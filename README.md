@@ -27,7 +27,7 @@ AR.js has separate builds for both Three.js and A-Frame compatibliity. In additi
 ## Setup
 
 ##### Our first example
-We have a basic app running in `index.html` and `index.js`. All we're doing at the moment is showin a sample A-Frame scene with some cool shapes.
+We have a basic app running in `index.html` and `index.js`. All we're doing at the moment is showing a sample A-Frame scene with some cool shapes.
 
 ##### Getting Ready
 As of now, this library has an npm package file, but no NPM packages! Blame this on AR.js not having a working module at the moment. Everything is included in script tags in our `index.html` file.
@@ -38,7 +38,7 @@ As of now, this library has an npm package file, but no NPM packages! Blame this
 to install currently non-existent dependencies
 
 ##### To run our initial dev app:
-```npm run dev``` to run a script that will serve the app on `https://localhost:1234` with self-signed certificates. You may to enable self-signed certificates in your browser's security settings. HTTPS is required because we are accessing the device's camera.
+```npm run dev``` to run a script that will serve the app on `https://localhost:1234` with self-signed certificates. You may need to enable self-signed certificates in your browser's security settings. HTTPS is required because we are accessing the device's camera.
 
 ## Adding Samples
 
