@@ -5,14 +5,15 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "parcel ./src/index.html --no-hmr --target browser --https --out-dir ./dev"
+    "dev": "parcel ./src/index.html --no-hmr --target browser --https --out-dir ./dev",
+    "dev:contentstack": "parcel ./samples/contentstack-integration/index.html --no-hmr --target browser --out-dir ./samples/contentstack-integration/dev" 
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/valtech-sd/spyglass.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Valtech",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/valtech-sd/spyglass/issues"
   },
