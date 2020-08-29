@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A Contentstack + Valtech demo",
   "main": "src/index.js",
+  "browserslist": [
+    "since 2019-08"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel ./src/index.html --no-hmr --target browser --https --out-dir ./dev",
