@@ -4,17 +4,9 @@ This sample shows how to retrieve data from the Contentstack API.
 
 GET requests to the cdn are not rate-limited.
 
-## Setup
+## Add the missing secrets file
 
-Run the server using 
-```
-npm run dev:contentstack
-```
-from the repository root. It will retrieve all of the records as a JSON file and put it on the screen.
-
-## Using API Key and Delivery Token
-
-We're keeping the API Key and Delivery token for this stack in a separate `secrets.js` file for now. It looks like the following: 
+We're keeping the API Key and Delivery token for this stack in a separate `./secrets.js` file for now. It's not tracked in git so that we avoid sharing the delivery token in GitHub. It looks like the following: 
 
 ```js
 const secrets = {
@@ -26,3 +18,11 @@ export default secrets;
 ```
 
 `apiKey` and `deliveryToken` are stored in the shared 1Password (or accessed within Contentstack from the Spyglass ⚙️ menu > Tokens).
+
+## Setup
+
+Run the server using 
+```
+npm run dev:contentstack
+```
+from the repository root. It runs `./index.html`, which has demonstrates retrieving all of the serum products as JSON via the REST API (the Contentstack CDN) and via GraphQL (which also uses the CDN under the hood).

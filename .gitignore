@@ -72,4 +72,3 @@ typings/
 # Parcel related files
 dist/
 .cache/
-samples/contentstack-integration/secrets.js
