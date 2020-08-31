@@ -3,17 +3,21 @@
   "version": "1.0.0",
   "description": "A Contentstack + Valtech demo",
   "main": "src/index.js",
+  "browserslist": [
+    "since 2019-08"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel ./src/index.html --no-hmr --target browser --https --out-dir ./dev",
+    "dev:contentstack": "parcel ./samples/contentstack-integration/index.html --no-hmr --target browser --out-dir ./samples/contentstack-integration/dev",
     "dev:rotation": "parcel ./samples/rotation/rotation-marker.html --no-hmr --target browser --out-dir ./samples/rotation/dev"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/valtech-sd/spyglass.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Valtech",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/valtech-sd/spyglass/issues"
   },
