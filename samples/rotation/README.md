@@ -4,7 +4,7 @@ This example shows a demo of using a single marker to detect rotation events. Wh
 
 Download and print the [Hiro marker here](https://github.com/jeromeetienne/AR.js/blob/master/data/images/HIRO.jpg).
 
---> Alex will add interaction sketch here <--
+![Tilt interaction sketch](../../readmeImages/tilt.png)
 
 ## To run the example
 
