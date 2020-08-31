@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel ./src/index.html --no-hmr --target browser --https --out-dir ./dev",
-    "dev:contentstack": "parcel ./samples/contentstack-integration/index.html --no-hmr --target browser --out-dir ./samples/contentstack-integration/dev" 
+    "dev:contentstack": "parcel ./samples/contentstack-integration/index.html --no-hmr --target browser --out-dir ./samples/contentstack-integration/dev",
+    "dev:rotation": "parcel ./samples/rotation/rotation-marker.html --no-hmr --target browser --out-dir ./samples/rotation/dev"
   },
   "repository": {
     "type": "git",
