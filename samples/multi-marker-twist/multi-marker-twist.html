@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spyglass Demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+
+    <!-- Debug GUI -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+
+    <!-- A-Frame version of AR.js with marker tracking + location-based AR -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+    <!-- Rotation-trigger component -->
+<!--    <script src="rotation-trigger.js"></script>-->
+    <script src="adjusted-rotation.js"></script>
+    <script src="multi-marker-rotation-system.js"></script>
+    <script src="multi-marker-twist.js"></script>
+
+</head>
+
+<body style="margin : 0px; overflow: hidden;">
+<h1>Rotation Demo</h1>
+
+<a-scene
+        vr-mode-ui="enabled: true;"
+        renderer="logarithmicDepthBuffer: true;"
+        embedded
+        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: true;"
+        gui-env>
+
+    <!-- parent of multi-marker rotation -->
+    <a-entity id="twistParent" multi-marker-rotation-interpolator>
+        <a-marker camera preset='kanji'>
+            <a-box position='0 0.0 0' material='opacity: 0.5; side: double;color:green;'></a-box>
+        </a-marker>
+
+        <a-marker camera preset='hiro'>
+            <a-box position='0 0.0 0' material='opacity: 0.5; side: double;color:red;'></a-box>
+        </a-marker>
+    </a-entity>
+
+    <a-entity camera></a-entity>
+</a-scene>
+</body>
+</html>
