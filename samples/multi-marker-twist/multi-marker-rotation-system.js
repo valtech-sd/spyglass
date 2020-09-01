@@ -25,6 +25,8 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
     this.prevTrackedIndex = -1
     this.prevTrackedElement = null
     this.rotationDelta = 0
+    this.minRotation = -50
+    this.maxRotation = 50
 
     this.tagElements = this.el.querySelectorAll('a-marker');
 
@@ -32,10 +34,36 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
     this.tagElements.forEach( function(tag) {
       tag.setAttribute("adjusted-rotation", "")
     })
+
+    this.onTagIndexTrigger = AFRAME.utils.bind(this.onTagIndexTrigger, this);
+    this.onTagRotation = AFRAME.utils.bind(this.onTagRotation, this);
+
+    // Attach event listener.
+    // We could do this outside of the component too
+    this.el.addEventListener('tag-index-trigger', this.onTagIndexTrigger);
+    this.el.addEventListener('tag-rotation', this.onTagRotation);
+  },
+  onTagIndexTrigger: function(e) {
+    console.log("Tag index trigger!")
+
+    let index = e.detail.index
+    console.log(index)
+  },
+  onTagRotation: function(e) {
+    console.log("Tag rotation!")
+
+    let index = e.detail.index
+    let normRot = e.detail.normalizedRotation
+
+    console.log("Tag rotation!")
+    console.log(index)
+    console.log(normRot)
   },
   lastTrackedTag: function () {
     var lastTrackedIndex = -1; // None tracked
     var lastTrackedElement = null;
+
+    let self = this
 
     this.tagElements.forEach(function (tag, index) {
       let entity = tag.object3D
@@ -51,11 +79,8 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
 
           // Update rotation offset
           this.initialRotation = adjustRot.adjustedRotation
-          //
-          // console.log("new starting rotation")
-          // console.log(this.initialRotation)
-          //
-          // // Get adjusted rotaiton for our new tracked tag
+
+          self.el.emit("tag-index-trigger", { index: lastTrackedIndex });
         }
 
         this.prevTrackedIndex = lastTrackedIndex
@@ -82,27 +107,23 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
       // Figure out last tag visible
       let lastTag = this.lastTrackedTag().element
 
-
       if (lastTag) {
-
-        // console.log(lastTrackedInfo)
-        // console.log(lastTag)
 
         // lastTag.components
         let currentRotation = lastTag.getAttribute('adjusted-rotation').adjustedRotation
 
         // Compute delta from starting rotation
         // Focus on "flip" rotation about y-axis
-
         let deltaRotationAboutY = this.initialRotation.y - currentRotation.y
-        console.log("delta rotation: ", deltaRotationAboutY)
-        // console.log(adjustRot)
+
+        // Compute normalized value of rotation, clamping to min/max rotation
+        // mapLinear
+        let clampedRotation = THREE.Math.clamp(deltaRotationAboutY, this.minRotation, this.maxRotation)
+        let normalizedRotation = THREE.Math.mapLinear(clampedRotation, this.minRotation, this.maxRotation, 0, 1)
+        console.log("normalized rotation: ", normalizedRotation)
+
+        this.el.emit("tag-rotation", { index: lastTrackedInfo.index, normalizedRotation: normalizedRotation });
       }
-
-
-
-      // console.log(lastTag)
-
     }
 
   },
