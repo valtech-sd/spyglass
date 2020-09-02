@@ -20,19 +20,23 @@ $( document ).ready(function() {
         console.log("Lost marker")
     })
 
-    anchorRef.addEventListener("rotated-right", (e)=>{ // your code here}
-        console.log("righty")
-        boxRef.setAttribute('color', 'blue');
+    // anchorRef.addEventListener("tilt-side", (e)=>{ // your code here}
+    //     boxRef.setAttribute('color', 'blue');
+    //     if (colorReset) { clearInterval( colorReset )}
+    //     colorReset = setInterval(resetColor, 500);
+    // })
 
+    // anchorRef.addEventListener("tilt-forward", (e)=>{ // your code here}
+    //     boxRef.setAttribute('color', 'red');
+    //     if (colorReset) { clearInterval( colorReset )}
+    //     colorReset = setInterval(resetColor, 500);
+    // })
+
+    // More difficult to detect twist with other events
+    anchorRef.addEventListener("twist", (e)=>{ // your code here}
+        boxRef.setAttribute('color', 'purple');
         if (colorReset) { clearInterval( colorReset )}
-        colorReset = setInterval(resetColor, 1000);
-    })
-
-    anchorRef.addEventListener("rotated-left", (e)=>{ // your code here}
-        boxRef.setAttribute('color', 'red');
-
-        if (colorReset) { clearInterval( colorReset )}
-        colorReset = setInterval(resetColor, 1000);
+        colorReset = setInterval(resetColor, 500);
     })
 });
 
