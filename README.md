@@ -46,3 +46,25 @@ We plan to add sample projects to a separate directory, so that they can exist a
 
 ## Adding images / markers to track
 TBD
+
+## Live Site and Deployment
+
+All files in the `docs` directory on the `main` branch will be served at [https://spyglass.valtech.engineering](https://spyglass.valtech.engineering).
+
+### Contributing
+
+This project is hosted on Github Pages and is using Jekyll to build the site. It is recommended that you use rbenv for your Ruby and GEM environment. Here is a decent [guide](https://jekyllrb.com/docs/installation/) if you need help setting up Ruby.
+
+Install the bundler by running:
+
+`$ gem install bundler:2.1.4`
+
+To set up your development environment first run the following from the `docs` directory:
+
+`$ bundle install`
+
+To build the site and make it available on a local server:
+
+`$ bundle exec jekyll serve`
+
+>NOTE: There is NO external CI for this project. Code with build steps must be built manually locally before pushing to this `docs` folder.
