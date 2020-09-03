@@ -1,4 +1,13 @@
-$( document ).ready(function() {
+function ready(fn) {
+    // replaces $(document).ready() in jQuery
+    if (document.readyState != 'loading'){
+        fn();
+    } else {
+        document.addEventListener('DOMContentLoaded', fn);
+    }
+}
+
+ready(function() {
     console.log( "DOM loaded" );
 
     var anchorRef = document.querySelector('a-marker');
