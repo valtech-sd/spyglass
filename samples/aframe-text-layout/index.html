@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Hello, WebVR! • A-Frame</title>
+    <meta name="description" content="Hello, WebVR! • A-Frame">
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.0/aframe/build/aframe-ar.js"></script>
+</head>
+
+<body style='margin : 0px; overflow: hidden;'>
+    <a-scene embedded arjs='sourceType: webcam;'>
+        <a-cylinder position="0 0 0" radius="0.5" height="1.5" color="#835D36" rotation='270 0 0'>
+            <a-entity position="0 0 1"
+                text="width: 2; color: #00F8FF; value: TILT FORWARD TO\n MAKE SELECTION; align: center;">
+            </a-entity>
+        </a-cylinder>
+        <a-marker-camera preset='hiro'></a-marker-camera>
+    </a-scene>
+</body>
+
+</html>
