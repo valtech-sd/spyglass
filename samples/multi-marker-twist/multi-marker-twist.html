@@ -16,6 +16,7 @@
 
     <!-- Rotation-trigger component -->
 <!--    <script src="rotation-trigger.js"></script>-->
+    <script src="content-fan.js"></script>
     <script src="adjusted-rotation.js"></script>
     <script src="multi-marker-rotation-system.js"></script>
     <script src="multi-marker-twist.js"></script>
@@ -34,14 +35,21 @@
 
     <!-- parent of multi-marker rotation -->
     <a-entity id="twistParent" multi-marker-rotation-interpolator>
+        <a-marker camera preset='hiro'>
+            <a-box position='0 0.0 0' material='opacity: 0.5; side: double;color:red;'></a-box>
+        </a-marker>
+
         <a-marker camera preset='kanji'>
             <a-box position='0 0.0 0' material='opacity: 0.5; side: double;color:green;'></a-box>
         </a-marker>
 
-        <a-marker camera preset='hiro'>
-            <a-box position='0 0.0 0' material='opacity: 0.5; side: double;color:red;'></a-box>
+        <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/umbrella.patt">
+            <a-box position='0 0.0 0' material='opacity: 0.5; side: double;color:blue;'></a-box>
         </a-marker>
+
     </a-entity>
+
+    <a-entity id="contentFan" rotation-animator content-fan radius="3" opacity="0.4" position="0 -2 -20" rotation="0 0 0"></a-entity>
 
     <a-entity camera></a-entity>
 </a-scene>

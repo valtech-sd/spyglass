@@ -44,20 +44,20 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
     this.el.addEventListener('tag-rotation', this.onTagRotation);
   },
   onTagIndexTrigger: function(e) {
-    console.log("Tag index trigger!")
+    // console.log("Tag index trigger!")
 
     let index = e.detail.index
-    console.log(index)
+    // console.log(index)
   },
   onTagRotation: function(e) {
-    console.log("Tag rotation!")
+    // console.log("Tag rotation!")
 
     let index = e.detail.index
     let normRot = e.detail.normalizedRotation
 
-    console.log("Tag rotation!")
-    console.log(index)
-    console.log(normRot)
+    // console.log("Tag rotation!")
+    // console.log(index)
+    // console.log(normRot)
   },
   lastTrackedTag: function () {
     var lastTrackedIndex = -1; // None tracked
@@ -120,7 +120,7 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
         // mapLinear
         let clampedRotation = THREE.Math.clamp(deltaRotationAboutY, this.minRotation, this.maxRotation)
         let normalizedRotation = THREE.Math.mapLinear(clampedRotation, this.minRotation, this.maxRotation, 0, 1)
-        console.log("normalized rotation: ", normalizedRotation)
+        // console.log("normalized rotation: ", normalizedRotation)
 
         this.el.emit("tag-rotation", { index: lastTrackedInfo.index, normalizedRotation: normalizedRotation });
       }
