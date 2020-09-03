@@ -19,7 +19,8 @@ AFRAME.registerComponent('content-fan', {
 
     // Add a cylinder geometry for debugging
     var core = document.createElement('a-cylinder');
-    core.setAttribute("wireframe", true)
+    core.setAttribute("wireframe", false)
+    core.setAttribute("opacity", 0)
     core.setAttribute("color", "red")
     core.setAttribute("height", 4)
     core.setAttribute("radius", this.data.radius)
@@ -39,35 +40,28 @@ AFRAME.registerComponent('content-fan', {
 
       var currentAngle = i * angleInterval
 
-      let planeWidth = 3
+      let planeWidth = 3.4
       let dist = this.data.radius
 
       // Assuming we position around center
-      var x = dist * Math.cos(currentAngle)
-      var z = -dist * Math.sin(currentAngle)
+      let x = dist * Math.cos(currentAngle)
+      let z = -dist * Math.sin(currentAngle)
 
-      var planeContainer = document.createElement('a-entity');
+      let planeContainer = document.createElement('a-entity');
 
       // Make a plane
-      var plane = document.createElement('a-plane');
-      // plane.setAttribute("color", "green")
+      let plane = document.createElement('a-plane');
+
       plane.setAttribute("height", 4)
       plane.setAttribute("width", planeWidth)
       plane.object3D.position.x = planeWidth*0.5
 
-      if (i == 0) {
-        plane.setAttribute("material", "side: double; color: blue")
-      } else if (i == 1) {
-        plane.setAttribute("material", "side: double; color: green")
-      } else {
-        plane.setAttribute("material", "side: double; color: red")
-      }
+      plane.setAttribute("material", "src: #sample-image")
 
       planeContainer.object3D.position.x = x
       planeContainer.object3D.position.z = z
 
       planeContainer.object3D.rotation.y = currentAngle + THREE.Math.degToRad(120)
-        // - THREE.Math.degToRad(60)
 
       planeContainer.appendChild(plane)
       core.appendChild(planeContainer)
