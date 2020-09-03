@@ -41,21 +41,19 @@ AFRAME.registerComponent('content-fan', {
 
       let planeWidth = 3
       let dist = this.data.radius
-        // + planeWidth*0.5
-
-        //this.data.radius + planeWidth
-
-        // + planeWidth*0.5
 
       // Assuming we position around center
       var x = dist * Math.cos(currentAngle)
       var z = -dist * Math.sin(currentAngle)
+
+      var planeContainer = document.createElement('a-entity');
 
       // Make a plane
       var plane = document.createElement('a-plane');
       // plane.setAttribute("color", "green")
       plane.setAttribute("height", 4)
       plane.setAttribute("width", planeWidth)
+      plane.object3D.position.x = planeWidth*0.5
 
       if (i == 0) {
         plane.setAttribute("material", "side: double; color: blue")
@@ -65,18 +63,15 @@ AFRAME.registerComponent('content-fan', {
         plane.setAttribute("material", "side: double; color: red")
       }
 
-      // plane.object3D.material.side = "double"
-      plane.object3D.position.x = x
-      plane.object3D.position.z = z
+      planeContainer.object3D.position.x = x
+      planeContainer.object3D.position.z = z
 
-      plane.object3D.rotation.y = currentAngle + THREE.Math.degToRad(90)
+      planeContainer.object3D.rotation.y = currentAngle + THREE.Math.degToRad(120)
+        // - THREE.Math.degToRad(60)
 
-      console.log("angle: ", currentAngle)
-
-      core.appendChild(plane)
+      planeContainer.appendChild(plane)
+      core.appendChild(planeContainer)
     }
-
-
   },
   animateToContent: function(index) {
 
@@ -88,9 +83,6 @@ AFRAME.registerComponent('content-fan', {
     // this.el.object3D.rotation.y = angle
 
     console.log("going to try to animate to ", index)
-
-
-    let animator = this.data.tweener
 
     let target = this
     let curRot = this.el.object3D.rotation.y
@@ -122,8 +114,6 @@ AFRAME.registerComponent('content-fan', {
     animation.to = 200
 
     animation.play()
-
-
   },
   update: function () {},
   tick: function () {
