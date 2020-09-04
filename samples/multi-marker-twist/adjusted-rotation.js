@@ -1,6 +1,6 @@
-// Register custom components before loading HTML
-// TODO: This should actually be a combo of a component and a system...!
-// We shouldn't do all the math in the component
+// This component flips the coordinate frame of an object as a convenience
+// It's mostly used to transform marker rotation to the rotation we perceive onscreen
+// (Instead of being Y-up oriented)
 AFRAME.registerComponent('adjusted-rotation', {
   init: function () {
 
@@ -25,12 +25,12 @@ AFRAME.registerComponent('adjusted-rotation', {
       0, 0, 0, 1);
 
     let adjustedRotationAxes = entity.rotation.toVector3().applyMatrix4(transformAxisMatrix)
+
     this.adjustedRotation = new THREE.Vector3(radToDeg(adjustedRotationAxes.x),
       radToDeg(adjustedRotationAxes.y),
       radToDeg(adjustedRotationAxes.z))
 
     this.data.adjustedRotation = this.adjustedRotation
-
   },
   update: function () {},
   tick: function () {

@@ -14,13 +14,10 @@
     <!-- A-Frame version of AR.js with marker tracking + location-based AR -->
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
-    <!-- Rotation-trigger component -->
-<!--    <script src="rotation-trigger.js"></script>-->
     <script src="content-fan.js"></script>
     <script src="adjusted-rotation.js"></script>
-    <script src="multi-marker-rotation-system.js"></script>
+    <script src="multi-marker-rotation-interpolator.js"></script>
     <script src="multi-marker-twist.js"></script>
-
 </head>
 
 <body style="margin : 0px; overflow: hidden;">
@@ -38,7 +35,8 @@
         <img id="sample-image-thin" src="images/test-3.png">
     </a-assets>
 
-    <!-- parent of multi-marker rotation -->
+    <!-- Parent of multi-marker rotation -->
+    <!--We add multi-marker-rotation-interpolator component-->
     <a-entity id="twistParent" multi-marker-rotation-interpolator>
         <a-marker camera preset='hiro'>
             <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:white;'></a-plane>
@@ -54,6 +52,7 @@
 
     </a-entity>
 
+    <!--The entity that will display our content-->
     <a-entity id="contentFan" rotation-animator content-fan radius="3" opacity="0.4" position="1.25 2.25 -20" rotation="0 0 0"></a-entity>
 
     <a-entity camera></a-entity>
