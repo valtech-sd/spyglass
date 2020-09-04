@@ -19,7 +19,6 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
     console.log(this.system);
 
     this.tagElements = [];
-    this.useRotation = false
     this.initialRotation = new THREE.Vector3(0,0,0)
 
     this.prevTrackedIndex = -1

@@ -19,6 +19,9 @@ $( document ).ready(function() {
 
     let index = e.detail.index
     let offset = e.detail.normalizedRotation
+    let animator = contentFanRef.components["content-fan"]
+
+    animator.animateContentOffset(offset)
 
     // console.log(e.detail)
   })

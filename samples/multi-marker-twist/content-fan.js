@@ -6,6 +6,14 @@ AFRAME.registerComponent('content-fan', {
     radius: {
       type: 'int',
       default: 1
+    },
+    wiggleEnabled: {
+      type: 'bool',
+      default: true
+    },
+    maxWiggle: {
+      type: 'number',
+      default: 10
     }
   },
   init: function () {
@@ -14,7 +22,8 @@ AFRAME.registerComponent('content-fan', {
     this.currentContentIndex = -1
     this.angleInterval = 0
     this.startingRotation = 0
-    this.test = 50
+    this.animationActive = false
+    this.animationDelta = 0
 
     // Add a cylinder geometry for debugging
     var core = document.createElement('a-cylinder');
@@ -73,6 +82,19 @@ AFRAME.registerComponent('content-fan', {
       this.currentContentIndex = 0
     }
   },
+
+  animateContentOffset: function(offset) {
+
+    if (this.animationActive || !this.data.wiggleEnabled) {
+      return
+    }
+
+    let wiggleAmount = THREE.Math.mapLinear(offset, 0, 1.0, -this.data.maxWiggle, this.data.maxWiggle)
+
+    let baseAngle = this.contentKeyframes[this.currentContentIndex]
+    this.el.object3D.rotation.y = baseAngle + THREE.Math.degToRad(wiggleAmount)
+  },
+
   animateToContent: function(index) {
 
     if (this.lastContentIndex == this.currentContentIndex) {
@@ -102,22 +124,24 @@ AFRAME.registerComponent('content-fan', {
       // This is noooot ideal
       var animation = AFRAME.ANIME({
         targets: target,
-        test: [0, deltaRotation],
+        animationDelta: [0, deltaRotation],
         delay: 0,
         duration: 1500,
         isRawProperty: true,
+        begin: function(anim) {
+          target.animationActive = true
+        },
+        complete: function(anim) {
+          target.animationActive = false
+        },
         update: function (animation) {
-          var value = animation.animatables[0].target
-          target.el.object3D.rotation.y = target.startingRotation + target.test
+          target.el.object3D.rotation.y = target.startingRotation + target.animationDelta
         },
         direction: 'normal',
         loop: false,
         autoplay: false,
         easing: 'easeInOutSine'
       });
-
-      animation.property = "object3D.position.z"
-      animation.to = 200
 
       animation.play()
     }
