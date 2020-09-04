@@ -32,6 +32,14 @@ We glued the markers around our bottle as seen in the photos. Our marker order f
 * `multi-marker-twist.html`
      -  This sets up the basic HTML, including a persistent `content-fan` and our group of markers
      
+     
+## Dev Notes
+
+(more elaboration to be added later)
+
+* To get the illusion that we're controlling the marker with the bottle, we actually need to reverse the indices of our "content" items
+* We should animate our "wiggle" for the slightly rotation movement effect
+* [Add notes about rotating to closest content]
 
      
      
