@@ -35,25 +35,26 @@
 
     <a-assets>
         <img id="sample-image" src="images/test.png">
+        <img id="sample-image-thin" src="images/test-3.png">
     </a-assets>
 
     <!-- parent of multi-marker rotation -->
     <a-entity id="twistParent" multi-marker-rotation-interpolator>
         <a-marker camera preset='hiro'>
-            <a-box position='0 0.0 0' material='opacity: 0.5; side: double;color:red;'></a-box>
+            <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:white;'></a-plane>
         </a-marker>
 
         <a-marker camera preset='kanji'>
-            <a-box position='0 0.0 0' material='opacity: 0.5; side: double;color:green;'></a-box>
+            <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:white;'></a-plane>
         </a-marker>
 
         <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/umbrella.patt">
-            <a-box position='0 0.0 0' material='opacity: 0.5; side: double;color:blue;'></a-box>
+            <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:white;'></a-plane>
         </a-marker>
 
     </a-entity>
 
-    <a-entity id="contentFan" rotation-animator content-fan radius="3" opacity="0.4" position="0 2 -20" rotation="0 0 0"></a-entity>
+    <a-entity id="contentFan" rotation-animator content-fan radius="3" opacity="0.4" position="1.25 2.25 -20" rotation="0 0 0"></a-entity>
 
     <a-entity camera></a-entity>
 </a-scene>

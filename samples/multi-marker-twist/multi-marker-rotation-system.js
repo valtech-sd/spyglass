@@ -1,16 +1,3 @@
-AFRAME.registerSystem('multi-marker-rotation-system', {
-  schema: {},  // System schema. Parses into `this.data`.
-
-  init: function () {
-    // Called on scene initialization.
-
-    // We will collect all
-    this.tags = [];
-  },
-
-  // Other handlers and methods.
-});
-
 // Parent component of a rotation group
 AFRAME.registerComponent('multi-marker-rotation-interpolator', {
   init: function () {

@@ -13,7 +13,7 @@ AFRAME.registerComponent('content-fan', {
     },
     maxWiggle: {
       type: 'number',
-      default: 10
+      default: 14
     }
   },
   init: function () {
@@ -44,7 +44,11 @@ AFRAME.registerComponent('content-fan', {
 
       var currentAngle = (i * this.angleInterval)
 
-      let planeWidth = 3.4*2
+      // TODO: This is just fake content, so I manually plugged in the aspect ratio
+      // Ideally, we'll be building these panels ourselves
+      let aspectRatio = 257/1153
+      let planeWidth = 2
+      let planeHeight = planeWidth / aspectRatio
       let dist = this.data.radius
 
       // Assuming we position around center
@@ -56,12 +60,12 @@ AFRAME.registerComponent('content-fan', {
       // Make a plane
       let plane = document.createElement('a-plane');
 
-      plane.setAttribute("height", 4*2)
+      plane.setAttribute("height", planeHeight)
       plane.setAttribute("width", planeWidth)
       plane.object3D.position.x = planeWidth*0.5
 
       // Currently, this is the same for all
-      plane.setAttribute("material", "src: #sample-image")
+      plane.setAttribute("material", "src: #sample-image-thin")
 
       planeContainer.object3D.position.x = x
       planeContainer.object3D.position.z = z
@@ -89,7 +93,9 @@ AFRAME.registerComponent('content-fan', {
       return
     }
 
-    let wiggleAmount = THREE.Math.mapLinear(offset, 0, 1.0, -this.data.maxWiggle, this.data.maxWiggle)
+    // If wiggle amount is too large, we may want to animate this as well
+    // flip direction bc
+    let wiggleAmount = THREE.Math.mapLinear(offset, 1.0, 0.0, -this.data.maxWiggle, this.data.maxWiggle)
 
     let baseAngle = this.contentKeyframes[this.currentContentIndex]
     this.el.object3D.rotation.y = baseAngle + THREE.Math.degToRad(wiggleAmount)
