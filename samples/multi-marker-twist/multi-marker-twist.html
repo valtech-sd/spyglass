@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spyglass Demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+
+    <!-- Debug GUI -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+
+    <!-- A-Frame version of AR.js with marker tracking + location-based AR -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+    <script src="content-fan.js"></script>
+    <script src="adjusted-rotation.js"></script>
+    <script src="multi-marker-rotation-interpolator.js"></script>
+    <script src="multi-marker-twist.js"></script>
+</head>
+
+<body style="margin : 0px; overflow: hidden;">
+<h1>Rotation Demo</h1>
+
+<a-scene
+        vr-mode-ui="enabled: true;"
+        renderer="logarithmicDepthBuffer: true;"
+        embedded
+        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: true;"
+        gui-env>
+
+    <a-assets>
+        <img id="sample-image" src="images/test.png">
+        <img id="sample-image-thin" src="images/test-3.png">
+        <!--        <a-asset-item id="umbrella-marker" src="markers/umbrella.patt"></a-asset-item>-->
+    </a-assets>
+
+    <!-- Parent of multi-marker rotation -->
+    <!--We add multi-marker-rotation-interpolator component-->
+    <a-entity id="twistParent" multi-marker-rotation-interpolator>
+        <a-marker camera preset='hiro'>
+            <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:white;'></a-plane>
+        </a-marker>
+
+        <a-marker camera preset='kanji'>
+            <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:white;'></a-plane>
+        </a-marker>
+
+        <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/umbrella.patt">
+            <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:white;'></a-plane>
+        </a-marker>
+
+    </a-entity>
+
+    <!--The entity that will display our content-->
+    <a-entity id="contentFan" rotation-animator content-fan radius="3" opacity="0.4" position="1.25 2.25 -20" rotation="0 0 0"></a-entity>
+
+    <a-entity camera></a-entity>
+</a-scene>
+</body>
+</html>
