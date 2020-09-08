@@ -11,7 +11,8 @@
     "dev": "parcel ./src/index.html --no-hmr --target browser --https --out-dir ./dev",
     "dev:contentstack": "parcel ./samples/contentstack-integration/index.html --no-hmr --target browser --out-dir ./samples/contentstack-integration/dev",
     "dev:rotation": "parcel ./samples/rotation/rotation-marker.html --https --no-hmr --target browser --out-dir ./samples/rotation/dev",
-    "dev:overlay": "parcel ./samples/camera-overlay/camera-overlay.html --https --no-hmr --target browser --out-dir ./samples/camera-overlay/dev"
+    "dev:overlay": "parcel ./samples/camera-overlay/camera-overlay.html --https --no-hmr --target browser --out-dir ./samples/camera-overlay/dev",
+    "dev:multirotation": "parcel ./samples/multi-marker-twist/multi-marker-twist.html --https --no-hmr --target browser --out-dir ./samples/multi-marker-twist/dev"
   },
   "repository": {
     "type": "git",
