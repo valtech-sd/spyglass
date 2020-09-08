@@ -8,7 +8,11 @@ AFRAME.registerComponent("webcam-overlay-helper", {
   schema: {
     blurAmount: {
       type: 'number',
-      default: 1.5
+      default: 1.0
+    },
+    tintAmount: {
+      type: 'number',
+      default: 0.4
     }
   },
 
@@ -28,6 +32,7 @@ AFRAME.registerComponent("webcam-overlay-helper", {
 
     let blurAmount = new THREE.Vector2(this.data.blurAmount, this.data.blurAmount);
     this.el.setAttribute('material', 'blurAmount', blurAmount);
+    this.el.setAttribute('material', 'tintAmount', this.data.tintAmount);
   },
   // We need to update the resolution to pass to the blur function
   // in our shader
@@ -71,7 +76,8 @@ AFRAME.registerShader('gaussian-blur', {
   schema: {
     map: {type: 'map', is: 'uniform'},
     resolution: {type: 'vec2', is: 'uniform'},
-    blurAmount: {type: 'vec2', is: 'uniform'}
+    blurAmount: {type: 'vec2', is: 'uniform'},
+    tintAmount: {type: 'float', is: 'uniform'}
   },
 
   //TODO: Is there a way we can load these from glsl files`?
@@ -103,6 +109,7 @@ varying vec2 vUv;
 uniform sampler2D map;
 uniform vec2 resolution;
 uniform vec2 blurAmount;
+uniform float tintAmount;
 
 // Single-pass Gaussian blur
 // Borrowed from: https://github.com/Jam3/glsl-fast-gaussian-blur
@@ -124,7 +131,12 @@ vec4 blur13(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
 
 void main() {
       // Blur our pixels!
-      gl_FragColor = blur13(map, vUv, resolution, blurAmount);
+      vec4 blurredColor = blur13(map, vUv, resolution, blurAmount);
+      
+      vec4 tintedColor = mix(blurredColor, vec4(0,0,0,1.), tintAmount);
+      
+      // Mix with object color
+      gl_FragColor = tintedColor;
 }
 `
 });
