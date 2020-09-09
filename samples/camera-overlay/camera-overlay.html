@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spyglass Demo</title>
+
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+
+    <!-- Debug GUI -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+
+    <!-- A-Frame version of AR.js with marker tracking + location-based AR -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+    <script src="webcam-overlay.js"></script>
+
+</head>
+
+<body style="margin : 0px; overflow: hidden;">
+<h1>Camera Overlay Demo</h1>
+
+<a-scene
+        vr-mode-ui="enabled: true;"
+        renderer="logarithmicDepthBuffer: true;"
+        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: true;"
+        gui-env>
+
+    <a-plane material="shader: gaussian-blur" webcam-overlay-helper opacity="0.4" rotation="0 0 0" position="0 0 -1" width="1.0" height=1.0">
+        <a-plane mask opacity="0.0" rotation="0 0 0" position="-3 0 -10" width="4.0" height=4.0"
+                             animation="property: position; to:3 0 -10; dur: 7000; easing: linear; loop: true"></a-plane>
+    </a-plane>
+
+    <!-- Simple camera positioned at 0 0 0 -->
+    <a-entity camera></a-entity>
+
+</a-scene>
+</body>
+</html>
