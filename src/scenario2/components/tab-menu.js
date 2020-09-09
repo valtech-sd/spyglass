@@ -39,7 +39,15 @@ AFRAME.registerComponent('tab-menu', {
     })
   },
   selectIndex: function(index) {
-
+    let self = this
+    this.tabElements.forEach( function(tabEl, i) {
+      let tabComponent = tabEl.components.tabitem
+      if (i == index) {
+        tabComponent.select()
+      } else {
+        tabComponent.deselect()
+      }
+    })
   },
   update: function () {},
   tick: function () {

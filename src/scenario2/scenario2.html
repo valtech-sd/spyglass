@@ -17,6 +17,9 @@
     <script src="components/text-with-icon.js"></script>
     <script src="components/tab-menu-item.js"></script>
     <script src="components/tab-menu.js"></script>
+    <script src="components/content-fan.js"></script>
+    <script src="components/adjusted-rotation.js"></script>
+    <script src="components/multi-marker-rotation-interpolator.js"></script>
     <script src="scenario2.js"></script>
 </head>
 
@@ -60,6 +63,8 @@
                value: hello there;">
         </a-mixin>
 
+
+
 <!--        <a-mixin id="text"-->
 <!--                 text="align: center; width: 20;-->
 <!--               value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam"-->
@@ -73,6 +78,24 @@
 <!--        </a-mixin>-->
 
     </a-assets>
+
+        <!--We add multi-marker-rotation-interpolator component-->
+    <a-entity id="twistParent" multi-marker-rotation-interpolator>
+        <!--        <a-marker camera preset='hiro'>-->
+        <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/serum_1.patt">
+            <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:red;'></a-plane>
+        </a-marker>
+
+        <!--        <a-marker camera preset='kanji'>-->
+        <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/antioxidant.patt">
+            <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:blue;'></a-plane>
+        </a-marker>
+
+<!--        <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/performant.patt">-->
+<!--            <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:white;'></a-plane>-->
+<!--        </a-marker>-->
+
+    </a-entity>
 
 <!--    <a-text id="title" mixin="body-text" position="0 2 -2" side="double"-->
 <!--            font="value=This is a Title">-->
@@ -94,8 +117,8 @@
 <!--        <a-image src="#panthenol" position="0.13 0.13 0" width="0.25" height="0.25"></a-image>-->
 <!--    </a-entity>-->
 
-    <a-entity tab-menu position="-3 11 -50">
-        <a-entity tabitem="textLabel: FOR YOU; iconImage: #for-you"></a-entity>
+    <a-entity id="tab-menu" tab-menu position="-3 11 -50">
+<!--        <a-entity tabitem="textLabel: FOR YOU; iconImage: #for-you"></a-entity>-->
         <a-entity tabitem="textLabel: USAGE; iconImage: #usage"></a-entity>
         <a-entity tabitem="textLabel: BENEFITS; iconImage: #benefits"></a-entity>
     </a-entity>

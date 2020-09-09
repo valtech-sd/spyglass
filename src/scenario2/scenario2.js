@@ -58,17 +58,42 @@ ready(function() {
     panel.setAttribute("content-group", "");
     panel.setAttribute("position", "-3 5.5 -50")
 
-    sceneRef.append(panel);
+    // sceneRef.append(panel);
 
     let content = panel.components['content-group'];
     content.initializeFromData(data);
   }
 
   // Build content panels with "data"
-  // var usagePanel = makePanel(usageData);
+  var usagePanel = makePanel(usageData);
   var benefitsPanel = makePanel(benefitsData);
 
   // Provide content panel with an array of objects
+  var anchorRef = document.getElementById('twistParent');
+  var tabMenuRef = document.getElementById('tab-menu');
+  // var contentFanRef = document.getElementById("contentFan")
+
+  console.log("anchor ref");
+
+  console.log(anchorRef);
+  // Update our content fan if we've detected a new tag
+  anchorRef.addEventListener("tag-index-trigger", (e)=>{ // your code here}
+    let index = e.detail.index
+
+    console.log("tag index triggered! ", index)
+    tabMenuRef.components["tab-menu"].selectIndex(index)
+    // let animator = contentFanRef.components["content-fan"]
+    // animator.animateToContent(index)
+  })
+
+  // Wiggle our content fan if the current tag has been rotated slightly
+  // anchorRef.addEventListener("tag-rotation", (e)=>{ // your code here}
+  //   // let index = e.detail.index
+  //   // let offset = e.detail.normalizedRotation
+  //   // let animator = contentFanRef.components["content-fan"]
+  //
+  //   // animator.animateContentOffset(offset)
+  // })
 
 
 
