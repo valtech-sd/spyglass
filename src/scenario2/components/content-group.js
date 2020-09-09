@@ -10,11 +10,11 @@ AFRAME.registerComponent('content-group', {
     }
   },
   init: function () {
-
-    // For now, we're just looking for entities with textwithicon components
-    this.contentElements = this.el.querySelectorAll('[textwithicon]');
-
     this.spacing = this.data.contentSpacing;
+    this.initLayout()
+  },
+  initLayout: function() {
+    this.contentElements = this.el.querySelectorAll('[textwithicon]');
 
     console.log("content elet");
     console.log(this.contentElements);
@@ -36,6 +36,37 @@ AFRAME.registerComponent('content-group', {
       // console.log("content height so far: ", contentHeightSoFar);
 
     })
+  },
+  // TODO: Have some smarter way of adding data
+  initializeFromData(data) {
+
+    let self = this
+
+    //   <a-entity textwithicon position="0 0 0"></a-entity>
+    // <a-entity textwithicon position="0 0 0"></a-entity>
+
+    data.forEach(function (content){
+      console.log(content);
+
+      let hasTitle = content.title != null
+
+      // Create a content element
+      var contentEl = document.createElement('a-entity');
+
+      console.log(contentEl);
+      contentEl.setAttribute("textwithicon", {
+        hasTitle: hasTitle,
+        icon: content.icon,
+        titleLabel: content.title,
+        bodyLabel: content.body
+      })
+
+      self.el.appendChild(contentEl);
+    })
+
+    this.initLayout()
+
+    console.log("initializing from data!")
   },
   update: function () {},
   tick: function () {

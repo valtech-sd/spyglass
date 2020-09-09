@@ -79,7 +79,7 @@ AFRAME.registerComponent('textwithicon', {
 
     // Get height of body text
     // TODO: Replace 2.25 with icon height + spacing
-    var h =  2.25 + 3;
+    var h =  2.25 + 5;
 
       //+ this.body.height;
 
@@ -96,15 +96,16 @@ AFRAME.registerComponent('textwithicon', {
     // console.log(bodyText.data);
 
 
-    if (this.data.hasTitle) {
+    if (this.hasTitle) {
       // h += this.title.height + 1;
       h += 1.5;
     }
 
-    console.log("height is " + h);
+    // console.log("height is " + h);
 
     // Fake number for now
     return h;
+    // return 5;
 
   },
   configure: function(titleName, textBody, iconUrl) {
