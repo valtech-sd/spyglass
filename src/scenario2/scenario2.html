@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spyglass Demo</title>
+
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+
+    <!-- Debug GUI -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+
+    <!-- A-Frame version of AR.js with marker tracking + location-based AR -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+    <script src="components/content-group.js"></script>
+    <script src="components/text-with-icon.js"></script>
+    <script src="components/tab-menu-item.js"></script>
+    <script src="components/tab-menu.js"></script>
+    <script src="scenario2.js"></script>
+</head>
+
+<body style="margin : 0px; overflow: hidden;">
+<h1>Scenario 2 Demo</h1>
+
+<!--<a-scene background="color: #3CF">-->
+<a-scene
+        vr-mode-ui="enabled: true;"
+        renderer="logarithmicDepthBuffer: true; antialias: true"
+        embedded
+        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: true;"
+        gui-env>
+
+    <a-assets>
+<!--            <img id="dinotimg" src="/assets/dinot.png">-->
+<!--            <a-mixin id="body-text"-->
+<!--                 text="align: left; anchor: left; baseline: top; width: 1.25; wrapCount: 30;-->
+<!--               font: roboto; value: hello there;">-->
+<!--            </a-mixin>-->
+
+        <img id="panthenol" src="/assets/panthenol.png">
+        <img id="ylangylang" src="/assets/ylangylang.png">
+
+        <!-- Tab Menu Icons -->
+        <img id="benefits" src="/assets/benefits_icon.png">
+        <img id="usage" src="/assets/usage_icon.png">
+        <img id="for-you" src="/assets/for_you_icon.png">
+
+        <a-mixin id="body-text"
+                 text="align: left; anchor: left; baseline: top; width: 13.0; wrapCount: 35;
+               font: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.fnt;
+               fontImage: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.png;
+               value: hello there;">
+        </a-mixin>
+
+        <a-mixin id="menu-text"
+                 text="align: center; anchor: center; baseline: top; width: 13.0; wrapCount: 35;
+               font: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.fnt;
+               fontImage: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.png;
+               value: hello there;">
+        </a-mixin>
+
+<!--        <a-mixin id="text"-->
+<!--                 text="align: center; width: 20;-->
+<!--               value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam"-->
+<!--        ></a-mixin>-->
+
+<!--        <a-mixin id="body-text-2"-->
+<!--                 text="align: left; width: 1;-->
+<!--               font: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.fnt;-->
+<!--               fontImage: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.png;-->
+<!--                value: This is place holder content">-->
+<!--        </a-mixin>-->
+
+    </a-assets>
+
+<!--    <a-text id="title" mixin="body-text" position="0 2 -2" side="double"-->
+<!--            font="value=This is a Title">-->
+<!--    </a-text>-->
+
+<!--    <a-text position="0 1.25 -1" font="/assets/dinot.fnt" fontimage="#dinot" color="black" align="center" value="Hello World!"></a-text>-->
+    <!-- handle hiro marker -->
+<!--    <a-marker camera preset='hiro' rotation-trigger='tiltSideThreshold: 1.0; twistThreshold: 1.0; tiltForwardThreshold: 1.0;'>-->
+<!--        <a-box position='0 0.5 0' material='opacity: 0.5; side: double;color:green;'>-->
+<!--            <a-torus-knot radius='0.26' radius-tubular='0.05'-->
+<!--                          animation="property: rotation; to:360 0 0; dur: 5000; easing: linear; loop: true">-->
+<!--            </a-torus-knot>-->
+<!--        </a-box>-->
+<!--    </a-marker>-->
+<!--    <a-text mixin="body-text" font="kelsonsans" position="0 0 -10" wrap-count="20"></a-text>-->
+
+
+<!--    <a-entity id="image-container" position="-1 0 -5">-->
+<!--        <a-image src="#panthenol" position="0.13 0.13 0" width="0.25" height="0.25"></a-image>-->
+<!--    </a-entity>-->
+
+    <a-entity tab-menu position="-3 11 -50">
+        <a-entity tabitem="textLabel: FOR YOU; iconImage: #for-you"></a-entity>
+        <a-entity tabitem="textLabel: USAGE; iconImage: #usage"></a-entity>
+        <a-entity tabitem="textLabel: BENEFITS; iconImage: #benefits"></a-entity>
+    </a-entity>
+
+    <a-entity content-group position="-3 5.5 -50">
+        <a-entity textwithicon position="0 0 0"></a-entity>
+        <a-entity textwithicon position="0 0 0"></a-entity>
+    </a-entity>
+
+
+<!--    <a-entity position="-1 0 -50">-->
+<!--        <a-circle color="#74fab9" radius="1.5" opacity="0.8" position="1 0 0" segments="128">-->
+<!--            &lt;!&ndash;        <a-image src="#ylangylang" position="0.0 0.0 0" opacity="1.0" width="1" height="1"></a-image>&ndash;&gt;-->
+<!--        </a-circle>-->
+<!--        <a-entity position="0 -2.25 0">-->
+<!--            <a-text mixin="body-text" value="YLANG YLANG" position="0 0 0"></a-text>-->
+<!--            <a-text mixin="body-text" value="Sweet, exotic and floral, essential oil distilled from the fragrant flowers."-->
+<!--                    position="0 -1 0"></a-text>-->
+<!--        </a-entity>-->
+<!--    </a-entity>-->
+
+<!--    <a-entity position="-1 5 -50">-->
+<!--        <a-image src="#benefits" position="0.0 0.0 0" opacity="1.0" width="2" height="2"-->
+<!--                 animation="property: opacity; to: 0; dur: 1000; easing: easeInOutCubic; loop: true">-->
+<!--        <a-text mixin="menu-text" value="BENEFITS" position="0 -1.65 0"></a-text>-->
+<!--        <a-circle color="#74fab9" radius="1.5" opacity="0.8" position="1 0 0" segments="128">-->
+<!--            &lt;!&ndash;        <a-image src="#ylangylang" position="0.0 0.0 0" opacity="1.0" width="1" height="1"></a-image>&ndash;&gt;-->
+<!--        </a-circle>-->
+<!--        <a-entity position="0 -2.25 0">-->
+<!--            <a-text mixin="body-text" value="YLANG YLANG" position="0 0 0"></a-text>-->
+<!--            <a-text mixin="body-text" value="Sweet, exotic and floral, essential oil distilled from the fragrant flowers."-->
+<!--                    position="0 -1 0"></a-text>-->
+<!--        </a-entity>-->
+    </a-entity>
+
+
+
+
+
+
+<!--    <a-text mixin="body-text-2" value="PANTHENOL" position="-3 0 -3" wrap-count="20"></a-text>-->
+<!--    <a-text mixin="body-text-2" value="Also called B5 Vitamin, moisturizes the skin." position="-3 0 -3" wrap-count="20"></a-text>-->
+
+<!--    <a-entity position="0 2 3.7">-->
+<!--        <a-entity camera look-controls wasd-controls></a-entity>-->
+<!--    </a-entity>-->
+
+    <!-- Simple camera positioned at 0 0 0 -->
+    <a-entity camera></a-entity>
+<!--    //look-controls wasd-controls-->
+<!--    <a-entity camera></a-entity>-->
+</a-scene>
+</body>
+</html>
