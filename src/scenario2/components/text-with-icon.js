@@ -26,9 +26,21 @@ AFRAME.registerComponent('textwithicon', {
     icon.setAttribute("color", "#74fab9");
     icon.setAttribute("radius", 1.5);
     icon.setAttribute("segments", 128);
-    icon.setAttribute("opacity", 0.8);
+    icon.setAttribute("opacity", 1.0);
     icon.setAttribute("position", "1 0 0");
     this.el.appendChild(icon);
+
+    // Add a circle
+    if (this.data.icon != "") {
+      let iconImage = document.createElement('a-image');
+      iconImage.setAttribute("src", this.data.icon);
+      iconImage.setAttribute("opacity", 1.0);
+      iconImage.setAttribute("scale", "2 2 2");
+      iconImage.setAttribute("color", "black");
+      iconImage.setAttribute("position", "0 0 1");
+
+      icon.appendChild(iconImage);
+    }
 
     this.icon = icon;
 
