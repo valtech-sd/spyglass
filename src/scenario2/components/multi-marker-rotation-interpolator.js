@@ -67,8 +67,6 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
       let entity = tag.object3D
 
       if (entity.visible) {
-
-        self.startTrackTime = Date.now()
         self.lastTrackedTime = Date.now()
         lastTrackedIndex = index
         lastTrackedElement = tag
@@ -78,19 +76,14 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
           emitTrackingStart = true;
         }
 
+        // console.log("e visible")
+        // console.log('prev track ', lastTrackedIndex)
         if (this.prevTrackedIndex != lastTrackedIndex) {
 
           // start our time
           self.emittedIndexEvent = false;
-          // let currTimestamp = Date.now()  // convert to
-          // let deltaTimestamp = (this.prevTimestamp == -1) ? 0 : Math.abs(currTimestamp - this.prevTimestamp)
+          self.startTrackTime = Date.now()
 
-
-          // let adjustRot = lastTrackedElement.getAttribute('adjusted-rotation')
-          //
-          // // Calculate and emit event for last tag tracked
-          // this.initialRotation = adjustRot.adjustedRotation
-          // self.el.emit("tag-index-trigger", { index: lastTrackedIndex });
         } else {
 
           if (!self.emittedIndexEvent) {
@@ -100,6 +93,8 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
             if (deltaTimestamp > self.minTrackDuration){
               self.el.emit("tag-index-trigger", { index: lastTrackedIndex });
               self.emittedIndexEvent = true
+
+              console.log("emitting trigger")
             }
           }
         }
