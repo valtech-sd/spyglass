@@ -16,15 +16,10 @@ AFRAME.registerComponent('tab-menu', {
     let children = this.el.querySelectorAll('[tabitem]');
     this.spacing = this.data.tabSpacing
 
-    console.log("children are");
-    console.log(children);
-
     this.selectedIndex = 0;
     let self = this;
 
     this.tabElements.forEach( function(tag, index) {
-      console.log("index ", index)
-
       let tabComponent = tag.components.tabitem
       let tabWidth = tabComponent.getWidth();
       tag.object3D.position.x = tabWidth * 0.5 + index * self.data.tabSpacing

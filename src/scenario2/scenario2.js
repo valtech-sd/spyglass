@@ -98,20 +98,13 @@ ready(function() {
   anchorRef.addEventListener("tag-rotation", (e)=>{ // your code here}
 
     let tracker = contentContainerRef.components["smoothed-marker-tracker"]
-    tracker.onMarkerPositionUpdate(e)
-
-
-
-    // animator.animateContentOffset(offset)
+    tracker.onMarkerRotationUpdate(e)
   })
 
   anchorRef.addEventListener("tag-position", (e)=>{ // your code here}
 
     let tracker = contentContainerRef.components["smoothed-marker-tracker"]
     tracker.onMarkerPositionUpdate(e)
-
-    // animator.animateContentOffset()
-    // animator.animateContentOffset(offset)
   })
 
   anchorRef.addEventListener("tracking-started", (e)=>{ // your code here}
