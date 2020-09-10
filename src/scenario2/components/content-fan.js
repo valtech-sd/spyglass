@@ -98,7 +98,7 @@ AFRAME.registerComponent('contentfan', {
       // Save this angle to our "key frames" that we can animate to
       self.contentKeyframes.push(currentAngle)
 
-      console.log("keyframe, ", THREE.Math.radToDeg(currentAngle));
+      // console.log("keyframe, ", THREE.Math.radToDeg(currentAngle));
 
       planeContainer.appendChild(el)
       self.core.appendChild(planeContainer)
@@ -136,6 +136,7 @@ AFRAME.registerComponent('contentfan', {
   // Will rotate cylinder to a different keyframe
   animateToContent: function(index) {
 
+    console.log("animating to content")
     if (this.lastContentIndex == this.currentContentIndex) {
       return
     }

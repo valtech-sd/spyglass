@@ -29,13 +29,13 @@
 <!--<a-scene background="color: #3CF">-->
 <a-scene
         vr-mode-ui="enabled: false;"
-        renderer="logarithmicDepthBuffer: true; antialias: true"
+        renderer="logarithmicDepthBuffer: true; antialias: true;"
         embedded
+
         arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
         gui-env>
 
     <a-assets>
-
         <img id="panthenol" src="/assets/panthenol.png">
         <img id="ylangylang" src="/assets/ylangylang.png">
         <img id="step1" src="/assets/1.png">
@@ -60,20 +60,18 @@
                fontImage: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.png;
                value: hello there;">
         </a-mixin>
-
-
     </a-assets>
 
         <!--We add multi-marker-rotation-interpolator component-->
     <a-entity id="twistParent" multi-marker-rotation-interpolator>
         <!--        <a-marker camera preset='hiro'>-->
         <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/serum_1.patt">
-<!--            <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:red;'></a-plane>-->
+<!--            <a-plane position='0 -1 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.1; side: double;color:white;'></a-plane>-->
         </a-marker>
 
         <!--        <a-marker camera preset='kanji'>-->
         <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/antioxidant.patt">
-<!--            <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:blue;'></a-plane>-->
+<!--            <a-plane position='0 -1 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.1; side: double;color:white;'></a-plane>-->
         </a-marker>
 
 <!--        <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/performant.patt">-->
