@@ -15,11 +15,16 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
     this.startTrackTime = -1 // when we started tracking the current marker
     this.emittedIndexEvent = false
 
+    this.trackerLostThreshold = 3000
+    this.lastTrackedTime = -1
+
     this.prevTrackedIndex = -1
     this.prevTrackedElement = null
     this.rotationDelta = 0
     this.minRotation = -50
     this.maxRotation = 50
+
+    this.isTracking = false;
 
     // Find all of the tags in this group
     this.tagElements = this.el.querySelectorAll('a-marker');
@@ -56,18 +61,26 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
     var lastTrackedElement = null;
 
     let self = this
+    var emitTrackingStart = false;
 
     this.tagElements.forEach(function (tag, index) {
       let entity = tag.object3D
 
       if (entity.visible) {
+
+        self.startTrackTime = Date.now()
+        self.lastTrackedTime = Date.now()
         lastTrackedIndex = index
         lastTrackedElement = tag
 
+        // This is our first tracked tag
+        if (!self.isTracking) {
+          emitTrackingStart = true;
+        }
+
         if (this.prevTrackedIndex != lastTrackedIndex) {
 
-          // start our timer
-          self.startTrackTime = Date.now()
+          // start our time
           self.emittedIndexEvent = false;
           // let currTimestamp = Date.now()  // convert to
           // let deltaTimestamp = (this.prevTimestamp == -1) ? 0 : Math.abs(currTimestamp - this.prevTimestamp)
@@ -91,10 +104,27 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
           }
         }
 
+        if (emitTrackingStart) {
+          self.isTracking = true;
+          self.el.emit("tracking-started", { index: lastTrackedIndex });
+        }
+
         this.prevTrackedIndex = lastTrackedIndex
         this.prevTrackedElement = lastTrackedElement
       }
     })
+
+    if (lastTrackedElement == null && this.lastTrackedTime != null) {
+
+      let currentTime = Date.now()
+      let deltaTimestamp = Math.abs(currentTime - this.lastTrackedTime)
+
+      if ((deltaTimestamp > this.trackerLostThreshold) && this.isTracking) {
+        self.lastTrackedIndex = -1;
+        this.isTracking = false;
+        self.el.emit("tracking-ended", { index: lastTrackedIndex });
+      }
+    }
     return { index: lastTrackedIndex, element: lastTrackedElement }
   }
   ,
@@ -113,6 +143,7 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
       if (lastTag && this.emittedIndexEvent) {
         // Get adjusted rotation
         let currentRotation = lastTag.getAttribute('adjusted-rotation').adjustedRotation
+        let currentPosition = lastTag.getAttribute("position")
 
         // Compute delta from starting rotation
         // Focus on "flip" rotation about y-axis
@@ -122,7 +153,10 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
         let clampedRotation = THREE.Math.clamp(deltaRotationAboutY, this.minRotation, this.maxRotation)
         let normalizedRotation = THREE.Math.mapLinear(clampedRotation, this.minRotation, this.maxRotation, 0, 1)
 
-        this.el.emit("tag-rotation", { index: lastTrackedInfo.index, normalizedRotation: normalizedRotation });
+        // this.el.emit("tag-rotation", { index: lastTrackedInfo.index, normalizedRotation: normalizedRotation });
+        this.el.emit("tag-rotation", { index: lastTrackedInfo.index, rotation: currentRotation });
+        this.el.emit("tag-position", { index: lastTrackedInfo.index, position: currentPosition });
+
       }
     }
 

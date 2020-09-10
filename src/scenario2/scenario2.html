@@ -18,6 +18,7 @@
     <script src="components/tab-menu-item.js"></script>
     <script src="components/tab-menu.js"></script>
     <script src="components/content-fan.js"></script>
+    <script src="components/smoothed-marker-tracker.js"></script>
     <script src="components/adjusted-rotation.js"></script>
     <script src="components/multi-marker-rotation-interpolator.js"></script>
     <script src="scenario2.js"></script>
@@ -34,11 +35,6 @@
         gui-env>
 
     <a-assets>
-<!--            <img id="dinotimg" src="/assets/dinot.png">-->
-<!--            <a-mixin id="body-text"-->
-<!--                 text="align: left; anchor: left; baseline: top; width: 1.25; wrapCount: 30;-->
-<!--               font: roboto; value: hello there;">-->
-<!--            </a-mixin>-->
 
         <img id="panthenol" src="/assets/panthenol.png">
         <img id="ylangylang" src="/assets/ylangylang.png">
@@ -86,11 +82,7 @@
 
     </a-entity>
 
-<!--    <a-text id="title" mixin="body-text" position="0 2 -2" side="double"-->
-<!--            font="value=This is a Title">-->
-<!--    </a-text>-->
-
-    <a-entity id="container" position="2 -1 -50">
+    <a-entity id="container" model-opacity="0" smoothed-marker-tracker position="2 -1 -50">
         <a-entity id="tab-menu" tab-menu position="-3 17 0">
             <!--        <a-entity tabitem="textLabel: FOR YOU; iconImage: #for-you"></a-entity>-->
             <a-entity tabitem="textLabel: USAGE; iconImage: #usage"></a-entity>

@@ -75,10 +75,10 @@ ready(function() {
   var anchorRef = document.getElementById('twistParent');
   var tabMenuRef = document.getElementById('tab-menu');
   var contentFanRef = document.getElementById("contentFan");
+  let contentContainerRef = document.getElementById("container");
+
 
   let contentFan = contentFanRef.components.contentfan
-
-  // contentFanRef.components["content-fan"].buildWithContentElements([usagePanel, benefitsPanel]);
 
   // Add content to content fan
   // At some point we can find a better way to sync this w/the tab menu
@@ -93,6 +93,45 @@ ready(function() {
     tabMenuRef.components["tab-menu"].selectIndex(index)
     let animator = contentFanRef.components["contentfan"]
     animator.animateToContent(index)
+  })
+
+  anchorRef.addEventListener("tag-rotation", (e)=>{ // your code here}
+
+    let tracker = contentContainerRef.components["smoothed-marker-tracker"]
+    tracker.onMarkerPositionUpdate(e)
+
+
+
+    // animator.animateContentOffset(offset)
+  })
+
+  anchorRef.addEventListener("tag-position", (e)=>{ // your code here}
+
+    let tracker = contentContainerRef.components["smoothed-marker-tracker"]
+    tracker.onMarkerPositionUpdate(e)
+
+    // animator.animateContentOffset()
+    // animator.animateContentOffset(offset)
+  })
+
+  anchorRef.addEventListener("tracking-started", (e)=>{ // your code here}
+
+    console.log("tracking started")
+    let tracker = contentContainerRef.components["smoothed-marker-tracker"]
+    tracker.onMarkerTrackingStarted(e)
+
+    // animator.animateContentOffset()
+    // animator.animateContentOffset(offset)
+  })
+
+  anchorRef.addEventListener("tracking-ended", (e)=>{ // your code here}
+
+    console.log("tracking ended")
+    let tracker = contentContainerRef.components["smoothed-marker-tracker"]
+    tracker.onMarkerTrackingEnded(e)
+
+    // animator.animateContentOffset()
+    // animator.animateContentOffset(offset)
   })
 
   // Wiggle our content fan if the current tag has been rotated slightly
