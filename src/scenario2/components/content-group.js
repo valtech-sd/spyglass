@@ -42,9 +42,6 @@ AFRAME.registerComponent('content-group', {
 
     let self = this
 
-    //   <a-entity textwithicon position="0 0 0"></a-entity>
-    // <a-entity textwithicon position="0 0 0"></a-entity>
-
     data.forEach(function (content){
       console.log(content);
 

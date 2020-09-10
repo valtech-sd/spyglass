@@ -24,14 +24,13 @@
 </head>
 
 <body style="margin : 0px; overflow: hidden;">
-<h1>Scenario 2 Demo</h1>
 
 <!--<a-scene background="color: #3CF">-->
 <a-scene
-        vr-mode-ui="enabled: true;"
+        vr-mode-ui="enabled: false;"
         renderer="logarithmicDepthBuffer: true; antialias: true"
         embedded
-        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: true;"
+        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
         gui-env>
 
     <a-assets>
@@ -43,6 +42,9 @@
 
         <img id="panthenol" src="/assets/panthenol.png">
         <img id="ylangylang" src="/assets/ylangylang.png">
+        <img id="step1" src="/assets/1.png">
+        <img id="step2" src="/assets/2.png">
+        <img id="step3" src="/assets/3.png">
 
         <!-- Tab Menu Icons -->
         <img id="benefits" src="/assets/benefits_icon.png">
@@ -64,31 +66,18 @@
         </a-mixin>
 
 
-
-<!--        <a-mixin id="text"-->
-<!--                 text="align: center; width: 20;-->
-<!--               value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam"-->
-<!--        ></a-mixin>-->
-
-<!--        <a-mixin id="body-text-2"-->
-<!--                 text="align: left; width: 1;-->
-<!--               font: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.fnt;-->
-<!--               fontImage: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.png;-->
-<!--                value: This is place holder content">-->
-<!--        </a-mixin>-->
-
     </a-assets>
 
         <!--We add multi-marker-rotation-interpolator component-->
     <a-entity id="twistParent" multi-marker-rotation-interpolator>
         <!--        <a-marker camera preset='hiro'>-->
         <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/serum_1.patt">
-            <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:red;'></a-plane>
+<!--            <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:red;'></a-plane>-->
         </a-marker>
 
         <!--        <a-marker camera preset='kanji'>-->
         <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/antioxidant.patt">
-            <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:blue;'></a-plane>
+<!--            <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:blue;'></a-plane>-->
         </a-marker>
 
 <!--        <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/performant.patt">-->
@@ -101,80 +90,25 @@
 <!--            font="value=This is a Title">-->
 <!--    </a-text>-->
 
-<!--    <a-text position="0 1.25 -1" font="/assets/dinot.fnt" fontimage="#dinot" color="black" align="center" value="Hello World!"></a-text>-->
-    <!-- handle hiro marker -->
-<!--    <a-marker camera preset='hiro' rotation-trigger='tiltSideThreshold: 1.0; twistThreshold: 1.0; tiltForwardThreshold: 1.0;'>-->
-<!--        <a-box position='0 0.5 0' material='opacity: 0.5; side: double;color:green;'>-->
-<!--            <a-torus-knot radius='0.26' radius-tubular='0.05'-->
-<!--                          animation="property: rotation; to:360 0 0; dur: 5000; easing: linear; loop: true">-->
-<!--            </a-torus-knot>-->
-<!--        </a-box>-->
-<!--    </a-marker>-->
-<!--    <a-text mixin="body-text" font="kelsonsans" position="0 0 -10" wrap-count="20"></a-text>-->
+    <a-entity id="container" position="2 -1 -50">
+        <a-entity id="tab-menu" tab-menu position="-3 17 0">
+            <!--        <a-entity tabitem="textLabel: FOR YOU; iconImage: #for-you"></a-entity>-->
+            <a-entity tabitem="textLabel: USAGE; iconImage: #usage"></a-entity>
+            <a-entity tabitem="textLabel: BENEFITS; iconImage: #benefits"></a-entity>
+        </a-entity>
 
+        <!--The entity that will display our content-->
+        <!--    <a-entity id="contentFan" rotation-animator content-fan radius="3" opacity="0.4" position="1.25 2.25 -20" rotation="0 0 0"></a-entity>-->
+        <a-entity id="contentFan" contentfan="radius: 5;" opacity="0.4" position="-10 6 0" rotation="0 0 0"></a-entity>
 
-<!--    <a-entity id="image-container" position="-1 0 -5">-->
-<!--        <a-image src="#panthenol" position="0.13 0.13 0" width="0.25" height="0.25"></a-image>-->
-<!--    </a-entity>-->
-
-    <a-entity id="tab-menu" tab-menu position="-3 11 -50">
-<!--        <a-entity tabitem="textLabel: FOR YOU; iconImage: #for-you"></a-entity>-->
-        <a-entity tabitem="textLabel: USAGE; iconImage: #usage"></a-entity>
-        <a-entity tabitem="textLabel: BENEFITS; iconImage: #benefits"></a-entity>
     </a-entity>
 
-<!--    <a-entity content-group position="-3 5.5 -50">-->
-<!--        <a-entity textwithicon position="0 0 0"></a-entity>-->
-<!--        <a-entity textwithicon position="0 0 0"></a-entity>-->
-<!--    </a-entity>-->
-
-<!--    <a-entity content-group position="-3 5.5 -50">-->
-<!--        <a-entity textwithicon position="0 0 0"></a-entity>-->
-<!--        <a-entity textwithicon position="0 0 0"></a-entity>-->
-<!--    </a-entity>-->
-
-
-<!--    <a-entity position="-1 0 -50">-->
-<!--        <a-circle color="#74fab9" radius="1.5" opacity="0.8" position="1 0 0" segments="128">-->
-<!--            &lt;!&ndash;        <a-image src="#ylangylang" position="0.0 0.0 0" opacity="1.0" width="1" height="1"></a-image>&ndash;&gt;-->
-<!--        </a-circle>-->
-<!--        <a-entity position="0 -2.25 0">-->
-<!--            <a-text mixin="body-text" value="YLANG YLANG" position="0 0 0"></a-text>-->
-<!--            <a-text mixin="body-text" value="Sweet, exotic and floral, essential oil distilled from the fragrant flowers."-->
-<!--                    position="0 -1 0"></a-text>-->
-<!--        </a-entity>-->
-<!--    </a-entity>-->
-
-<!--    <a-entity position="-1 5 -50">-->
-<!--        <a-image src="#benefits" position="0.0 0.0 0" opacity="1.0" width="2" height="2"-->
-<!--                 animation="property: opacity; to: 0; dur: 1000; easing: easeInOutCubic; loop: true">-->
-<!--        <a-text mixin="menu-text" value="BENEFITS" position="0 -1.65 0"></a-text>-->
-<!--        <a-circle color="#74fab9" radius="1.5" opacity="0.8" position="1 0 0" segments="128">-->
-<!--            &lt;!&ndash;        <a-image src="#ylangylang" position="0.0 0.0 0" opacity="1.0" width="1" height="1"></a-image>&ndash;&gt;-->
-<!--        </a-circle>-->
-<!--        <a-entity position="0 -2.25 0">-->
-<!--            <a-text mixin="body-text" value="YLANG YLANG" position="0 0 0"></a-text>-->
-<!--            <a-text mixin="body-text" value="Sweet, exotic and floral, essential oil distilled from the fragrant flowers."-->
-<!--                    position="0 -1 0"></a-text>-->
-<!--        </a-entity>-->
-    </a-entity>
-
-
-
-
-
-
-<!--    <a-text mixin="body-text-2" value="PANTHENOL" position="-3 0 -3" wrap-count="20"></a-text>-->
-<!--    <a-text mixin="body-text-2" value="Also called B5 Vitamin, moisturizes the skin." position="-3 0 -3" wrap-count="20"></a-text>-->
-
-<!--    <a-entity position="0 2 3.7">-->
-<!--        <a-entity camera look-controls wasd-controls></a-entity>-->
 <!--    </a-entity>-->
 
     <!-- Simple camera positioned at 0 0 0 -->
-    <a-entity camera></a-entity>
+<!--    <a-entity camera look-controls wasd-controls></a-entity>-->
 <!--    //look-controls wasd-controls-->
-<!--    <a-entity camera></a-entity>-->
+    <a-entity camera></a-entity>
 </a-scene>
 </body>
 </html>

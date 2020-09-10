@@ -1,6 +1,6 @@
 // This component presents pieces of content as a "fan" around a cylinder
 // It can be animated to rotate to each piece of content
-AFRAME.registerComponent('content-fan', {
+AFRAME.registerComponent('contentfan', {
   schema: {
     radius: {
       type: 'int',
@@ -33,66 +33,76 @@ AFRAME.registerComponent('content-fan', {
     // Cylinder parent will be rotated
     var core = document.createElement('a-cylinder');
     core.setAttribute("wireframe", false)
-    core.setAttribute("opacity", 0)
+    core.setAttribute("opacity", 0.0)
     core.setAttribute("color", "red")
-    core.setAttribute("height", 4)
+    core.setAttribute("height", 14)
     core.setAttribute("radius", this.data.radius)
     this.el.appendChild(core);
 
+    this.core = core
+  },
+  // Build the content with an array of data
+  buildWithContentElements: function(elements) {
+
+    let self = this
+
     // Build some blades on which we'll show some content
-    // TODO: Make this configureable
-    let numBlades = 3
+    var numBlades = Math.max(elements.length, 3);
+    // var numBlades = Math.max(elements.length, 3);
+
+    // 2 blades looks dumb
 
     // How many degrees apart is each blade around the cylinder
     this.angleInterval = (2 * Math.PI) / numBlades
 
-    // Create blades with some sample content
-    for (var i = 0; i < numBlades; i++) {
+    elements.forEach(function (el, i) {
 
-      var currentAngle = (i * this.angleInterval)
-
-      // TODO: This is just fake content, so I manually plugged in the aspect ratio
-      // Ideally, we'll be building these panels ourselves
-      let aspectRatio = 257/1153
-      let planeWidth = 2
-      let planeHeight = planeWidth / aspectRatio
-      let dist = this.data.radius
-
-      // Assuming we position around center
-      let x = dist * Math.cos(currentAngle)
-      let z = -dist * Math.sin(currentAngle)
+      var currentAngle = (i * self.angleInterval)
+      let dist = self.data.radius + 5
 
       // We create a container so that we can adjust the anchor and pivot point
       // of the plane...A-Frame has a "pivot" component that can do this, but
       // no way to change the position anchor...this is easier for now.
       let planeContainer = document.createElement('a-entity');
+      // let planeContainer = document.createElement('a-plane');
+      // planeContainer.setAttribute("wireframe", true)
+      // planeContainer.setAttribute("color", "blue")
+      // planeContainer.setAttribute("opacity", 0)
+      // planeContainer.setAttribute("height", 10)
+      // planeContainer.setAttribute("width", 10)
+      // planeContainer.setAttribute("material","side: double")
 
-      // Make a plane
-      let plane = document.createElement('a-plane');
 
-      plane.setAttribute("height", planeHeight)
-      plane.setAttribute("width", planeWidth)
+      // Assuming we position around center
+      let x = dist * Math.cos(currentAngle)
+      let z = -dist * Math.sin(currentAngle)
 
       // Scoot plane over so we're positioning it from the edge
-      plane.object3D.position.x = planeWidth*0.5
-
-      // Currently, this is the same for all...just a test
-      plane.setAttribute("material", "src: #sample-image-thin")
+      // Hardcoded crap
+      el.object3D.position.x = -3.5
+      el.object3D.position.y = 3.5
 
       // Position plane around cylinder
+      // planeContainer.object3D.position.x = x - 14
       planeContainer.object3D.position.x = x
+        //- 6
       planeContainer.object3D.position.z = z
+
 
       // Rotate so we're mostly facing the camera
       // TODO: 120 is hardcoded so maybe we'd need to adjust that? Unsure
-      planeContainer.object3D.rotation.y = (currentAngle + THREE.Math.degToRad(120))
+      // planeContainer.object3D.rotation.y = (currentAngle + THREE.Math.degToRad(120))
+      planeContainer.object3D.rotation.y = (currentAngle) + THREE.Math.degToRad(0)
+        //+ THREE.Math.degToRad(-360 / numBlades))
 
       // Save this angle to our "key frames" that we can animate to
-      this.contentKeyframes.push(currentAngle)
+      self.contentKeyframes.push(currentAngle)
 
-      planeContainer.appendChild(plane)
-      core.appendChild(planeContainer)
-    }
+      console.log("keyframe, ", THREE.Math.radToDeg(currentAngle));
+
+      planeContainer.appendChild(el)
+      self.core.appendChild(planeContainer)
+    });
 
     // Content should be in REVERSE order of tags
     // That way, the direction we spin the content matches the direction we detect the markers

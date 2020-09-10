@@ -7,9 +7,12 @@ import fontFile from './assets/din_ot.fnt'
 function ready(fn) {
   // replaces $(document).ready() in jQuery
   if (document.readyState != 'loading'){
-    fn();
+
+    setTimeout(fn, 3000);
   } else {
-    document.addEventListener('DOMContentLoaded', fn);
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(fn, 3000);
+    });
   }
 }
 
@@ -27,26 +30,26 @@ ready(function() {
   // Test data
   let usageData = [
     {
-    icon: "",
+    icon: "#step1",
     title: null,
     body: "Cleanse and tone head and neck."
     }, {
-    icon: "",
+    icon: "#step2",
     title: null,
     body: "Measure out 1/2 teaspoon of serum."
     }, {
-    icon: "",
+    icon: "#step3",
     title: null,
     body: "Massage into skin twice daily."
   }];
 
   let benefitsData = [
     {
-      icon: "",
+      icon: "#ylangylang",
       title: "YLANG YLANG",
       body: "Sweet, exotic and floral, essential oil distilled from the fragrant flowers.."
     }, {
-      icon: "",
+      icon: "#panthenol",
       title: "PANTHENOL",
       body: "Also called B5 Vitamin, moisturizes the skin."
     }];
@@ -56,34 +59,40 @@ ready(function() {
     // Build content panels with "data"
     var panel = document.createElement('a-entity');
     panel.setAttribute("content-group", "");
-    panel.setAttribute("position", "-3 5.5 -50")
-
-    // sceneRef.append(panel);
 
     let content = panel.components['content-group'];
     content.initializeFromData(data);
+
+    return panel
   }
 
   // Build content panels with "data"
   var usagePanel = makePanel(usageData);
   var benefitsPanel = makePanel(benefitsData);
+  var benefitsPanel2 = makePanel(benefitsData);
 
   // Provide content panel with an array of objects
   var anchorRef = document.getElementById('twistParent');
   var tabMenuRef = document.getElementById('tab-menu');
-  // var contentFanRef = document.getElementById("contentFan")
+  var contentFanRef = document.getElementById("contentFan");
 
-  console.log("anchor ref");
+  let contentFan = contentFanRef.components.contentfan
 
-  console.log(anchorRef);
+  // contentFanRef.components["content-fan"].buildWithContentElements([usagePanel, benefitsPanel]);
+
+  // Add content to content fan
+  // At some point we can find a better way to sync this w/the tab menu
+  contentFan.buildWithContentElements([benefitsPanel, usagePanel, benefitsPanel2 ]);
+
+  // console.log(anchorRef);
   // Update our content fan if we've detected a new tag
   anchorRef.addEventListener("tag-index-trigger", (e)=>{ // your code here}
     let index = e.detail.index
 
     console.log("tag index triggered! ", index)
     tabMenuRef.components["tab-menu"].selectIndex(index)
-    // let animator = contentFanRef.components["content-fan"]
-    // animator.animateToContent(index)
+    let animator = contentFanRef.components["contentfan"]
+    animator.animateToContent(index)
   })
 
   // Wiggle our content fan if the current tag has been rotated slightly
