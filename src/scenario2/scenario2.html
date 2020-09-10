@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spyglass Demo</title>
+
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+
+    <!-- Debug GUI -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+
+    <!-- A-Frame version of AR.js with marker tracking + location-based AR -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+    <script src="components/content-group.js"></script>
+    <script src="components/text-with-icon.js"></script>
+    <script src="components/tab-menu-item.js"></script>
+    <script src="components/tab-menu.js"></script>
+    <script src="components/content-fan.js"></script>
+    <script src="components/smoothed-marker-tracker.js"></script>
+    <script src="components/adjusted-rotation.js"></script>
+    <script src="components/multi-marker-rotation-interpolator.js"></script>
+    <script src="scenario2.js"></script>
+</head>
+
+<body style="margin : 0px; overflow: hidden;">
+
+<!--<a-scene background="color: #3CF">-->
+<a-scene
+        vr-mode-ui="enabled: false;"
+        renderer="logarithmicDepthBuffer: true; antialias: true;"
+        embedded
+
+        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+        gui-env>
+
+    <a-assets>
+        <img id="panthenol" src="/assets/panthenol.png">
+        <img id="ylangylang" src="/assets/ylangylang.png">
+        <img id="step1" src="/assets/1.png">
+        <img id="step2" src="/assets/2.png">
+        <img id="step3" src="/assets/3.png">
+
+        <!-- Tab Menu Icons -->
+        <img id="benefits" src="/assets/benefits_icon.png">
+        <img id="usage" src="/assets/usage_icon.png">
+        <img id="for-you" src="/assets/for_you_icon.png">
+
+        <a-mixin id="body-text"
+                 text="align: left; anchor: left; baseline: top; width: 13.0; wrapCount: 35;
+               font: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.fnt;
+               fontImage: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.png;
+               value: hello there;">
+        </a-mixin>
+
+        <a-mixin id="menu-text"
+                 text="align: center; anchor: center; baseline: top; width: 13.0; wrapCount: 35;
+               font: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.fnt;
+               fontImage: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.png;
+               value: hello there;">
+        </a-mixin>
+    </a-assets>
+
+        <!--We add multi-marker-rotation-interpolator component-->
+    <a-entity id="twistParent" multi-marker-rotation-interpolator>
+        <!--        <a-marker camera preset='hiro'>-->
+        <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/serum_1.patt">
+<!--            <a-plane position='0 -1 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.1; side: double;color:white;'></a-plane>-->
+        </a-marker>
+
+        <!--        <a-marker camera preset='kanji'>-->
+        <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/antioxidant.patt">
+<!--            <a-plane position='0 -1 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.1; side: double;color:white;'></a-plane>-->
+        </a-marker>
+
+<!--        <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/performant.patt">-->
+<!--            <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0' material='opacity: 0.5; side: double;color:white;'></a-plane>-->
+<!--        </a-marker>-->
+
+    </a-entity>
+
+    <a-entity id="container" visible="false" smoothed-marker-tracker position="2 -1 -50">
+        <a-entity id="tab-menu" tab-menu position="-3 17 0">
+            <!--        <a-entity tabitem="textLabel: FOR YOU; iconImage: #for-you"></a-entity>-->
+            <a-entity tabitem="textLabel: USAGE; iconImage: #usage"></a-entity>
+            <a-entity tabitem="textLabel: BENEFITS; iconImage: #benefits"></a-entity>
+        </a-entity>
+
+        <!--The entity that will display our content-->
+        <!--    <a-entity id="contentFan" rotation-animator content-fan radius="3" opacity="0.4" position="1.25 2.25 -20" rotation="0 0 0"></a-entity>-->
+        <a-entity id="contentFan" contentfan="radius: 5;" opacity="0.4" position="-10 6 0" rotation="0 0 0"></a-entity>
+
+    </a-entity>
+
+<!--    </a-entity>-->
+
+    <!-- Simple camera positioned at 0 0 0 -->
+<!--    <a-entity camera look-controls wasd-controls></a-entity>-->
+<!--    //look-controls wasd-controls-->
+    <a-entity camera></a-entity>
+</a-scene>
+</body>
+</html>
