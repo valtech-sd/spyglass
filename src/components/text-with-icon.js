@@ -21,6 +21,10 @@ AFRAME.registerComponent('textwithicon', {
   },
   init: function () {
 
+    this.el.setAttribute("content-type", {
+      contentType: "textwithicon"
+    });
+
     // For now, it's a circle
     var icon = document.createElement('a-circle');
     icon.setAttribute("color", "#74fab9");
@@ -35,7 +39,7 @@ AFRAME.registerComponent('textwithicon', {
       let iconImage = document.createElement('a-image');
       iconImage.setAttribute("src", this.data.icon);
       iconImage.setAttribute("opacity", 1.0);
-      iconImage.setAttribute("scale", "2 2 2");
+      iconImage.setAttribute("scale", "2 2 0");
       iconImage.setAttribute("color", "black");
       iconImage.setAttribute("position", "0 0 1");
 
@@ -75,18 +79,7 @@ AFRAME.registerComponent('textwithicon', {
 
     // Compute width
     // TODO: Also include text size
-    // let textAttr = text.components.value
-    //
-    // let textWidth = text.getAttribute("value")
-    //   //.data.length
-    //   //* (textAttr.data.width / textAttr.data.wrapCount);
-    // this.width = Math.max(icon.getAttribute("width"), textWidth);
-    // this.width = icon.getAttribute("width")
   },
-  // getWidth: function() {
-  //   console.log("width is ", this.width);
-  //   return this.width;
-  // },
   getHeight: function() {
 
     // Get height of body text
