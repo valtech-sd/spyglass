@@ -42,7 +42,7 @@ from the repository root. It runs `./index.html`, which has demonstrates retriev
 | serum: why it is better for you |   | x |
 | serum: percentage fit for your goals |   | x |
 | serum: (fake) reviews |   | x |
-| serum: ingredients & contraindications | x |   |
+| serum: active ingredients & contraindications | x |   |
 | user's allergies related to contraindications |   | x |
 | serum: marker .patt | x |   |
 | _which eligible moisturizers_ |   | x |
