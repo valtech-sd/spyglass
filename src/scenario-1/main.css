@@ -1,0 +1,184 @@
+/*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */html,body,p,ol,ul,li,dl,dt,dd,blockquote,figure,fieldset,legend,textarea,pre,iframe,hr,h1,h2,h3,h4,h5,h6{margin:0;padding:0}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}ul{list-style:none}button,input,select,textarea{margin:0}html{box-sizing:border-box}*,*::before,*::after{box-sizing:inherit}img{height:auto;max-width:100%}iframe{border:0}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}td:not([align]),th:not([align]){text-align:left}
+
+/* *** FONTS *** */
+/* latin-ext */
+@font-face {
+  font-family: 'DINOT-Regular';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('DINOT Regular'), local('DINOT-Regular'), url(../../src/fonts/DINOT-Regular.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'DINOT-Regular';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('DINOT Regular'), local('DINOT-Regular'), url(../../src/fonts/DINOT-Regular.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* *** GLOBAL *** */
+body {
+  font-size: 16px;
+  line-height: 1em;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  font-family: 'DINOT-Regular', Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  position: relative;
+  background: #000000;
+}
+
+/* *** S1 HUD *** */
+#scanner {
+  padding: 14.5vw;
+  height: 60vh;
+  color: #eeeeee;
+  transition: all 400ms ease-out; 
+}
+#scanner svg {
+  width: 100%;
+  height: 100%;
+  transition: all 400ms ease-out;
+}
+#scanner svg line {
+  opacity: 0;
+  transform: translateY(0px);
+}
+#scanner.scanning {
+  color: #26E1AB;
+  padding: 18vw;
+}
+#scanner.scanning svg line {
+  animation-name: expand, scanning, expand, blip;
+  animation-duration: 500ms, 2s, 400ms, 50ms;
+  animation-direction: normal, alternate, reverse, normal; 
+  animation-timing-function: 
+    cubic-bezier(0.5, 0, 0.75, 0),
+    cubic-bezier(0.76, 0, 0.24, 1),
+    cubic-bezier(0.5, 0, 0.75, 0),
+    ease;
+  animation-fill-mode: forwards; 
+  animation-delay: 500ms, 1000ms, 3000ms, 3400ms;
+}
+@keyframes expand {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes scanning {
+  0% {
+    transform: translateY(0px);
+  }
+  25% {
+    transform: translateY(251px);
+  }
+  50% {
+    transform: translateY(0px);
+  }
+  75% {
+    transform: translateY(251px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+@keyframes blip {
+  0% {
+    left: 0px;
+  }
+  50% {
+    left: 1px;
+  }
+  100% {
+    left: 0px;
+  }
+}
+#scanner .complete-check {
+  transition: opacity 500ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+#scanner.complete .complete-check {
+  opacity: 1;
+}
+.found #scanner svg {
+  opacity: 0;
+}
+
+/* *** S1 FOOTER *** */
+#tray {
+  position: fixed;
+  width: 100vw;
+  height: 40vh;
+  bottom: 0;
+  left: 0; 
+  right: 0;
+  transition: all 1s, bottom 800ms cubic-bezier(0.25, 1, 0.5, 1);
+  background-color: #ffffff;
+}
+#tray svg {
+  width: 100%;
+  height: 100%;
+}
+.found #tray {
+  bottom: -40vh;
+}
+#status_label {
+  text-anchor: middle;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+/* *** S1 BUTTONS *** */
+a {
+  text-decoration: none;
+  text-align: center;
+  color: #ffffff;
+  text-transform: uppercase;
+  opacity: 0;
+  visibility: collapse;
+  transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+a:hover, a:active, a:visited {
+  color: #ffffff;
+}
+a:hover, a:active {
+  background-color: rgba(255,255,255,0.2);
+}
+
+.found a {
+  opacity: 1; 
+  visibility: visible;
+}
+
+a.back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.5em 1em;
+  font-size: 1em;
+}
+
+a.add {
+  position: absolute;
+  bottom: 0.5em;
+  left: 1em;
+  right: 1em;
+  padding: 0.5em 1em;
+  font-size: 1.5em;
+  border: solid 2px #ffffff;
+}
+/* cheat code? */
+a.skip {
+  position: absolute;
+  color: transparent;
+  padding: 0.5em 1em;
+  font-size: 1em;
+  top: 0; 
+  right: 0;
+}

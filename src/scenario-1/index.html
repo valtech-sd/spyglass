@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Valtech + Contentstack + AR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./main.css" rel="stylesheet">
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <!-- Debug GUI -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+    <!-- A-Frame version of AR.js with marker tracking + location-based AR -->
+<!--    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>-->
+      <script src="https://raw.githack.com/aolivier/AR.js/alex/root-2/aframe/build/aframe-ar.js"></script>
+<!--      <script src="utils/aframe-ar.js"></script>-->
+  </head>
+  <body>
+    <main>
+      <!-- Have to comment out the a-frame scene because it is making the window larger than the device. -->
+        <div id="scene_root">
+      <a-scene
+        embedded
+
+        vr-mode-ui="enabled: false;"
+        renderer="logarithmicDepthBuffer: true;"
+        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+        >
+
+        <a-entity camera></a-entity>
+      </a-scene>
+        </div>
+
+<!--        <a-scene embedded>-->
+<!--            <a-box color="red" position="0 0 0"></a-box>-->
+<!--            <a-entity camera></a-entity>-->
+<!--        </a-scene>-->
+
+      <div id="scanner">
+        <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 308 366" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g class="complete-check" transform="translate(145.5,174.5)" opacity="0">
+                  <circle id="Oval-Copy-3" fill="#08F4AF" cx="8.5" cy="8.5" r="8.5"></circle>
+                  <polygon id="Path-3" fill="#000000" fill-rule="nonzero" transform="translate(8.328087, 8.890434) rotate(5.000000) translate(-8.328087, -8.890434) " points="10.7191312 5.37530495 12.2808688 6.62469505 7.65617376 12.4055639 4.37530495 9.78086881 5.62469505 8.21913119 7.343 9.595"></polygon>
+                </g>
+                <!-- y from 58 to 308, midpoint is 183.5 -->
+                <line x1="77" y1="58" x2="232" y2="58" stroke="currentColor" stroke-width="2"></line>
+                <path id="corners" d="M57.8143322,365 L1,365 L1,308 M307,308 L307,365 L249.188925,365 M249.188925,1 L307,1 L307,58 M1,58 L1,1 L57.8143322,1" stroke="currentColor" stroke-width="2"></path>
+            </g>
+        </svg>
+      </div>
+      <a href="#" class="back">Back</a>
+      <a href="#" class="add">Add to routine</a>
+      <a href="#" class="skip">skip</a>
+      <section id="tray">
+        <svg preserveAspectRatio="xMidYMax meet" viewBox="0 0 482 411" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>tray</title>
+          <defs>
+              <radialGradient cx="50%" cy="50%" fx="50%" fy="50%" r="44.4707174%" gradientTransform="translate(0.500000,0.500000),scale(0.307692,1.000000),rotate(91.468018),scale(1.000000,3.460900),translate(-0.500000,-0.500000)" id="radialGradient-1">
+                  <stop stop-color="#000000" offset="0%"></stop>
+                  <stop stop-color="#000000" stop-opacity="0" offset="100%"></stop>
+              </radialGradient>
+              <radialGradient cx="50%" cy="50%" fx="50%" fy="50%" r="44.4708675%" gradientTransform="translate(0.500000,0.500000),scale(0.306122,1.000000),rotate(91.475543),scale(1.000000,3.460900),translate(-0.500000,-0.500000)" id="radialGradient-2">
+                  <stop stop-color="#000000" offset="0%"></stop>
+                  <stop stop-color="#000000" stop-opacity="0" offset="100%"></stop>
+              </radialGradient>
+          </defs>
+          <g id="tray" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <rect id="frame" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="482" height="411"></rect>
+              <path d="M432,297.5 C432,329.5 325.359122,349.5 238.75,349.455277 C152.140878,349.410553 45.5,329.5 45.5,297.5" id="product_path" stroke="#6C6C6C"></path>
+              <g id="cleanser_check" transform="translate(40.000000, 292.000000)">
+                  <circle id="Oval-Copy-3" fill="#08F4AF" cx="8.5" cy="8.5" r="8.5"></circle>
+                  <polyline id="Path-3" stroke="#000000" stroke-width="2" transform="translate(8.250000, 8.500000) rotate(5.000000) translate(-8.250000, -8.500000) " points="5 9 7.5 11 11.5 6"></polyline>
+              </g>
+              <g id="toner_check" transform="translate(65.000000, 316.000000)">
+                  <circle id="Oval-Copy-3" fill="#08F4AF" cx="8.5" cy="8.5" r="8.5"></circle>
+                  <polyline id="Path-3" stroke="#000000" stroke-width="2" transform="translate(8.250000, 8.500000) rotate(5.000000) translate(-8.250000, -8.500000) " points="5 9 7.5 11 11.5 6"></polyline>
+              </g>
+              <circle id="serum" stroke="#FFFFFF" stroke-width="2" fill="#000000" cx="238" cy="351" r="6"></circle>
+              <circle id="moisturizer" stroke="#000000" fill="#FFFFFF" cx="407.5" cy="321.5" r="4"></circle>
+              <circle id="protectant" stroke="#000000" fill="#FFFFFF" cx="431.5" cy="297.5" r="4"></circle>
+              <g id="serum1" transform="translate(132.000000, 143.000000)">
+                  <ellipse id="Oval-Copy-9" fill="url(#radialGradient-1)" opacity="0.351376488" cx="45.5" cy="174" rx="45.5" ry="14"></ellipse>
+                  <rect id="Rectangle-Copy-14" stroke="#979797" fill="#D8D8D8" x="16.5" y="0.5" width="58" height="177"></rect>
+              </g>
+              <g id="serum3" transform="translate(250.000000, 143.000000)">
+                  <ellipse id="Oval-Copy-9" fill="url(#radialGradient-1)" opacity="0.351376488" cx="45.5" cy="174" rx="45.5" ry="14"></ellipse>
+                  <rect id="Rectangle-Copy-14" stroke="#979797" fill="#D8D8D8" x="16.5" y="0.5" width="58" height="177"></rect>
+              </g>
+              <g id="serum2" transform="translate(191.000000, 154.000000)">
+                  <ellipse id="Oval-Copy-9" fill="url(#radialGradient-1)" opacity="0.351376488" cx="45.5" cy="174" rx="45.5" ry="14"></ellipse>
+                  <rect id="Rectangle-Copy-14" stroke="#979797" fill="#D8D8D8" x="16.5" y="0.5" width="58" height="177"></rect>
+              </g>
+              <g id="cleanser" transform="translate(23.000000, 159.000000)">
+                  <ellipse id="Oval-Copy-8" fill="url(#radialGradient-2)" opacity="0.351376488" cx="24.5" cy="113.5" rx="24.5" ry="7.5"></ellipse>
+                  <rect stroke="#979797" fill="#D8D8D8" x="7.5" y="0.5" width="35" height="116"></rect>
+              </g>
+              <g id="toner" transform="translate(53.000000, 177.000000)">
+                  <ellipse id="Oval-Copy-9" fill="url(#radialGradient-2)" opacity="0.351376488" cx="24.5" cy="113.5" rx="24.5" ry="7.5"></ellipse>
+                  <rect stroke="#979797" fill="#D8D8D8" x="7.5" y="0.5" width="35" height="116"></rect>
+              </g>
+              <g id="protectant" transform="translate(402.000000, 156.000000)">
+                  <ellipse id="Oval-Copy-9" fill="url(#radialGradient-2)" opacity="0.351376488" cx="24.5" cy="113.5" rx="24.5" ry="7.5"></ellipse>
+                  <rect id="toner" stroke="#979797" fill="#D8D8D8" x="7.5" y="0.5" width="35" height="116"></rect>
+              </g>
+              <g id="moisturizer" transform="translate(377.000000, 177.000000)">
+                  <ellipse id="Oval-Copy-9" fill="url(#radialGradient-2)" opacity="0.351376488" cx="24.5" cy="113.5" rx="24.5" ry="7.5"></ellipse>
+                  <rect id="toner" stroke="#979797" fill="#D8D8D8" x="7.5" y="0.5" width="35" height="116"></rect>
+              </g>
+              <text x="50%" y="67.3" id="status_label" font-family="DINOT-Regular, Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif" font-size="24" line-spacing="24" fill="#000000" text-anchor="middle">
+                Exploring Serums
+              </text>
+          </g>
+        </svg>
+      </section>
+      <script src="./in-store.js"></script>
+    </main>
+  </body>
+</html>
