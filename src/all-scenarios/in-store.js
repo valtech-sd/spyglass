@@ -132,6 +132,10 @@ ready(() => {
     return false;
   }
 
+  function configureScenario1() {
+    const $tabMenu = document.getElementById('tab-menu');
+  }
+
   // Add custom listeners for events when marker is recognized
   document.addEventListener('markerfound', productRecognized);
   document.addEventListener('markerlostscan', productOutOfView);

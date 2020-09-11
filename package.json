@@ -16,7 +16,7 @@
     "dev:overlay": "parcel ./samples/camera-overlay/camera-overlay.html --https --no-hmr --target browser --out-dir ./samples/camera-overlay/dev",
     "dev:multirotation": "parcel ./samples/multi-marker-twist/multi-marker-twist.html --https --no-hmr --target browser --out-dir ./samples/multi-marker-twist/dev",
     "dev:s1html": "parcel ./samples/scenario-1-template/index.html --https --no-hmr --target browser --out-dir ./samples/scenario-1-template/dev",
-    "dev:s1": "parcel ./src/scenario-1/index.html --https --no-hmr --target browser --out-dir ./src/scenario-1/dev"
+    "dev:all": "parcel src/all-scenarios/index.html --https --no-hmr --target browser --out-dir src/all-scenarios/dev"
   },
   "repository": {
     "type": "git",
