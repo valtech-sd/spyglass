@@ -26,3 +26,52 @@ Run the server using
 npm run dev:contentstack
 ```
 from the repository root. It runs `./index.html`, which has demonstrates retrieving all of the serum products as JSON via the REST API (the Contentstack CDN) and via GraphQL (which also uses the CDN under the hood).
+
+## What data is needed where?
+
+### Scenario 1
+
+| data | from contentstack? | local ? |
+|------|--------------------|---------|
+| _which cleanser_ |   | x |
+| cleanser: product name & image | x |   |
+| _which toner_ |   | x |
+| toner: product name & image | x |   |
+| _which eligible serums_ |   | x |
+| serum: product name & image | x |   |
+| serum: why it is better for you |   | x |
+| serum: percentage fit for your goals |   | x |
+| serum: (fake) reviews |   | x |
+| serum: ingredients & contraindications | x |   |
+| user's allergies related to contraindications |   | x |
+| serum: marker .patt | x |   |
+| _which eligible moisturizers_ |   | x |
+| moisturizer: product name & image | x |   |
+
+### Scenario 2
+
+| data | from contentstack? | local ? |
+|------|--------------------|---------|
+| serum: product name | x |   |
+| serum: marker .patt | x |   |
+| serum: usage instructions | x |   |
+| serum: ingredients & benefits | x |   |
+
+### Scenario 3
+
+| data | from contentstack? | local ? |
+|------|--------------------|---------|
+| serum: product name | x |   |
+| serum: marker .patt | x |   |
+| serum: usage instructions | x |   |
+| serum: ingredients & benefits | x |   |
+| serum: capture your review |   | x |
+| serum: new for you |   | x |
+
+## Cleanup
+
+_What does it do?_
+
+## Injecting into A-Frame
+
+_Instructions here?_
