@@ -17,7 +17,18 @@ ready(() => {
   const $backButton = document.querySelector('a.back');
   const $addButton = document.querySelector('a.add');
   const $serumMarkers = document.querySelectorAll('a-marker');
-  const $tabMenu = document.querySelector('#tab-menu');
+
+
+  // TODO: Jason please fix my selectors to be smarter T_T
+
+  let $contentFan_1 = document.getElementById("contentFan_serum1");
+  let $tabMenu_1 = document.getElementById('tab-menu-1');
+
+  let $tabMenu_2 = document.getElementById('tab-menu-2');
+  let $contentFan_2 = document.getElementById("contentFan_serum2");
+
+  let $tabMenu_3 = document.getElementById('tab-menu-3');
+  let $contentFan_3 = document.getElementById("contentFan_serum3");
 
   /** Two useful functions:
     * - pause(X) 
@@ -174,77 +185,162 @@ ready(() => {
     })
 
 
-  // Add custom listeners for events when marker is recognized
-  document.addEventListener('markerfound', productRecognized);
-  document.addEventListener('markerlostscan', productOutOfView);
+  // Fake data for scenario 1
+  let checkType = "numbered-text";
+  let checkData = [
+    {
+      title: "1",
+      body: "Your goal is moisturizing.",
+      type: checkType
+    }, {
+      title: "2",
+      body: "Better than leading competitors' products.",
+      type: checkType
+    }, {
+      title: "3",
+      body: "Cheaper than leading competitors' products.",
+      type: checkType
+    }, {
+      title: "4",
+      body: "No allergens for you!",
+      type: checkType
+    }
+    ];
 
-  // Add listeners for buttons
-  $backButton.addEventListener('click', backToExplore);
-  $addButton.addEventListener('click', addToRoutine);
-  // This is temporary, until we have onmarkerfound event...
-  $tray.addEventListener('click', productRecognized);
+  let reviewType = "numbered-text"
+  let reviewsData = [
+    {
+      title: "THE BEST SERUM OUT THERE",
+      body: "\n\"This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even.\"",
+      type: reviewType
+    }
+    ];
 
-  // Swipe detection
-  document.addEventListener('touchstart', handleTouchStart, false);
-  document.addEventListener('touchmove', handleTouchMove, false);
+  let benefitsType = "textwithicon"
+  let benefitsData = [
+    {
+      icon: "#ylangylang",
+      title: "YLANG YLANG",
+      body: "Sweet, exotic and floral, essential oil distilled from the fragrant flowers..",
+      type: benefitsType
+    }, {
+      icon: "#panthenol",
+      title: "PANTHENOL",
+      body: "Also called B5 Vitamin, moisturizes the skin.",
+      type: benefitsType
+    }];
 
-  // document.addEventListener('swipeleft', handleSwipeLeft, false);
-  // document.addEventListener('swiperight', handleSwipeRight, false);
+  let makePanel = function(data) {
+    // Build content panels with "data"
+    var panel = document.createElement('a-entity');
+    panel.setAttribute("content-group", "");
 
-  function handleSwipeLeft() {
-    console.log("swipe left!")
-    $tabMenu.components["tab-menu"].incrementSelectedIndex()
-    // $tabMenu.components.
+    let content = panel.components['content-group'];
+    content.initializeFromData(data);
+
+    return panel
   }
 
-  function handleSwipeRight() {
-    console.log("swipe right!")
-    $tabMenu.components["tab-menu"].decrementSelectedIndex()
-  }
+  setTimeout(initializeScenario1, 50);
 
-  var xDown = null;
-  var yDown = null;
+  function initializeScenario1() {
 
-  function getTouches(evt) {
-    return evt.touches ||             // browser API
-      evt.originalEvent.touches; // jQuery
-  }
+    // Build content panels with "data"
+    let contentFan_1 = $contentFan_1.components.contentfan
+    let contentFan_2 = $contentFan_2.components.contentfan
+    let contentFan_3 = $contentFan_3.components.contentfan
 
-  function handleTouchStart(evt) {
-    const firstTouch = getTouches(evt)[0];
-    xDown = firstTouch.clientX;
-    yDown = firstTouch.clientY;
-  };
+    // Add content to content fan
+    // At some point we can find a better way to sync this w/the tab menu
+    contentFan_1.buildWithContentElements([makePanel(benefitsData), makePanel(checkData), makePanel(reviewsData)]);
+    contentFan_2.buildWithContentElements([makePanel(benefitsData), makePanel(checkData), makePanel(reviewsData)]);
+    contentFan_3.buildWithContentElements([makePanel(benefitsData), makePanel(checkData), makePanel(reviewsData)]);
 
-  function handleTouchMove(evt) {
-    if ( ! xDown || ! yDown ) {
-      return;
+    // Add custom listeners for events when marker is recognized
+    document.addEventListener('markerfound', productRecognized);
+    document.addEventListener('markerlostscan', productOutOfView);
+
+    // Add listeners for buttons
+    $backButton.addEventListener('click', backToExplore);
+    $addButton.addEventListener('click', addToRoutine);
+    // This is temporary, until we have onmarkerfound event...
+    $tray.addEventListener('click', productRecognized);
+
+    // Swipe detection
+    document.addEventListener('touchstart', handleTouchStart, false);
+    document.addEventListener('touchmove', handleTouchMove, false);
+
+    // document.addEventListener('swipeleft', handleSwipeLeft, false);
+    // document.addEventListener('swiperight', handleSwipeRight, false);
+
+    function handleSwipeLeft() {
+      // We are just broadcasting swipes to everyone...not ideal!
+      $tabMenu_1.components["tab-menu"].incrementSelectedIndex()
+      $tabMenu_2.components["tab-menu"].incrementSelectedIndex()
+      $tabMenu_3.components["tab-menu"].incrementSelectedIndex()
+
+      $contentFan_1.components.contentfan.incrementContentIndex()
+      $contentFan_2.components.contentfan.incrementContentIndex()
+      $contentFan_3.components.contentfan.incrementContentIndex()
+
+      // $tabMenu.components.
     }
 
-    var xUp = evt.touches[0].clientX;
-    var yUp = evt.touches[0].clientY;
+    function handleSwipeRight() {
+      console.log("swipe right!")
+      // We are just broadcasting swipes to everyone...not ideal!
+      $tabMenu_1.components["tab-menu"].decrementSelectedIndex()
+      $tabMenu_2.components["tab-menu"].decrementSelectedIndex()
+      $tabMenu_3.components["tab-menu"].decrementSelectedIndex()
 
-    var xDiff = xDown - xUp;
-    var yDiff = yDown - yUp;
-
-    if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
-      if ( xDiff > 0 ) {
-        /* left swipe */
-        handleSwipeLeft()
-      } else {
-        handleSwipeRight()
-        /* right swipe */
-      }
-    } else {
-      if ( yDiff > 0 ) {
-        /* up swipe */
-      } else {
-        /* down swipe */
-      }
+      $contentFan_1.components.contentfan.decrementContentIndex()
+      $contentFan_2.components.contentfan.decrementContentIndex()
+      $contentFan_3.components.contentfan.decrementContentIndex()
     }
-    /* reset values */
-    xDown = null;
-    yDown = null;
-  };
 
+    var xDown = null;
+    var yDown = null;
+
+    function getTouches(evt) {
+      return evt.touches ||             // browser API
+        evt.originalEvent.touches; // jQuery
+    }
+
+    function handleTouchStart(evt) {
+      const firstTouch = getTouches(evt)[0];
+      xDown = firstTouch.clientX;
+      yDown = firstTouch.clientY;
+    };
+
+    function handleTouchMove(evt) {
+      if (!xDown || !yDown) {
+        return;
+      }
+
+      var xUp = evt.touches[0].clientX;
+      var yUp = evt.touches[0].clientY;
+
+      var xDiff = xDown - xUp;
+      var yDiff = yDown - yUp;
+
+      if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
+        if (xDiff > 0) {
+          /* left swipe */
+          handleSwipeLeft()
+        } else {
+          handleSwipeRight()
+          /* right swipe */
+        }
+      } else {
+        if (yDiff > 0) {
+          /* up swipe */
+        } else {
+          /* down swipe */
+        }
+      }
+      /* reset values */
+      xDown = null;
+      yDown = null;
+    };
+  }
 })
