@@ -144,7 +144,7 @@ AFRAME.registerComponent('rotation-trigger', {
                 }
 
                 // Detect forward tilt
-                console.log(this.currRotationRate.x);
+                // console.log(this.currRotationRate.x);
                 if (Math.abs(this.currRotationRate.x) >= this.data.tiltForwardThreshold) {
                     if (currTime - this.lastTiltForward > this.data.debounceTime) {
                         this.lastTiltForward = currTime
@@ -155,8 +155,8 @@ AFRAME.registerComponent('rotation-trigger', {
                 }
 
                 // Detect twist
-                console.log(Math.abs(this.currRotationRate.y))
-                console.log(this.data.twistThreshold)
+                // console.log(Math.abs(this.currRotationRate.y))
+                // console.log(this.data.twistThreshold)
                 if (Math.abs(this.currRotationRate.y) >= this.data.twistThreshold) {
                     if (currTime - this.lastTwist > this.data.debounceTime) {
                         this.lastTwist = currTime

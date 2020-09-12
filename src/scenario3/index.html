@@ -74,31 +74,29 @@
                 </a-mixin>
             </a-assets>
 
-
-            <!--            <a-entity id="content" visible="true" rotation="0 0 0" position="0 2 -2" scale="0.2 0.2 0.2">-->
-
             <a-entity id="twistParent" multi-marker-rotation-interpolator>
-                <!--        <a-marker camera preset='hiro'>-->
+
                 <a-marker id="mainMarker" type="pattern" preset="custom"
                           url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/serum_1.patt"
                           smooth="true"
                           smoothCount="10"
                           smoothTolerance=".01"
                           smoothThreshold="5"
-                          rotation-trigger='tiltSideThreshold: 1.0; twistThreshold: 1.0;'>
-                    <a-plane position='0 -1 -0.75' width='1' height='1' rotation='90 0 0'
-                             material='opacity: 0.1; side: double;color:white;'></a-plane>
+                          size="1"
+                          rotation-trigger='tiltSideThreshold: 0.7; tiltForwardThreshold: 0.6; twistThreshold: 1.0;'>
+                    <!--                    <a-plane position='0 -1 -0.75' width='1' height='1' rotation='90 0 0'-->
+                    <!--                             material='opacity: 0.1; side: double;color:white;'></a-plane>-->
                 </a-marker>
 
-                <!--        <a-marker camera preset='kanji'>-->
                 <a-marker type="pattern" preset="custom"
                           url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/antioxidant.patt"
                           smooth="true"
                           smoothCount="10"
                           smoothTolerance=".01"
-                          smoothThreshold="5">
-                    <a-plane position='0 -1 -0.75' width='1' height='1' rotation='90 0 0'
-                             material='opacity: 0.1; side: double;color:white;'></a-plane>
+                          smoothThreshold="5"
+                          size="0.5">
+                    <!--                    <a-plane position='0 -1 -0.75' width='1' height='1' rotation='90 0 0'-->
+                    <!--                             material='opacity: 0.1; side: double;color:white;'></a-plane>-->
                 </a-marker>
 
                 <a-marker type="pattern" preset="custom"
@@ -106,28 +104,29 @@
                           smooth="true"
                           smoothCount="10"
                           smoothTolerance=".01"
-                          smoothThreshold="5">
-                    <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0'
-                             material='opacity: 0.5; side: double;color:white;'></a-plane>
+                          smoothThreshold="5"
+                          size="0.5">
+                    <!--                    <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0'-->
+                    <!--                             material='opacity: 0.5; side: double;color:white;'></a-plane>-->
                 </a-marker>
 
             </a-entity>
 
-
-<!--            marker-tracker="marker: serum_3_marker"-->
-            <a-entity id="review-content" marker-tracker="marker: mainMarker; visibility-trigger: true; visibility-only: true;" visible="false" rotation="0 0 0" position="0 8 -50" scale="1.25 1.25 1.25">
-            <a-entity position="-3 0 0">
-                <a-text value="ENJOYING SERUM?" mixin="body-text" position="0 0 0"></a-text>
-                <a-entity id="review-product-menu" tab-menu position="0 -2.75 0">
-                    <a-entity icon-tab-menu-item="iconImage: #happy"></a-entity>
-                    <a-entity icon-tab-menu-item="iconImage: #sad"></a-entity>
+            <a-entity id="review-content"
+                      marker-tracker="marker: mainMarker; visibility-trigger: true; visibility-only: true;"
+                      visible="false" rotation="0 0 0" position="0 8 -50" scale="1.25 1.25 1.25">
+                <a-entity position="-3 5 0">
+                    <a-text value="ENJOYING SERUM?" mixin="body-text" position="0 0 0"></a-text>
+                    <a-entity id="review-product-menu" tab-menu position="0 -2.75 0">
+                        <a-entity icon-tab-menu-item="iconImage: #happy"></a-entity>
+                        <a-entity icon-tab-menu-item="iconImage: #sad"></a-entity>
+                    </a-entity>
                 </a-entity>
-            </a-entity>
             </a-entity>
 
             <a-entity id="product-content" visible="false"
                       rotation="0 0 0"
-                      position="0 0 -2" scale="0.2 0.2 0.2">
+                      position="-1 0 -5" scale="0.2 0.2 0.2">
                 <a-entity id="tab-menu" tab-menu position="6 6 0">
                     <a-entity tabitem="textLabel: FOR YOU; iconImage: #for-you"></a-entity>
                     <a-entity tabitem="textLabel: USAGE; iconImage: #usage"></a-entity>

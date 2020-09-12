@@ -21,6 +21,7 @@ AFRAME.registerComponent('icon-tab-menu-item', {
     icon.setAttribute("src", this.data.iconImage)
     icon.setAttribute("width", 2);
     icon.setAttribute("height", 2);
+    icon.setAttribute("side", "front");
 
     icon.setAttribute("animation__1", "property: opacity; from: 0.4; to: 1.0; dur: 300; startEvents: onSelect; easing: easeOutCubic;");
     icon.setAttribute("animation__2", "property: opacity; from: 1.0; to: 0.4; dur: 300; startEvents: onDeselect; easing: easeOutCubic;");
