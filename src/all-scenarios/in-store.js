@@ -1,3 +1,5 @@
+import data_sources from './js/data_sources';
+
 function ready(fn) {
   // replaces $(document).ready() in jQuery
   if (document.readyState != 'loading'){
