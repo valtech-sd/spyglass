@@ -17,6 +17,7 @@
     <!--    <script src="../components/raycaster-listen.js"></script>-->
     <script src="../components/marker-tracker-no-rotation.js"></script>
     <script src="../components/content-type.js"></script>
+    <script src="../components/text-paragraph-bar.js"></script>
     <script src="../components/numbered-text.js"></script>
     <script src="../components/text-with-icon.js"></script>
     <script src="../components/webcam-overlay.js"></script>
@@ -82,10 +83,12 @@
                     <a-entity tabitem="textLabel: BENEFITS; iconImage: #benefits"></a-entity>
                 </a-entity>
 
-                <a-entity id="review-product-menu" tab-menu position="-3 10 0">
-                    <a-entity icon-tab-menu-item="iconImage: #happy"></a-entity>
-                    <a-entity icon-tab-menu-item="iconImage: #sad"></a-entity>
-
+                <a-entity position="-3 0 0">
+                    <a-text value="ENJOYING SERUM?" mixin="body-text" position="0 0 0"></a-text>
+                    <a-entity id="review-product-menu" tab-menu position="0 -2.75 0">
+                        <a-entity icon-tab-menu-item="iconImage: #happy"></a-entity>
+                        <a-entity icon-tab-menu-item="iconImage: #sad"></a-entity>
+                    </a-entity>
                 </a-entity>
 
                 <a-entity id="contentFan" contentfan="radius: 5;" opacity="0.4" position="0 -1 0"
