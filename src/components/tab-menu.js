@@ -18,8 +18,6 @@ AFRAME.registerComponent('tab-menu', {
     this.selectedIndex = 0;
     let self = this;
 
-    console.log(this.tabElements)
-
     // Fetch components
     this.tabElements.forEach( function(tag, index) {
       let textTab = tag.components['tabitem'];
