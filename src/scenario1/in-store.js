@@ -241,7 +241,7 @@ ready(() => {
     return panel
   }
 
-  setTimeout(initializeScenario1, 50);
+  setTimeout(initializeScenario1, 1000);
 
   function initializeScenario1() {
 
