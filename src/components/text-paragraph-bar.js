@@ -16,7 +16,7 @@ AFRAME.registerComponent('text-paragraph-bar', {
     });
 
     let textContainer = document.createElement('a-entity');
-    textContainer.setAttribute('position', "0 0 0");
+    textContainer.setAttribute('position', "0.75 0 0");
     this.el.appendChild(textContainer);
 
     this.textContainer = textContainer;
@@ -39,21 +39,21 @@ AFRAME.registerComponent('text-paragraph-bar', {
     this.body = body;
 
     // Add side bar
-    // var sidebar = document.createElement('a-plane');
-    // sidebar.setAttribute('color', 'white');
-    // sidebar.setAttribute('height', 5);
-    // sidebar.setAttribute('width', 0.2);
-    // sidebar.setAttribute('position', '-0.1 0 0');
-    //
-    // this.sidebar = sidebar
-    //
-    //
-    // this.textContainer.appendChild(sidebar);
+    var sidebar = document.createElement('a-plane');
+    sidebar.setAttribute('color', 'white');
+    sidebar.setAttribute('height', 5.5);
+    sidebar.setAttribute('width', 0.05);
+    sidebar.setAttribute('position', '0 -2.75 0');
+
+    this.sidebar = sidebar
+
+
+    this.el.appendChild(sidebar);
 
   },
   getHeight: function () {
     // FAKE NUMBER
-    return 6;
+    return 8;
   },
   update: function () {
   },
