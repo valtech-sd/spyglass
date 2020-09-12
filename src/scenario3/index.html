@@ -15,6 +15,7 @@
     <script src="https://raw.githack.com/aolivier/AR.js/alex/root-2/aframe/build/aframe-ar.js"></script>
     <!--    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>-->
     <!--    <script src="../components/raycaster-listen.js"></script>-->
+    <script src="../components/rotation-trigger.js"></script>
     <script src="../components/marker-tracker-no-rotation.js"></script>
     <script src="../components/content-type.js"></script>
     <script src="../components/text-paragraph-bar.js"></script>
@@ -75,127 +76,68 @@
 
 
             <!--            <a-entity id="content" visible="true" rotation="0 0 0" position="0 2 -2" scale="0.2 0.2 0.2">-->
-            <a-entity id="content" visible="true" rotation="0 0 0" position="2 -1 -50">
-                <!--                <a-entity id="tab-menu" tab-menu position="6 6 0">-->
-                <a-entity id="tab-menu" tab-menu position="-3 17 0">
+
+            <a-entity id="twistParent" multi-marker-rotation-interpolator>
+                <!--        <a-marker camera preset='hiro'>-->
+                <a-marker id="mainMarker" type="pattern" preset="custom"
+                          url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/serum_1.patt"
+                          smooth="true"
+                          smoothCount="10"
+                          smoothTolerance=".01"
+                          smoothThreshold="5"
+                          rotation-trigger='tiltSideThreshold: 1.0; twistThreshold: 1.0;'>
+                    <a-plane position='0 -1 -0.75' width='1' height='1' rotation='90 0 0'
+                             material='opacity: 0.1; side: double;color:white;'></a-plane>
+                </a-marker>
+
+                <!--        <a-marker camera preset='kanji'>-->
+                <a-marker type="pattern" preset="custom"
+                          url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/antioxidant.patt"
+                          smooth="true"
+                          smoothCount="10"
+                          smoothTolerance=".01"
+                          smoothThreshold="5">
+                    <a-plane position='0 -1 -0.75' width='1' height='1' rotation='90 0 0'
+                             material='opacity: 0.1; side: double;color:white;'></a-plane>
+                </a-marker>
+
+                <a-marker type="pattern" preset="custom"
+                          url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/performant.patt"
+                          smooth="true"
+                          smoothCount="10"
+                          smoothTolerance=".01"
+                          smoothThreshold="5">
+                    <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0'
+                             material='opacity: 0.5; side: double;color:white;'></a-plane>
+                </a-marker>
+
+            </a-entity>
+
+
+<!--            marker-tracker="marker: serum_3_marker"-->
+            <a-entity id="review-content" marker-tracker="marker: mainMarker; visibility-trigger: true; visibility-only: true;" visible="false" rotation="0 0 0" position="0 8 -50" scale="1.25 1.25 1.25">
+            <a-entity position="-3 0 0">
+                <a-text value="ENJOYING SERUM?" mixin="body-text" position="0 0 0"></a-text>
+                <a-entity id="review-product-menu" tab-menu position="0 -2.75 0">
+                    <a-entity icon-tab-menu-item="iconImage: #happy"></a-entity>
+                    <a-entity icon-tab-menu-item="iconImage: #sad"></a-entity>
+                </a-entity>
+            </a-entity>
+            </a-entity>
+
+            <a-entity id="product-content" visible="false"
+                      rotation="0 0 0"
+                      position="0 0 -2" scale="0.2 0.2 0.2">
+                <a-entity id="tab-menu" tab-menu position="6 6 0">
                     <a-entity tabitem="textLabel: FOR YOU; iconImage: #for-you"></a-entity>
                     <a-entity tabitem="textLabel: USAGE; iconImage: #usage"></a-entity>
                     <a-entity tabitem="textLabel: BENEFITS; iconImage: #benefits"></a-entity>
-                </a-entity>
-
-                <a-entity position="-3 0 0">
-                    <a-text value="ENJOYING SERUM?" mixin="body-text" position="0 0 0"></a-text>
-                    <a-entity id="review-product-menu" tab-menu position="0 -2.75 0">
-                        <a-entity icon-tab-menu-item="iconImage: #happy"></a-entity>
-                        <a-entity icon-tab-menu-item="iconImage: #sad"></a-entity>
-                    </a-entity>
                 </a-entity>
 
                 <a-entity id="contentFan" contentfan="radius: 5;" opacity="0.4" position="0 -1 0"
                           rotation="0 0 0"></a-entity>
 
             </a-entity>
-
-            <!--Serum 1 Bottle-->
-            <a-marker id="serum_1_marker" type="pattern" adjusted-rotation preset="custom"
-                      url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/serum_1.patt"
-                      smooth="true"
-                      smoothCount="10"
-                      smoothTolerance=".01"
-                      smoothThreshold="5">
-
-                <a-plane material="shader: gaussian-blur" webcam-overlay-helper opacity="0.4" rotation="0 0 0"
-                         position="0.0 0 -0.25" width="0.55" height=1.0">
-                    <a-circle mask position='0 0 0.375' radius="0.75" rotation='90 0 0'
-                              material='opacity: 0.0; side: double;'></a-circle>
-                </a-plane>
-            </a-marker>
-
-            <!--Serum 2 Bottle-->
-            <a-marker id="serum_2_marker" type="pattern" adjusted-rotation preset="custom"
-                      url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/serum_2.patt"
-                      smooth="true"
-                      smoothCount="10"
-                      smoothTolerance=".01"
-                      smoothThreshold="5">
-
-                <a-plane material="shader: gaussian-blur" webcam-overlay-helper opacity="0.4" rotation="0 0 0"
-                         position="0.0 0 -0.25" width="0.55" height=1.0">
-                    <a-circle mask position='0 0 0.375' radius="0.75" rotation='90 0 0'
-                              material='opacity: 0.0; side: double;'></a-circle>
-                </a-plane>
-            </a-marker>
-
-
-            <!--Serum 3 Bottle-->
-            <a-marker id="serum_3_marker" type="pattern" adjusted-rotation preset="custom"
-                      url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/serum_3.patt"
-                      smooth="true"
-                      smoothCount="15"
-                      smoothTolerance=".01"
-                      smoothThreshold="5">
-
-                <a-plane material="shader: gaussian-blur" webcam-overlay-helper opacity="0.4" rotation="0 0 0"
-                         position="0.0 0 -0.25" width="0.55" height=1.0">
-                    <a-circle mask position='0 0 0.375' radius="0.75" rotation='90 0 0'
-                              material='opacity: 0.0; side: double;'></a-circle>
-                </a-plane>
-
-            </a-marker>
-
-            <!--Serum 1 content-->
-            <a-image src="#reclabel" marker-tracker="marker: serum_1_marker" height="2" width="2"
-                     position="-0.25 1 -2"></a-image>
-
-            <a-entity id="serum_1_content" marker-tracker="marker: serum_1_marker" visible="false" rotation="0 0 0"
-                      position="0 2 -2" scale="0.2 0.2 0.2">
-                <a-entity id="tab-menu-1" tab-menu position="6 6 0">
-                    <!--        <a-entity tabitem="textLabel: FOR YOU; iconImage: #for-you"></a-entity>-->
-                    <a-entity icon-tab-menu-item="iconImage: #check"></a-entity>
-                    <a-entity icon-tab-menu-item="iconImage: #reviews"></a-entity>
-                    <a-entity icon-tab-menu-item="iconImage: #benefits"></a-entity>
-                </a-entity>
-
-                <a-entity id="contentFan_serum1" contentfan="radius: 5;" opacity="0.4" position="0 -1 0"
-                          rotation="0 0 0"></a-entity>
-
-            </a-entity>
-
-            <!--Serum 2 content-->
-            <a-image src="#reclabel" marker-tracker="marker: serum_2_marker" height="2" width="2"
-                     position="-0.25 1 -2"></a-image>
-
-            <a-entity id="serum_2_content" marker-tracker="marker: serum_2_marker" visible="false" rotation="0 0 0"
-                      position="0 2 -2" scale="0.2 0.2 0.2">
-                <a-entity id="tab-menu-2" tab-menu position="6 6 0">
-                    <a-entity icon-tab-menu-item="iconImage: #check"></a-entity>
-                    <a-entity icon-tab-menu-item="iconImage: #reviews"></a-entity>
-                    <a-entity icon-tab-menu-item="iconImage: #benefits"></a-entity>
-                </a-entity>
-
-                <a-entity id="contentFan_serum2" contentfan="radius: 5;" opacity="0.4" position="0 -1 0"
-                          rotation="0 0 0"></a-entity>
-
-            </a-entity>
-
-            <!--Serum 3 content-->
-            <a-image src="#reclabel" marker-tracker="marker: serum_3_marker" height="2" width="2"
-                     position="-0.25 1 -2"></a-image>
-
-            <a-entity id="serum_3_content" marker-tracker="marker: serum_3_marker" visible="false" rotation="0 0 0"
-                      position="0 2 -2" scale="0.2 0.2 0.2">
-                <a-entity id="tab-menu-3" tab-menu position="6 6 0">
-                    <!--        <a-entity tabitem="textLabel: FOR YOU; iconImage: #for-you"></a-entity>-->
-                    <a-entity icon-tab-menu-item="iconImage: #check"></a-entity>
-                    <a-entity icon-tab-menu-item="iconImage: #reviews"></a-entity>
-                    <a-entity icon-tab-menu-item="iconImage: #benefits"></a-entity>
-                </a-entity>
-
-                <a-entity id="contentFan_serum3" contentfan="radius: 5;" opacity="0.4" position="0 -1 0"
-                          rotation="0 0 0"></a-entity>
-
-            </a-entity>
-
 
             <a-entity camera></a-entity>
         </a-scene>

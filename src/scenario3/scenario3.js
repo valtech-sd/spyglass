@@ -77,10 +77,72 @@ ready(function() {
 
   let $contentFan = document.getElementById("contentFan");
   let contentFan = $contentFan.components.contentfan
+  let tabMenuRef = document.getElementById('tab-menu');
+  let $reviewContent= document.getElementById('review-content'); // menu and text
+  let $productContent = document.getElementById('product-content');
+  let reviewMenuRef = document.getElementById('review-product-menu');
 
   // These are out of order bc I'm bad: 3 1 2
   contentFan.buildWithContentElements([makePanel(benefitsData), makePanel(forYouData), makePanel(usageData)]);
 
+  var anchorRef = document.getElementById('twistParent');
+  var mainMarkerRef = document.getElementById('mainMarker');
+
+  // Get reference to menu confirm
+  reviewMenuRef.addEventListener('tab-confirm', (e)=>{ // your code here}
+
+    // Hide review menu
+    // Remove marker tracker from review content
+    $reviewContent.removeAttribute("marker-tracker");
+    $reviewContent.object3D.visible = false;
+
+    // Once we've reviewed the product, add the component to our content so it's trackable"
+    $productContent.setAttribute("marker-tracker", "isPromiscuous: true;")
+  })
+
+  let triggerConfirm = function() {
+    reviewMenuRef.components["tab-menu"].confirmSelectedIndex()
+  }
+  // setTimeout(triggerConfirm, 10000)
+
+  mainMarkerRef.addEventListener("tilt-side", (e)=>{ // your code here}
+    reviewMenuRef.components["tab-menu"].incrementSelectedIndex()
+  })
+
+  mainMarkerRef.addEventListener("tilt-forward", (e)=>{ // your code here}
+    console.log("forward")
+    reviewMenuRef.components["tab-menu"].confirmSelectedIndex()
+  })
+
+  anchorRef.addEventListener("tag-index-trigger", (e)=>{ // your code here}
+    let index = e.detail.index
+
+    console.log("tag index triggered! ", index)
+    tabMenuRef.components["tab-menu"].selectIndex(index)
+    contentFan.animateToContent(index)
+  })
+
+  anchorRef.addEventListener("tag-rotation", (e)=>{ // your code here}
+    // let tracker = contentContainerRef.components["smoothed-marker-tracker"]
+    // tracker.onMarkerRotationUpdate(e)
+  })
+
+  anchorRef.addEventListener("tag-position", (e)=>{ // your code here}
+    // let tracker = contentContainerRef.components["smoothed-marker-tracker"]
+    // tracker.onMarkerPositionUpdate(e)
+  })
+
+  anchorRef.addEventListener("tracking-started", (e)=>{ // your code here}
+    console.log("tracking started")
+    // let tracker = contentContainerRef.components["smoothed-marker-tracker"]
+    // tracker.onMarkerTrackingStarted(e)
+  })
+
+  anchorRef.addEventListener("tracking-ended", (e)=>{ // your code here}
+    console.log("tracking ended")
+    // let tracker = contentContainerRef.components["smoothed-marker-tracker"]
+    // tracker.onMarkerTrackingEnded(e)
+  })
 
 });
 
