@@ -34,6 +34,8 @@ AFRAME.registerComponent('icon-tab-menu-item', {
     underline.setAttribute("position", "0.0 -1.5 0");
     underline.setAttribute("animation__1", "property: opacity; from: 0.0; to: 1.0; dur: 300; startEvents: onSelect; easing: easeOutCubic;");
     underline.setAttribute("animation__2", "property: opacity; from: 1.0; to: 0.0; dur: 300; startEvents: onDeselect; easing: easeOutCubic;");
+
+    //We should technically reset this confirm color when we're done...but we're only going to do it once
     underline.setAttribute("animation__3", "property: color; from: #FFF; to: #74fab9; dur: 500; startEvents: onConfirm; easing: easeOutCubic;");
 
     this.el.appendChild(underline);
