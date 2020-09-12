@@ -89,7 +89,7 @@ AFRAME.registerComponent('marker-tracker', {
           updatedPosition.y = origin.y + markerPos.y
         }
 
-        let smoothAmount = 0.6
+        let smoothAmount = 0.3
         let weightedCurrentPos = this.el.object3D.position.clone().multiplyScalar(smoothAmount);
         let weightedUpdatedPos = updatedPosition.clone().multiplyScalar(1.0 - smoothAmount);
         let smoothedResult = weightedCurrentPos.add(weightedUpdatedPos);
