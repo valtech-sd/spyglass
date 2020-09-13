@@ -139,6 +139,15 @@ body {
   text-transform: uppercase;
 }
 
+.serum1 #scanner.complete ~ #tray #serum2,
+.serum1 #scanner.complete ~ #tray #serum3,
+.serum2 #scanner.complete ~ #tray #serum1,
+.serum2 #scanner.complete ~ #tray #serum3,
+.serum3 #scanner.complete ~ #tray #serum1,
+.serum3 #scanner.complete ~ #tray #serum2 {
+  opacity: 0.2;
+}
+
 /* *** S1 BUTTONS *** */
 a {
   text-decoration: none;
@@ -154,14 +163,6 @@ a:hover, a:active, a:visited {
 }
 a:hover, a:active {
   background-color: rgba(255,255,255,0.2);
-}
-.serum1 #scanner.complete ~ #tray #serum2,
-.serum1 #scanner.complete ~ #tray #serum3,
-.serum2 #scanner.complete ~ #tray #serum1,
-.serum2 #scanner.complete ~ #tray #serum3,
-.serum3 #scanner.complete ~ #tray #serum1,
-.serum3 #scanner.complete ~ #tray #serum2 {
-  opacity: 0.2;
 }
 
 .found a {
