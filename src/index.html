@@ -3,36 +3,66 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Spyglass Demo</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-	<!-- A-Frame -->
-	<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-
-	<!-- A-Frame version of AR.js with image tracking + location-based AR -->
-	<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
-
-	<!-- A-Frame version of AR.js with marker tracking + location-based AR -->
-	<!-- <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script> -->
-	<!-- CDN-hosted THREE.js -->
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r119/three.min.js"></script> -->
-	<!-- THREE.js version of AR.js with image tracking + location-based AR -->
-	<!-- <script src="https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-nft.js"></script> -->
-
-	<script src="index.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="./scenario1/main.css" rel="stylesheet">
 	<style>
-		body { margin: 0; }
-		canvas { display: block; }
+		body {
+			color: #ffffff;
+			line-height: 1.5em;
+			font-size: 18px;
+			overflow: auto;
+		}
+		article {
+			position: relative;
+			margin: 0 auto;
+			display: block;
+			max-width: 50em;
+			width: 90%;
+		}
+		a { 
+			border: solid 2px #ffffff;
+			display: inline-block;
+			padding: 0.2em 1em;
+			color: white;
+			font-size: 1.25em;
+			visibility: visible;
+			opacity: 1;
+		}
+		p { padding-bottom: 0.75em;}
+	  h1 {
+			font-size: 2em;
+			text-transform: uppercase;
+			line-height: 1.2em;
+			padding: 1em 0 0.5em;
+		}
+		h2 {
+			font-size: 1.5em;
+			color: #bbbbbb;
+		}
+		section {
+			padding: 1em 0;
+		}
 	</style>
-	<!-- <link rel="stylesheet" href="assets/css/main.css" /> -->
 </head>
 <body>
-	<h1>Spyglass Demo</h1>
-	 <a-scene>
-      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-      <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      <a-sky color="#ECECEC"></a-sky>
-    </a-scene>
+	<article>
+	<h1>Spyglass Skincare Demo</h1>
+	<p>⚠️ Watch your step! We're in the process of sewing together these three scenarios, but until then, you'll need to launch them separately.</p>
+	<section>
+	<h2>Shopping for products</h2>
+	<p>Hold the phone up to a product to get information that will help you decide whether or not to add it to your skincare routine.</p>
+	<a href="./scenario1/index.html">Launch Scenario 1</a>
+	</section>
+	<section>
+	<h2>Bringing the product home</h2>
+	<p>Hold the skincare product bottle up to your phone and use it as a controller to learn how to use it.</p>
+	<a href="./scenario2/index.html">Launch Scenario 2</a>
+	</section>
+	<section>
+	<h2>At home, after using for a while</h2>
+	<p>Hold the skincare product bottle up to your phone and use it as a controller to review it and get personalized advice.</p>
+	<a href="./scenario3/index.html">Launch Scenario 3</a>
+	</section>
+	</article>
 </body>
 </html>
