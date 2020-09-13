@@ -316,12 +316,12 @@ ready(() => {
       $contentFan_3.components.contentfan.decrementContentIndex()
     }
 
+    // Originally from https://stackoverflow.com/a/23230280
     var xDown = null;
     var yDown = null;
 
     function getTouches(evt) {
-      return evt.touches ||             // browser API
-        evt.originalEvent.touches; // jQuery
+      return evt.touches;
     }
 
     function handleTouchStart(evt) {
