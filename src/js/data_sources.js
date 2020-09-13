@@ -90,13 +90,11 @@ async function getStackData() {
     if (response?.data?.all_product) {
       newData = {'serums': [...response.data.all_product.items]};
       for (let i = 0; i < newData.serums.length; i++) {
-        console.log(newData.serums[i]);
-        const entry = {
+          const entry = {
           // Add an id (What serum no. is it?)
           '_id': parseInt(newData.serums[i].product_name.split(' ')[2]),
           ...newData.serums[i]
         }
-        console.log()
         // Remove nesting of references
         // ✔️ contraindications (see ingredients below)
         entry.contraindications = []; 
@@ -138,7 +136,6 @@ async function getStackData() {
         entry.directions = entry.instructions.map((item) => {return {text: item.step_instruction_text}});
         delete(entry.instructions);
         newData.serums[i] = entry;
-        console.log(newData.serums[i], entry)
       }
     }
     
@@ -162,16 +159,17 @@ async function getStackData() {
 
 getStackData();
 
+// This data would be stored in another database.
 data_sources.personalized = {
   other_product_images: {
-    cleanser: 'https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt2768458962874adb/5f5b96c9d1e5eb4414693738/01_Cleanser_3.png',
-    toner: 'https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt3b2f9c68cda139c8/5f5b96c82d8d464b43a53a45/02_Toner_3.png',
-    moisturizer_empty: 'https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt879660a27aedbfec/5f5b96c72917074cd81a272b/04_Moisturizer_0.png',
+    cleanser: 'https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt2768458962874adb/5f5d73c7ace172423d8845be/01_Cleanser_3.png',
+    toner: 'https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt3b2f9c68cda139c8/5f5d73b82917074cd81a2925/02_Toner_3.png',
+    moisturizer_empty: 'https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt879660a27aedbfec/5f5d73a665c9c14aec2fb9f7/04_Moisturizer_0.png',
     moisturizers: [
-      'https://images.contentstack.io/v3/assets/blte63f7056be4da683/blta69fd32048fdecab/5f5b9777d1e5eb441469374e/04_Moisturizer_1.png',
-      'https://images.contentstack.io/v3/assets/blte63f7056be4da683/blta69fd32048fdecab/5f5b9777d1e5eb441469374e/04_Moisturizer_1.png'
+      'https://images.contentstack.io/v3/assets/blte63f7056be4da683/blta69fd32048fdecab/5f5d740674038f4956e098d8/04_Moisturizer_1.png',
+      'https://images.contentstack.io/v3/assets/blte63f7056be4da683/blta69fd32048fdecab/5f5d740674038f4956e098d8/04_Moisturizer_1.png'
     ],
-    sunscreen: 'https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt80ab90086435bebe/5f5b96c683eade441b6a68d3/05_Sunscreen_0.png'
+    sunscreen: 'https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt80ab90086435bebe/5f5d739883eade441b6a6ae8/05_Sunscreen_0.png'
   },
   serums: [
     {
