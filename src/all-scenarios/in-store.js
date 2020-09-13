@@ -167,32 +167,32 @@ ready(() => {
   }
 
 
-    $serumMarkers.forEach(function($marker) {
+  $serumMarkers.forEach(function($marker) {
 
-      $marker.addEventListener("markerFound", (e)=>{ // your code here}
-        let target = e.target;
-        let productID = tagToProduct(target.id);
+    $marker.addEventListener("markerFound", (e)=>{ // your code here}
+      let target = e.target;
+      let productID = tagToProduct(target.id);
 
-        if (productID) {
-          console.log("Detected product ", productID);
+      if (productID) {
+        console.log("Detected product ", productID);
 
-          // call productRecognized
-          productRecognized(productID);
-        }
-      })
-
-      $marker.addEventListener("markerLost", (e)=>{ // your code here}
-        let target = e.target;
-        let productID = tagToProduct(target.id);
-
-        if (productID) {
-          console.log("Lost product ", productID);
-
-          // Call productOutOfView
-          productOutOfView(productID)
-        }
-      })
+        // call productRecognized
+        productRecognized(productID);
+      }
     })
+
+    $marker.addEventListener("markerLost", (e)=>{ // your code here}
+      let target = e.target;
+      let productID = tagToProduct(target.id);
+
+      if (productID) {
+        console.log("Lost product ", productID);
+
+        // Call productOutOfView
+        productOutOfView(productID)
+      }
+    })
+  });
 
 
   // Fake data for scenario 1
@@ -273,10 +273,6 @@ ready(() => {
     contentFan_1.buildWithContentElements([makePanel(benefitsData), makePanel(checkData), makePanel(reviewsData)]);
     contentFan_2.buildWithContentElements([makePanel(benefitsData), makePanel(checkData), makePanel(reviewsData)]);
     contentFan_3.buildWithContentElements([makePanel(benefitsData), makePanel(checkData), makePanel(reviewsData)]);
-
-    // Add custom listeners for events when marker is recognized
-    document.addEventListener('markerfound', productRecognized);
-    document.addEventListener('markerlostscan', productOutOfView);
 
     // Add listeners for buttons
     $backButton.addEventListener('click', backToExplore);
