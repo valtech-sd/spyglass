@@ -36,8 +36,13 @@ body {
 #scanner {
   padding: 14.5vw;
   height: 60vh;
+  width: 100%;
   color: #eeeeee;
   transition: all 400ms ease-out; 
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 #scanner svg {
   width: 100%;
@@ -132,6 +137,15 @@ body {
   text-anchor: middle;
   width: 100%;
   text-transform: uppercase;
+}
+
+.serum1 #scanner.complete ~ #tray #serum2,
+.serum1 #scanner.complete ~ #tray #serum3,
+.serum2 #scanner.complete ~ #tray #serum1,
+.serum2 #scanner.complete ~ #tray #serum3,
+.serum3 #scanner.complete ~ #tray #serum1,
+.serum3 #scanner.complete ~ #tray #serum2 {
+  opacity: 0.2;
 }
 
 /* *** S1 BUTTONS *** */

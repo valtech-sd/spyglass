@@ -14,7 +14,7 @@ AFRAME.registerComponent('content-group', {
   },
   initLayout: function() {
     // this.contentElements = this.el.querySelectorAll('[content-type]');
-    this.contentElements = this.el.querySelectorAll('[textwithicon], [numbered-text]');
+    this.contentElements = this.el.querySelectorAll('[textwithicon], [numbered-text], [text-paragraph-bar]');
     let self = this;
 
     var contentHeightSoFar = 0;
@@ -22,11 +22,16 @@ AFRAME.registerComponent('content-group', {
 
       // Unsure why it wasn't working the other way...with content type
       // AHHHHH.
+      // don't hold this against me
       let contentComponent = el.components["textwithicon"]
       let contentHeight = 8
       if (contentComponent == undefined) {
         contentComponent = el.components["numbered-text"]
         contentHeight = 4
+      }
+      if (contentComponent == undefined) {
+        contentComponent = el.components["text-paragraph-bar"]
+        contentHeight = 8
       }
 
       // let contentHeight = contentComponent.getHeight();
@@ -67,6 +72,13 @@ AFRAME.registerComponent('content-group', {
           contentEl.setAttribute(content.type, {
             hasTitle: hasTitle,
             icon: content.icon,
+            titleLabel: content.title,
+            bodyLabel: content.body
+          });
+          break;
+        case "text-paragraph-bar":
+          console.log("adding text with bar")
+          contentEl.setAttribute(content.type, {
             titleLabel: content.title,
             bodyLabel: content.body
           });

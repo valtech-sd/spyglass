@@ -14,11 +14,10 @@ AFRAME.registerComponent('tab-menu', {
     this.tabElements = this.el.querySelectorAll('[tabitem], [icon-tab-menu-item]');
     this.tabComponents = []
     this.spacing = this.data.tabSpacing
+    this.confirmedSelection = false;
 
     this.selectedIndex = 0;
     let self = this;
-
-    console.log(this.tabElements)
 
     // Fetch components
     this.tabElements.forEach( function(tag, index) {
@@ -44,6 +43,11 @@ AFRAME.registerComponent('tab-menu', {
   },
   selectIndex: function(index) {
 
+    // If we've already confirmed, don't allow changing selection!
+    if (this.confirmedSelection) {
+      return;
+    }
+
     let self = this
     this.tabComponents.forEach( function(tabComponent, i) {
       // let tabComponent = tabEl.components.tabitem
@@ -55,6 +59,20 @@ AFRAME.registerComponent('tab-menu', {
         tabComponent.deselect();
       }
     })
+  },
+  confirmIndex: function(index) {
+    if (this.tabComponents.length > 0) {
+      if (index >= 0 && index < this.tabComponents.length) {
+        this.tabComponents[index].confirm();
+        this.confirmedSelection = true;
+
+        // This should match confirmation animation duration (or a lil longer)
+        let self = this;
+        setTimeout(function() {
+          self.el.emit('tab-confirm');
+        }, 1000)
+      }
+    }
   },
   incrementSelectedIndex: function() {
     let numTabs = this.tabComponents.length
@@ -69,6 +87,9 @@ AFRAME.registerComponent('tab-menu', {
       let indexToSelect = (this.selectedIndex == 0) ? numTabs - 1 : (this.selectedIndex - 1) % numTabs;
       this.selectIndex(indexToSelect);
     }
+  },
+  confirmSelectedIndex: function() {
+    this.confirmIndex(this.selectedIndex);
   },
   update: function () {},
   tick: function () {

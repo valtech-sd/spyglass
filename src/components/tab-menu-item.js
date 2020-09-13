@@ -84,6 +84,9 @@ AFRAME.registerComponent('tabitem', {
       this.icon.emit('onDeselect', {}, true);
     }
   },
+  confirm: function() {
+
+  },
   update: function () {},
   tick: function () {
 
