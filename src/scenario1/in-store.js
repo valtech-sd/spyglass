@@ -1,3 +1,5 @@
+import data_sources from '../js/data_sources';
+
 function ready(fn) {
   // replaces $(document).ready() in jQuery
   if (document.readyState != 'loading'){
@@ -9,6 +11,7 @@ function ready(fn) {
 
 ready(() => {
   console.log('DOM is ready.');
+  console.log(data_sources);
   const $statusLabel = document.querySelector('#status_label');
   const $scanner = document.querySelector('#scanner');
   const $scanLine = document.querySelector('#scanner svg line');
@@ -86,7 +89,7 @@ ready(() => {
     });
   }
   
-  async function productRecognized(e) {
+  async function productRecognized(productID) {
     // TODO: recognize which product it is and cue up the data in A-Frame here
 
     // Kick off the animation to scan.
@@ -95,8 +98,10 @@ ready(() => {
     await pauseUntilEnd('a', $scanLine, 'blip');
     $statusLabel.textContent = 'Found!';
     $scanner.classList.add('complete');
+    $main.classList.add('serum'+productID);
     await pause(750);
     $main.classList.add('found');
+    $main.classList.remove('serum'+productID);
     $scanner.classList.remove('scanning');
     $scanner.classList.remove('complete');
   }
@@ -117,6 +122,9 @@ ready(() => {
     $scanner.classList.remove('scanning');
     $scanner.classList.remove('complete');
     $main.classList.remove('found');
+    $main.classList.remove('serum1');
+    $main.classList.remove('serum2');
+    $main.classList.remove('serum3');
     // ...which will slide up the tray.
     // Prevent changing the URL?
     return false;
@@ -159,30 +167,32 @@ ready(() => {
   }
 
 
-    $serumMarkers.forEach(function($marker) {
+  $serumMarkers.forEach(function($marker) {
 
-      $marker.addEventListener("markerFound", (e)=>{ // your code here}
-        let target = e.target;
-        let productID = tagToProduct(target.id);
+    $marker.addEventListener("markerFound", (e)=>{ // your code here}
+      let target = e.target;
+      let productID = tagToProduct(target.id);
 
-        if (productID) {
-          console.log("Detected product ", productID);
+      if (productID) {
+        console.log("Detected product ", productID);
 
-          // call productRecognized
-        }
-      })
-
-      $marker.addEventListener("markerLost", (e)=>{ // your code here}
-        let target = e.target;
-        let productID = tagToProduct(target.id);
-
-        if (productID) {
-          console.log("Lost product ", productID);
-
-          // Call productOutOfView
-        }
-      })
+        // call productRecognized
+        productRecognized(productID);
+      }
     })
+
+    $marker.addEventListener("markerLost", (e)=>{ // your code here}
+      let target = e.target;
+      let productID = tagToProduct(target.id);
+
+      if (productID) {
+        console.log("Lost product ", productID);
+
+        // Call productOutOfView
+        productOutOfView(productID)
+      }
+    })
+  });
 
 
   // Fake data for scenario 1
@@ -229,6 +239,14 @@ ready(() => {
       body: "Also called B5 Vitamin, moisturizes the skin.",
       type: benefitsType
     }];
+  // let benefitsData = [
+  //   {
+  //     icon: "#warning",
+  //     title: "INTERACTIONS",
+  //     body: data_sources.contentstack.serums[0].contraindications[0],
+  //     type: benefitsType
+  //   }
+  // ];
 
   let makePanel = function(data) {
     // Build content panels with "data"
@@ -256,15 +274,11 @@ ready(() => {
     contentFan_2.buildWithContentElements([makePanel(benefitsData), makePanel(checkData), makePanel(reviewsData)]);
     contentFan_3.buildWithContentElements([makePanel(benefitsData), makePanel(checkData), makePanel(reviewsData)]);
 
-    // Add custom listeners for events when marker is recognized
-    document.addEventListener('markerfound', productRecognized);
-    document.addEventListener('markerlostscan', productOutOfView);
-
     // Add listeners for buttons
     $backButton.addEventListener('click', backToExplore);
     $addButton.addEventListener('click', addToRoutine);
     // This is temporary, until we have onmarkerfound event...
-    $tray.addEventListener('click', productRecognized);
+    // $tray.addEventListener('click', productRecognized);
 
     // Swipe detection
     document.addEventListener('touchstart', handleTouchStart, false);
@@ -298,12 +312,12 @@ ready(() => {
       $contentFan_3.components.contentfan.decrementContentIndex()
     }
 
+    // Originally from https://stackoverflow.com/a/23230280
     var xDown = null;
     var yDown = null;
 
     function getTouches(evt) {
-      return evt.touches ||             // browser API
-        evt.originalEvent.touches; // jQuery
+      return evt.touches;
     }
 
     function handleTouchStart(evt) {
