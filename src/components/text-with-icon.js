@@ -42,6 +42,7 @@ AFRAME.registerComponent('textwithicon', {
       iconImage.setAttribute("scale", "2 2 0");
       iconImage.setAttribute("color", "black");
       iconImage.setAttribute("position", "0 0 1");
+      iconImage.setAttribute("side", "front");
 
       icon.appendChild(iconImage);
     }
