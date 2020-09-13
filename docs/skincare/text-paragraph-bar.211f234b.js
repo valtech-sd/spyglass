@@ -117,47 +117,51 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"k6zh":[function(require,module,exports) {
-// Register custom components before loading HTML
-// TODO: This should actually be a combo of a component and a system...!
-// We shouldn't do all the math in the component
-AFRAME.registerComponent('tab-menu', {
+})({"pk82":[function(require,module,exports) {
+AFRAME.registerComponent('text-paragraph-bar', {
   schema: {
-    tabSpacing: {
-      type: 'number',
-      default: 4.25
+    titleLabel: {
+      type: 'string',
+      default: 'YLANG YLANG'
+    },
+    bodyLabel: {
+      type: 'string',
+      default: "Sweet, exotic and floral, essential oil distilled from the fragrant flowers."
     }
   },
   init: function () {
-    this.tabElements = this.el.querySelectorAll('[tabitem]');
-    let children = this.el.querySelectorAll('[tabitem]');
-    this.spacing = this.data.tabSpacing;
-    this.selectedIndex = 0;
-    let self = this;
-    this.tabElements.forEach(function (tag, index) {
-      let tabComponent = tag.components.tabitem;
-      let tabWidth = tabComponent.getWidth();
-      tag.object3D.position.x = tabWidth * 0.5 + index * self.data.tabSpacing;
-
-      if (index == self.selectedIndex) {
-        tabComponent.select();
-      } else {
-        tabComponent.deselect();
-      } // tag.setAttribute("adjusted-rotation", "")
-
+    this.el.setAttribute("content-type", {
+      contentType: "text-paragraph-bar"
     });
+    let textContainer = document.createElement('a-entity');
+    textContainer.setAttribute('position', "0.75 0 0");
+    this.el.appendChild(textContainer);
+    this.textContainer = textContainer; // TODO: Make this smaller?
+
+    var title = document.createElement('a-text');
+    title.setAttribute('mixin', "body-text");
+    title.setAttribute('value', this.data.titleLabel);
+    title.setAttribute('position', '0 0 0');
+    this.textContainer.appendChild(title);
+    this.title = title;
+    var body = document.createElement('a-text');
+    body.setAttribute('mixin', "body-text");
+    body.setAttribute('value', this.data.bodyLabel);
+    body.setAttribute('position', '0 -2 0');
+    this.textContainer.appendChild(body);
+    this.body = body; // Add side bar
+
+    var sidebar = document.createElement('a-plane');
+    sidebar.setAttribute('color', 'white');
+    sidebar.setAttribute('height', 5.5);
+    sidebar.setAttribute('width', 0.05);
+    sidebar.setAttribute('position', '0 -2.75 0');
+    this.sidebar = sidebar;
+    this.el.appendChild(sidebar);
   },
-  selectIndex: function (index) {
-    let self = this;
-    this.tabElements.forEach(function (tabEl, i) {
-      let tabComponent = tabEl.components.tabitem;
-
-      if (i == index) {
-        tabComponent.select();
-      } else {
-        tabComponent.deselect();
-      }
-    });
+  getHeight: function () {
+    // FAKE NUMBER
+    return 8;
   },
   update: function () {},
   tick: function () {},
@@ -165,5 +169,5 @@ AFRAME.registerComponent('tab-menu', {
   pause: function () {},
   play: function () {}
 });
-},{}]},{},["k6zh"], null)
-//# sourceMappingURL=tab-menu.0da34cba.js.map
+},{}]},{},["pk82"], null)
+//# sourceMappingURL=text-paragraph-bar.211f234b.js.map

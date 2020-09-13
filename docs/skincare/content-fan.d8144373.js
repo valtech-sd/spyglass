@@ -227,6 +227,22 @@ AFRAME.registerComponent('contentfan', {
     let baseAngle = this.contentKeyframes[this.currentContentIndex];
     this.el.object3D.rotation.y = baseAngle + THREE.Math.degToRad(wiggleAmount);
   },
+  incrementContentIndex: function () {
+    let numKeyframes = this.contentKeyframes.length;
+
+    if (numKeyframes > 0) {
+      let indexToSelect = (this.currentContentIndex + 1) % numKeyframes;
+      this.animateToContent(indexToSelect);
+    }
+  },
+  decrementContentIndex: function () {
+    let numKeyframes = this.contentKeyframes.length;
+
+    if (numKeyframes > 0) {
+      let indexToSelect = this.currentContentIndex == 0 ? numKeyframes - 1 : (this.currentContentIndex - 1) % numKeyframes;
+      this.animateToContent(indexToSelect);
+    }
+  },
   // Called when a new marker is detected
   // Will rotate cylinder to a different keyframe
   animateToContent: function (index) {
@@ -285,4 +301,4 @@ AFRAME.registerComponent('contentfan', {
   play: function () {}
 });
 },{}]},{},["dyAr"], null)
-//# sourceMappingURL=content-fan.4ad5e662.js.map
+//# sourceMappingURL=content-fan.d8144373.js.map

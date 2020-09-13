@@ -130,20 +130,34 @@ AFRAME.registerComponent('content-group', {
   },
   init: function () {
     this.spacing = this.data.contentSpacing;
-    this.initLayout();
   },
   initLayout: function () {
-    this.contentElements = this.el.querySelectorAll('[textwithicon]');
+    // this.contentElements = this.el.querySelectorAll('[content-type]');
+    this.contentElements = this.el.querySelectorAll('[textwithicon], [numbered-text], [text-paragraph-bar]');
     let self = this;
     var contentHeightSoFar = 0;
     this.contentElements.forEach(function (el, index) {
-      let contentComponent = el.components.textwithicon;
-      let contentHeight = contentComponent.getHeight(); // console.log("content height ", contentHeight);
-      // console.log(self.spacing);
+      // Unsure why it wasn't working the other way...with content type
+      // AHHHHH.
+      // don't hold this against me
+      let contentComponent = el.components["textwithicon"];
+      let contentHeight = 8;
+
+      if (contentComponent == undefined) {
+        contentComponent = el.components["numbered-text"];
+        contentHeight = 4;
+      }
+
+      if (contentComponent == undefined) {
+        contentComponent = el.components["text-paragraph-bar"];
+        contentHeight = 8;
+      } // let contentHeight = contentComponent.getHeight();
+
 
       el.object3D.position.y = contentHeightSoFar; // Content grows down
+      // contentHeightSoFar += -self.spacing - contentHeight;
 
-      contentHeightSoFar += -self.spacing - contentHeight; // console.log("content height so far: ", contentHeightSoFar);
+      contentHeightSoFar += -contentHeight; // console.log("content height so far: ", contentHeightSoFar);
     });
   },
 
@@ -154,12 +168,41 @@ AFRAME.registerComponent('content-group', {
       let hasTitle = content.title != null; // Create a content element
 
       var contentEl = document.createElement('a-entity');
-      contentEl.setAttribute("textwithicon", {
-        hasTitle: hasTitle,
-        icon: content.icon,
-        titleLabel: content.title,
-        bodyLabel: content.body
-      });
+      contentEl.setAttribute("content-type", {
+        contentType: content.type
+      }); // This could be better
+
+      switch (content.type) {
+        case "numbered-text":
+          console.log("Adding numbered text");
+          contentEl.setAttribute(content.type, {
+            titleLabel: content.title,
+            bodyLabel: content.body
+          });
+          break;
+
+        case "textwithicon":
+          console.log("adding text with icon");
+          contentEl.setAttribute(content.type, {
+            hasTitle: hasTitle,
+            icon: content.icon,
+            titleLabel: content.title,
+            bodyLabel: content.body
+          });
+          break;
+
+        case "text-paragraph-bar":
+          console.log("adding text with bar");
+          contentEl.setAttribute(content.type, {
+            titleLabel: content.title,
+            bodyLabel: content.body
+          });
+          break;
+
+        default:
+          break;
+      }
+
       self.el.appendChild(contentEl);
     });
     this.initLayout();
@@ -172,4 +215,4 @@ AFRAME.registerComponent('content-group', {
   play: function () {}
 });
 },{}]},{},["Poyw"], null)
-//# sourceMappingURL=content-group.5683148b.js.map
+//# sourceMappingURL=content-group.fbec0f86.js.map

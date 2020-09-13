@@ -117,117 +117,98 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"EewT":[function(require,module,exports) {
-AFRAME.registerComponent('textwithicon', {
+})({"k6zh":[function(require,module,exports) {
+// Register custom components before loading HTML
+// TODO: This should actually be a combo of a component and a system...!
+// We shouldn't do all the math in the component
+AFRAME.registerComponent('tab-menu', {
   schema: {
-    hasTitle: {
-      type: 'boolean',
-      default: true
-    },
-    icon: {
-      type: 'string',
-      default: '#benefits'
-    },
-    titleLabel: {
-      type: 'string',
-      default: 'YLANG YLANG'
-    },
-    bodyLabel: {
-      type: 'string',
-      default: "Sweet, exotic and floral, essential oil distilled from the fragrant flowers."
+    tabSpacing: {
+      type: 'number',
+      default: 4.25
     }
   },
   init: function () {
-    // For now, it's a circle
-    var icon = document.createElement('a-circle');
-    icon.setAttribute("color", "#74fab9");
-    icon.setAttribute("radius", 1.5);
-    icon.setAttribute("segments", 128);
-    icon.setAttribute("opacity", 1.0);
-    icon.setAttribute("position", "1 0 0");
-    this.el.appendChild(icon); // Add a circle
+    this.tabElements = this.el.querySelectorAll('[tabitem], [icon-tab-menu-item]');
+    this.tabComponents = [];
+    this.spacing = this.data.tabSpacing;
+    this.confirmedSelection = false;
+    this.selectedIndex = 0;
+    let self = this; // Fetch components
 
-    if (this.data.icon != "") {
-      let iconImage = document.createElement('a-image');
-      iconImage.setAttribute("src", this.data.icon);
-      iconImage.setAttribute("opacity", 1.0);
-      iconImage.setAttribute("scale", "2 2 2");
-      iconImage.setAttribute("color", "black");
-      iconImage.setAttribute("position", "0 0 1");
-      icon.appendChild(iconImage);
-    }
+    this.tabElements.forEach(function (tag, index) {
+      let textTab = tag.components['tabitem'];
+      let iconTab = tag.components['icon-tab-menu-item'];
+      let tabComponent = textTab ? textTab : iconTab;
+      self.tabComponents.push(tabComponent);
+    });
+    this.tabComponents.forEach(function (tabComponent, index) {
+      let tabWidth = tabComponent.getWidth();
+      console.log(tabComponent);
+      tabComponent.el.object3D.position.x = tabWidth * 0.5 + index * self.data.tabSpacing;
 
-    this.icon = icon;
-    let textContainer = document.createElement('a-entity');
-    textContainer.setAttribute('position', "0 -2.25 0");
-    this.el.appendChild(textContainer);
-    this.textContainer = textContainer;
-
-    if (this.data.hasTitle) {
-      var title = document.createElement('a-text');
-      title.setAttribute('mixin', "body-text");
-      title.setAttribute('value', this.data.titleLabel);
-      title.setAttribute('position', '0 0 0');
-      this.textContainer.appendChild(title);
-      this.title = title;
-    }
-
-    var body = document.createElement('a-text');
-    body.setAttribute('mixin', "body-text");
-    body.setAttribute('value', this.data.bodyLabel);
-
-    if (this.data.hasTitle) {
-      body.setAttribute('position', '0 -1 0');
-    } else {
-      body.setAttribute('position', '0 0 0');
-    }
-
-    this.textContainer.appendChild(body);
-    this.body = body; // Compute width
-    // TODO: Also include text size
-    // let textAttr = text.components.value
-    //
-    // let textWidth = text.getAttribute("value")
-    //   //.data.length
-    //   //* (textAttr.data.width / textAttr.data.wrapCount);
-    // this.width = Math.max(icon.getAttribute("width"), textWidth);
-    // this.width = icon.getAttribute("width")
+      if (index == self.selectedIndex) {
+        tabComponent.select();
+      } else {
+        tabComponent.deselect();
+      }
+    });
   },
-  // getWidth: function() {
-  //   console.log("width is ", this.width);
-  //   return this.width;
-  // },
-  getHeight: function () {
-    // Get height of body text
-    // TODO: Replace 2.25 with icon height + spacing
-    var h = 2.25 + 5; //+ this.body.height;
-    // let bodyText = this.body.components.text
-    // let bodyHeight = this.body.getAttribute("height");
-    // console.log("body");
-    // console.log(this.body);
-    // bodyText.updateLayout();
-    //
-    // console.log("geo")
-    // console.log(bodyText.geometry)
-    // console.log(bodyText.geometry.height)
-    // // console.log(this.body.components.text);
-    // console.log(bodyText.data);
+  selectIndex: function (index) {
+    // If we've already confirmed, don't allow changing selection!
+    if (this.confirmedSelection) {
+      return;
+    }
 
-    if (this.hasTitle) {
-      // h += this.title.height + 1;
-      h += 1.5;
-    } // console.log("height is " + h);
-    // Fake number for now
-
-
-    return h; // return 5;
+    let self = this;
+    this.tabComponents.forEach(function (tabComponent, i) {
+      // let tabComponent = tabEl.components.tabitem
+      if (i == index) {
+        self.selectedIndex = index;
+        tabComponent.select();
+        console.log("selecting", index);
+      } else {
+        tabComponent.deselect();
+      }
+    });
   },
-  configure: function (titleName, textBody, iconUrl) {},
+  confirmIndex: function (index) {
+    if (this.tabComponents.length > 0) {
+      if (index >= 0 && index < this.tabComponents.length) {
+        this.tabComponents[index].confirm();
+        this.confirmedSelection = true; // This should match confirmation animation duration (or a lil longer)
+
+        let self = this;
+        setTimeout(function () {
+          self.el.emit('tab-confirm');
+        }, 1000);
+      }
+    }
+  },
+  incrementSelectedIndex: function () {
+    let numTabs = this.tabComponents.length;
+
+    if (numTabs > 0) {
+      let indexToSelect = (this.selectedIndex + 1) % numTabs;
+      this.selectIndex(indexToSelect);
+    }
+  },
+  decrementSelectedIndex: function () {
+    let numTabs = this.tabComponents.length;
+
+    if (numTabs > 0) {
+      let indexToSelect = this.selectedIndex == 0 ? numTabs - 1 : (this.selectedIndex - 1) % numTabs;
+      this.selectIndex(indexToSelect);
+    }
+  },
+  confirmSelectedIndex: function () {
+    this.confirmIndex(this.selectedIndex);
+  },
   update: function () {},
   tick: function () {},
   remove: function () {},
   pause: function () {},
   play: function () {}
 });
-},{}]},{},["EewT"], null)
-//# sourceMappingURL=text-with-icon.aa7a2933.js.map
+},{}]},{},["k6zh"], null)
+//# sourceMappingURL=tab-menu.8bbcf9b6.js.map

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Valtech + Contentstack + AR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--    <link href="./main.css" rel="stylesheet">-->
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <!--    <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>-->
+    <!-- Debug GUI -->
+    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>-->
+    <!-- A-Frame version of AR.js with marker tracking + location-based AR -->
+    <!--    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>-->
+    <script src="https://raw.githack.com/aolivier/AR.js/alex/root-2/aframe/build/aframe-ar.js"></script>
+    <!--    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>-->
+    <!--    <script src="../components/raycaster-listen.js"></script>-->
+    <script src="rotation-trigger.7deb647e.js"></script>
+    <script src="marker-tracker-no-rotation.3da89084.js"></script>
+    <script src="content-type.a1d40da1.js"></script>
+    <script src="text-paragraph-bar.211f234b.js"></script>
+    <script src="numbered-text.e88926dd.js"></script>
+    <script src="text-with-icon.2bc4a5a4.js"></script>
+    <script src="webcam-overlay.b9928355.js"></script>
+    <script src="content-group.fbec0f86.js"></script>
+    <script src="tab-menu-item.9d28d19e.js"></script>
+    <script src="icon-tab-menu-item.ed912b87.js"></script>
+    <script src="tab-menu.8bbcf9b6.js"></script>
+    <script src="content-fan.d8144373.js"></script>
+    <script src="smoothed-marker-tracker.85cdce73.js"></script>
+    <script src="adjusted-rotation.e1468c87.js"></script>
+    <script src="multi-marker-rotation-interpolator.973efdce.js"></script>
+</head>
+<body>
+<main>
+    <!-- Have to comment out the a-frame scene because it is making the window larger than the device. -->
+    <div id="scene_root">
+        <a-scene embedded="" vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true; antialias: true;" arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
+
+            <a-assets>
+                <img id="panthenol" src="panthenol.506d5325.png">
+                <img id="ylangylang" src="ylangylang.f6b8fb61.png">
+                <img id="step1" src="1.1113bbda.png">
+                <img id="step2" src="2.bfaf5357.png">
+                <img id="step3" src="3.6ba20e39.png">
+
+                <!-- Tab Menu Icons -->
+                <img id="benefits" src="benefits_icon.fcb152e2.png">
+                <img id="usage" src="usage_icon.760d9e08.png">
+                <img id="for-you" src="for_you_icon.48cc7cbd.png">
+                <img id="reviews" src="reviews_icon.6bf747e3.png">
+                <img id="check" src="check_icon.c22527bf.png">
+
+                <img id="reclabel" src="recommended_square.7769c088.png">
+                <img id="happy" src="happy_icon.722af686.png">
+                <img id="sad" src="sad_icon.6e6a2ac2.png">
+
+                <a-mixin id="body-text" text="align: left; anchor: left; baseline: top; width: 13.0; wrapCount: 35;
+               font: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.fnt;
+               fontImage: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.png;
+               value: hello there;">
+                </a-mixin>
+
+                <a-mixin id="menu-text" text="align: center; anchor: center; baseline: top; width: 13.0; wrapCount: 35;
+               font: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.fnt;
+               fontImage: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.png;
+               value: hello there;">
+                </a-mixin>
+            </a-assets>
+
+            <a-entity id="twistParent" multi-marker-rotation-interpolator="">
+
+                <a-marker id="mainMarker" type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/serum_1.patt" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5" size="1" rotation-trigger="tiltSideThreshold: 0.7; tiltForwardThreshold: 0.6; twistThreshold: 1.0;">
+                    <!--                    <a-plane position='0 -1 -0.75' width='1' height='1' rotation='90 0 0'-->
+                    <!--                             material='opacity: 0.1; side: double;color:white;'></a-plane>-->
+                </a-marker>
+
+                <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/antioxidant.patt" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5" size="0.5">
+                    <!--                    <a-plane position='0 -1 -0.75' width='1' height='1' rotation='90 0 0'-->
+                    <!--                             material='opacity: 0.1; side: double;color:white;'></a-plane>-->
+                </a-marker>
+
+                <a-marker type="pattern" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/performant.patt" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5" size="0.5">
+                    <!--                    <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0'-->
+                    <!--                             material='opacity: 0.5; side: double;color:white;'></a-plane>-->
+                </a-marker>
+
+            </a-entity>
+
+            <a-entity id="review-content" marker-tracker="marker: mainMarker; visibility-trigger: true; visibility-only: true;" visible="false" rotation="0 0 0" position="0 8 -50" scale="1.25 1.25 1.25">
+                <a-entity position="-3 5 0">
+                    <a-text value="ENJOYING SERUM?" mixin="body-text" position="0 0 0"></a-text>
+                    <a-entity id="review-product-menu" tab-menu="" position="0 -2.75 0">
+                        <a-entity icon-tab-menu-item="iconImage: #happy"></a-entity>
+                        <a-entity icon-tab-menu-item="iconImage: #sad"></a-entity>
+                    </a-entity>
+                </a-entity>
+            </a-entity>
+
+            <a-entity id="product-content" visible="false" rotation="0 0 0" position="-1 1.5 -5" scale="0.2 0.2 0.2">
+                <a-entity id="tab-menu" tab-menu="" position="6 6 0">
+                    <a-entity tabitem="textLabel: FOR YOU; iconImage: #for-you"></a-entity>
+                    <a-entity tabitem="textLabel: USAGE; iconImage: #usage"></a-entity>
+                    <a-entity tabitem="textLabel: BENEFITS; iconImage: #benefits"></a-entity>
+                </a-entity>
+
+                <a-entity id="contentFan" contentfan="radius: 5;" opacity="0.4" position="0 -3 0" rotation="0 0 0"></a-entity>
+
+            </a-entity>
+
+            <a-entity camera=""></a-entity>
+        </a-scene>
+    </div>
+    <script src="scenario3.40323e40.js"></script>
+</main>
+</body>
+</html>
