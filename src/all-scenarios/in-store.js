@@ -1,4 +1,4 @@
-import data_sources from './js/data_sources';
+import data_sources from '../js/data_sources';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -11,6 +11,7 @@ function ready(fn) {
 
 ready(() => {
   console.log('DOM is ready.');
+  console.log(data_sources);
   const $statusLabel = document.querySelector('#status_label');
   const $scanner = document.querySelector('#scanner');
   const $scanLine = document.querySelector('#scanner svg line');
@@ -88,7 +89,7 @@ ready(() => {
     });
   }
   
-  async function productRecognized(e) {
+  async function productRecognized(productID) {
     // TODO: recognize which product it is and cue up the data in A-Frame here
 
     // Kick off the animation to scan.
@@ -97,8 +98,10 @@ ready(() => {
     await pauseUntilEnd('a', $scanLine, 'blip');
     $statusLabel.textContent = 'Found!';
     $scanner.classList.add('complete');
+    $main.classList.add('serum'+productID);
     await pause(750);
     $main.classList.add('found');
+    $main.classList.remove('serum'+productID);
     $scanner.classList.remove('scanning');
     $scanner.classList.remove('complete');
   }
@@ -119,6 +122,9 @@ ready(() => {
     $scanner.classList.remove('scanning');
     $scanner.classList.remove('complete');
     $main.classList.remove('found');
+    $main.classList.remove('serum1');
+    $main.classList.remove('serum2');
+    $main.classList.remove('serum3');
     // ...which will slide up the tray.
     // Prevent changing the URL?
     return false;
@@ -171,6 +177,7 @@ ready(() => {
           console.log("Detected product ", productID);
 
           // call productRecognized
+          productRecognized(productID);
         }
       })
 
@@ -182,6 +189,7 @@ ready(() => {
           console.log("Lost product ", productID);
 
           // Call productOutOfView
+          productOutOfView(productID)
         }
       })
     })
@@ -231,6 +239,14 @@ ready(() => {
       body: "Also called B5 Vitamin, moisturizes the skin.",
       type: benefitsType
     }];
+  // let benefitsData = [
+  //   {
+  //     icon: "#warning",
+  //     title: "INTERACTIONS",
+  //     body: data_sources.contentstack.serums[0].contraindications[0],
+  //     type: benefitsType
+  //   }
+  // ];
 
   let makePanel = function(data) {
     // Build content panels with "data"
@@ -266,7 +282,7 @@ ready(() => {
     $backButton.addEventListener('click', backToExplore);
     $addButton.addEventListener('click', addToRoutine);
     // This is temporary, until we have onmarkerfound event...
-    $tray.addEventListener('click', productRecognized);
+    // $tray.addEventListener('click', productRecognized);
 
     // Swipe detection
     document.addEventListener('touchstart', handleTouchStart, false);
