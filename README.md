@@ -70,6 +70,12 @@ TBD
 
 All files in the `docs` directory on the `main` branch will be served at [https://spyglass.valtech.engineering](https://spyglass.valtech.engineering).
 
+### Building the latest for the site
+
+Running ```npm run build``` should put the latest into `docs/skincare/`. 
+
+Unfortunately, as of right now, `parcel build`'s output does not reference the paths correctly for CSS `link`s, `script` tags, and `img` elements — so you'll have to manually change all of those to add a `../` in front of the filename. (We aim to fix that this week.)
+
 ### Contributing
 
 This project is hosted on Github Pages and is using Jekyll to build the site. It is recommended that you use rbenv for your Ruby and GEM environment. Here is a decent [guide](https://jekyllrb.com/docs/installation/) if you need help setting up Ruby.
