@@ -69,6 +69,7 @@ async function getStackData() {
                   title
                   name
                   also_known_as
+                  description
                   imageConnection {
                     edges {
                       node {
@@ -124,6 +125,7 @@ async function getStackData() {
                 ingredient_edges[0].node.imageConnection.edges.length) {
               n.image_url = ingredient_edges[0].node.imageConnection.edges[0].node.url;
             }
+            n.description = ingredient_edges[0].node.description;
             if (item.concentration) n.concentration = item.concentration;
             // Add the contraindications 
             if (ingredient_edges[0].node.contraindications) {
@@ -180,8 +182,14 @@ data_sources.personalized = {
         'Sweet floral fragrance!'
       ],
       for_you: [
-        'Been using this product for 3 weeks with smoother skin? Consider dropping your concentration from 5% to 2% to get more value out of your purchase.',
-        'The UV index is super high today in your area! Make sure you make time to apply sunscreen at multiple times during the day after using this serum.'
+        {
+          title: 'Conserve and save',
+          text: 'You\'ve used Serum for 3 weeks with smoother skin? Consider increasing your concentration from 2% to 5% to increase cell turnover at an even faster rate.'
+        },
+        {
+          title: 'Shields up',
+          text: 'The UV index is super high today in your area! Make sure to apply sunscreen throughout the day after using this serum.'
+        }  
       ],
       ratings: {
         approval: 86,
@@ -204,8 +212,14 @@ data_sources.personalized = {
         'No allergens for you!'
       ],
       for_you: [
-        'Humidity forecasts are down for your location, so your skin may feel drier than usual, use a water based solution to hydrate your skin, then apply drops as needed.',
-        'If you’re feeling a bit stressed out, Borage Seed Oil also offers a calming effect in addition to helping maintain healthy skin.'
+        {
+          title: 'Feeling drier?',
+          text: 'Humidity forecasts are down for your location. Use a water-based solution to hydrate skin, then apply drops as needed.'
+        },
+        {
+          title: 'Relax naturally',
+          text: 'If you’re feeling a bit stressed out, know that Borage Seed Oil also creates a natural calming effect.'
+        }  
       ],
       ratings: {
         approval: 47,
@@ -228,8 +242,14 @@ data_sources.personalized = {
         'No allergens for you!'
       ],
       for_you: [
-        'Need more moisturizer? Here\'s how to add our face oils into your routine to better hydrate your skin…',
-        'The UV index is super high today in your area! Make sure you make time to apply sunscreen at multiple times during the day after using this serum.'
+        {
+          title: 'Next level',
+          text: 'Need more moisturizer? See our site to learn how to add our face oils into your routine to better hydrate your skin…'
+        },
+        {
+          title: 'Shields up',
+          text: 'The UV index is super high today in your area! Make sure to apply sunscreen throughout the day after using this serum.'
+        }  
       ],
       ratings: {
         approval: 86,
