@@ -15,10 +15,10 @@ ready(async function() {
   console.log( "DOM loaded" );
   await data_sources.getData();
   console.log(data_sources);
-  // some test content
-  let forYouType = "text-paragraph-bar";
-  let usageType = "textwithicon";
-  let benefitsType = "textwithicon"
+
+  const forYouType = "text-paragraph-bar";
+  const usageType = "textwithicon";
+  const benefitsType = "textwithicon";
 
   let scenarioData = [];
   
