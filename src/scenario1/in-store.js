@@ -9,8 +9,10 @@ function ready(fn) {
   }
 }
 
-ready(() => {
+ready(async () => {
   console.log('DOM is ready.');
+  // Wait for the Contentstack data to come back before proceeding!
+  await data_sources.getData();
   console.log(data_sources);
   const $statusLabel = document.querySelector('#status_label');
   const $scanner = document.querySelector('#scanner');
@@ -20,6 +22,7 @@ ready(() => {
   const $backButton = document.querySelector('a.back');
   const $addButton = document.querySelector('a.add');
   const $serumMarkers = document.querySelectorAll('a-marker');
+  let currentProduct = 0;
 
 
   // TODO: Jason please fix my selectors to be smarter T_T
@@ -91,6 +94,7 @@ ready(() => {
   
   async function productRecognized(productID) {
     // TODO: recognize which product it is and cue up the data in A-Frame here
+    currentProduct = productID;
 
     // Kick off the animation to scan.
     $statusLabel.innerHTML = 'Scanning...';
@@ -107,6 +111,8 @@ ready(() => {
   }
 
   function productOutOfView(e) {
+    currentProduct = 0;
+
     // Remove all classes from scanner
     $scanner.classList.remove('scanning');
     $scanner.classList.remove('complete');
@@ -117,6 +123,8 @@ ready(() => {
     // Prevent link from going anywhere
     e.stopPropagation();
     e.preventDefault();
+    // reset the currentProduct
+    currentProduct = 0;
     // Reset the label
     $statusLabel.innerHTML = 'Explore Serums';
     $scanner.classList.remove('scanning');
@@ -134,6 +142,8 @@ ready(() => {
     // Prevent link from going anywhere
     e.stopPropagation();
     e.preventDefault();
+
+    currentProduct = 0;
 
     $statusLabel.textContent = 'Explore Serums';
     $scanner.classList.remove('scanning');
@@ -189,64 +199,52 @@ ready(() => {
         console.log("Lost product ", productID);
 
         // Call productOutOfView
-        productOutOfView(productID)
+        productOutOfView(productID);
       }
     })
   });
 
-
-  // Fake data for scenario 1
-  let checkType = "numbered-text";
-  let checkData = [
-    {
-      title: "1",
-      body: "Your goal is moisturizing.",
-      type: checkType
-    }, {
-      title: "2",
-      body: "Better than leading competitors' products.",
-      type: checkType
-    }, {
-      title: "3",
-      body: "Cheaper than leading competitors' products.",
-      type: checkType
-    }, {
-      title: "4",
-      body: "No allergens for you!",
-      type: checkType
+  // Create data for scenario 1 for all three serums
+  const checkType = "numbered-text";
+  const reviewType = "numbered-text";
+  const ingredientsType = "textwithicon";
+  let scenarioData = [];
+  
+  function generateContentFanData() {
+    for (let i = 0; i < data_sources.contentstack.serums.length; i++) {
+      const csProduct = data_sources.contentstack.serums[i];
+      const localProduct = data_sources.personalized.serums[i];
+      const productData = {
+        why: [],
+        reviews: [],
+        warnings: []
+      }
+      for (let j = 0; j < localProduct.why.length; j++) {
+        productData.why.push({
+          title: ''+(j+1),
+          body: localProduct.why[j],
+          type: checkType
+        })
+      }
+      for (let j = 0; j < localProduct.ratings.reviews.length; j++) {
+        productData.reviews.push({
+          title: localProduct.ratings.reviews[j].title.toUpperCase(),
+          body: '\n' + localProduct.ratings.reviews[j].testimonial,
+          type: reviewType
+        });
+      }
+      for (let j=0; j < csProduct.contraindications.length; j++) {
+        productData.warnings.push({
+          icon: '#warning',
+          title: 'CONTRAINDICATIONS',
+          body: csProduct.contraindications[j],
+          type: ingredientsType
+        });
+      }
+      scenarioData.push(productData);
     }
-    ];
-
-  let reviewType = "numbered-text"
-  let reviewsData = [
-    {
-      title: "THE BEST SERUM OUT THERE",
-      body: "\n\"This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even.\"",
-      type: reviewType
-    }
-    ];
-
-  let benefitsType = "textwithicon"
-  let benefitsData = [
-    {
-      icon: "#ylangylang",
-      title: "YLANG YLANG",
-      body: "Sweet, exotic and floral, essential oil distilled from the fragrant flowers..",
-      type: benefitsType
-    }, {
-      icon: "#panthenol",
-      title: "PANTHENOL",
-      body: "Also called B5 Vitamin, moisturizes the skin.",
-      type: benefitsType
-    }];
-  // let benefitsData = [
-  //   {
-  //     icon: "#warning",
-  //     title: "INTERACTIONS",
-  //     body: data_sources.contentstack.serums[0].contraindications[0],
-  //     type: benefitsType
-  //   }
-  // ];
+  }
+  generateContentFanData();
 
   let makePanel = function(data) {
     // Build content panels with "data"
@@ -270,9 +268,9 @@ ready(() => {
 
     // Add content to content fan
     // At some point we can find a better way to sync this w/the tab menu
-    contentFan_1.buildWithContentElements([makePanel(benefitsData), makePanel(checkData), makePanel(reviewsData)]);
-    contentFan_2.buildWithContentElements([makePanel(benefitsData), makePanel(checkData), makePanel(reviewsData)]);
-    contentFan_3.buildWithContentElements([makePanel(benefitsData), makePanel(checkData), makePanel(reviewsData)]);
+    contentFan_1.buildWithContentElements([makePanel(scenarioData[0].warnings), makePanel(scenarioData[0].why), makePanel(scenarioData[0].reviews)]);
+    contentFan_2.buildWithContentElements([makePanel(scenarioData[1].warnings), makePanel(scenarioData[1].why), makePanel(scenarioData[1].reviews)]);
+    contentFan_3.buildWithContentElements([makePanel(scenarioData[2].warnings), makePanel(scenarioData[2].why), makePanel(scenarioData[2].reviews)]);
 
     // Add listeners for buttons
     $backButton.addEventListener('click', backToExplore);

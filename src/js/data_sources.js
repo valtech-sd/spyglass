@@ -2,7 +2,8 @@ import secrets from '../../samples/contentstack-integration/secrets';
 
 const data_sources = {
   contentstack: {},
-  personalized: {}
+  personalized: {},
+  getData: () => 0
 }
 
 async function getStackData() {
@@ -138,7 +139,7 @@ async function getStackData() {
         newData.serums[i] = entry;
       }
     }
-    
+    console.log(newData);
     return newData;
   }
 
@@ -157,8 +158,6 @@ async function getStackData() {
   data_sources.contentstack = productsByGraphQL;
 }
 
-getStackData();
-
 // This data would be stored in another database.
 data_sources.personalized = {
   other_product_images: {
@@ -175,9 +174,10 @@ data_sources.personalized = {
     {
       _id: 1,
       why: [
-        'Your skincare goals are anti-aging.',
-        'This serum hydrates and smooths the skin naturally to prevent wrinkles.',
-        'Sweet floral oils help refresh you in the morning and evening!'
+        'Your goal is anti-aging.',
+        'Better than leading competitors\' products.',
+        'Cheaper than leading competitors\' products.',
+        'Sweet floral fragrance!'
       ],
       for_you: [
         'Been using this product for 3 weeks with smoother skin? Consider dropping your concentration from 5% to 2% to get more value out of your purchase.',
@@ -189,7 +189,8 @@ data_sources.personalized = {
         reviews: [
           {
             user: 'yourfriendjen',
-            testimonial: ''
+            title: 'THE BEST SERUM OUT THERE',
+            testimonial: '"This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even."'
           }
         ]
       }
@@ -197,9 +198,10 @@ data_sources.personalized = {
     {
       _id: 2,
       why: [
-        'Your skincare goals include treating acne or irritated skin.',
-        'Borage Seed is a natural mellowing agent.',
-        'You\'re stressed out, friend.'
+        'Your goal is moisturizing.',
+        'Better than leading competitors\' products.',
+        'Borage seed is a natural mellowing agent.',
+        'No allergens for you!'
       ],
       for_you: [
         'Humidity forecasts are down for your location, so your skin may feel drier than usual, use a water based solution to hydrate your skin, then apply drops as needed.',
@@ -211,7 +213,8 @@ data_sources.personalized = {
         reviews: [
           {
             user: 'yourfriendjen',
-            testimonial: ''
+            title: 'THE BEST SERUM OUT THERE',
+            testimonial: '"This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even."'
           }
         ]
       }
@@ -219,9 +222,10 @@ data_sources.personalized = {
     {
       _id: 3,
       why: [
-        'Your skincare goals include smoother skin.',
-        'Of our three serums, this serum exfoliates and brightens, while also moisturizing, all of which dry skin needs.',
-        'Get more value with greater quantity at lower price than our competing brands.'
+        'Your goal is smoother skin.',
+        'Better than leading competitors\' products.',
+        'Cheaper than leading competitors\' products.',
+        'No allergens for you!'
       ],
       for_you: [
         'Need more moisturizer? Here\'s how to add our face oils into your routine to better hydrate your skin…',
@@ -233,7 +237,8 @@ data_sources.personalized = {
         reviews: [
           {
             user: 'yourfriendjen',
-            testimonial: ''
+            title: 'THE BEST SERUM OUT THERE',
+            testimonial: '"This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even."'
           }
         ]
       }
@@ -241,5 +246,8 @@ data_sources.personalized = {
   ],
 
 }
+
+data_sources.getData = getStackData;
+// console.log('inside data_sources.js and ',data_sources);
 
 export default data_sources;
