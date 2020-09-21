@@ -46,12 +46,12 @@ body {
   text-align: center;
   color: white;
   background-color: white;
+  min-width: calc(320px + 2em);
 }
 
 main {
   margin: 0 auto;
   text-align: left;
-  min-width: calc(320px + 2em);
 }
 h1 {
   font-size: 1.5em;
@@ -68,6 +68,7 @@ p {
 a {
   color: #2CF7F6;
   text-decoration: none;
+  word-wrap: break-word;
 }
 a:hover, a:active, a:visited {
   color: #2CF7F6;
@@ -98,6 +99,14 @@ aside.warning::before {
   padding: 0.2em 0 0 0.2em;
   text-align: center;
   margin-bottom: 2em;
+}
+
+aside.warning em {
+  background-color: #F7F536;
+  font-style: normal;
+  border: none;
+  border-radius: 4px 2px 3px 2px;
+  padding: 0 0.1em;
 }
 
 /* *** INSTRUCTIONS */
@@ -137,6 +146,10 @@ li a.sheet {
 li a.sheet img {
   padding: 0;
   border: solid 2px #2CF7F6;
+}
+/* have to do this because Safari doesn't wrap well */
+a.long span {
+  display: inline-block;
 }
 
 /* *** SECTIONS */
