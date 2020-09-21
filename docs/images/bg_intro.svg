@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg preserveAspectRatio="xMidYMin meet" viewBox="0 0 683 613" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>intro_bg</title>
+    <g id="intro_bg" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Oval-BG-Copy" transform="translate(0.000000, -62.000000)">
+            <circle id="Oval" fill="#F527F4" cx="346" cy="338" r="337"></circle>
+            <circle id="Oval" fill="#2CF7F6" cx="337" cy="337" r="337"></circle>
+            <circle id="Oval" fill="#22172F" cx="342" cy="337" r="337"></circle>
+        </g>
+    </g>
+</svg>

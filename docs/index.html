@@ -3,122 +3,81 @@
 <head>
   <meta charset="utf-8">
   <title>Project Spyglass - Contentstack + AR + Valtech</title>
-  <style>
-    /*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */html,body,p,ol,ul,li,dl,dt,dd,blockquote,figure,fieldset,legend,textarea,pre,iframe,hr,h1,h2,h3,h4,h5,h6{margin:0;padding:0}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}ul{list-style:none}button,input,select,textarea{margin:0}html{box-sizing:border-box}*,*::before,*::after{box-sizing:inherit}img{height:auto;max-width:100%}iframe{border:0}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}td:not([align]),th:not([align]){text-align:left}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="./spyglass.css" rel="stylesheet">
+  
+  <!-- facebook: https://developers.facebook.com/docs/sharing/webmasters -->
+  <meta property="og:url" content="https://spyglass.valtech.engineering/" />
+  <meta property="og:type" content="website" /> 
+  <meta property="og:title" content="Project Spyglass by Contentstack and Valtech" />
+  <meta property="og:description" content="A web augmented reality demo to help demystify skincare products, using the headless CMS Contentstack, built in three weeks." /> 
+  <meta property="og:image" content="https://spyglass.valtech.engineering/images/social_share.png" /> 
+  <meta property="og:image:width" content="2048" /> 
+  <meta property="og:image:height" content="2048" /> 
+  <!-- twitter: https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/summary -->
+  <meta name="twitter:card" content="summary_large_image" /> 
+  <meta name="twitter:site" content="@valtech" /> 
+  <meta name="twitter:creator" content="@valtech" /> 
+  <meta name="twitter:title" content="Project Spyglass by Contentstack and Valtech" />
+  <meta name="twitter:description" content="A web augmented reality demo to help demystify skincare products, using the headless CMS Contentstack, built in three weeks." /> 
+  <meta name="twitter:image" content="https://spyglass.valtech.engineering/images/social_share_wide.png" />
+  <meta name="twitter:image:alt" content="PROJECT SPYGLASS by Contentstack and Valtech." />
 
-    /* *** FONTS *** */
-    /* latin-ext */
-    @font-face {
-      font-family: 'DINOT-Regular';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: local('DINOT Regular'), local('DINOT-Regular'), url(./fonts/DINOT-Regular.woff2) format('woff2');
-      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U  +20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-    }
-    /* latin */
-    @font-face {
-      font-family: 'DINOT-Regular';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: local('DINOT Regular'), local('DINOT-Regular'), url(./fonts/DINOT-Regular.woff2) format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153,   +02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074,   +20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,   +FFFD;
-    }
-
-    body {
-      font-family: 'DINOT-Regular', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      font-size: 18px;
-      line-height: 1.4em;
-      text-align: center;
-      color: #222;
-      background-color: #eee;
-    }
-
-    main {
-      width: 80%;
-      margin: 0 auto;
-      text-align: left;
-      max-width: 50em;
-    }
-
-    h1 {
-      font-size: 2.5em;
-      text-align: center;
-      line-height: 1.4em;
-      padding: 1em 0 0.7em;
-      text-transform: uppercase;
-    }
-    h2 {
-      font-size: 1.6125em;
-      line-height: 1.4em;
-      padding: 1em 0 0.7em;
-    }
-    p {
-      padding-bottom: 0.7em;
-    }
-    a {
-      color: initial;
-      background-color: #aec6e6;
-      text-decoration: none;
-      padding: 0 0.1em;
-      border: none;
-      border-radius: 3px;
-    }
-    a:hover, a:active, a:visited {
-      color: initial;
-      text-decoration: none;
-    }
-    p.warning {
-      margin: 1em 0;
-      border-left: solid 3px #999;
-      background-color: #ccc;
-      color: #444;
-      padding: 1em;
-    }
-    ol {
-      padding: 1em 0;
-    }
-    li {
-      padding-bottom: 0.7em;
-    }
-    li img {
-      padding: 0.5em;
-      margin: 0 auto;
-      
-    }
-    section {
-      max-width: 25em;
-      margin: 0 auto;
-    }
-
-    p.fin {
-      padding: 2em;
-      text-align: center;
-      letter-spacing: 0.04em;
-    }
-  </style>
+  <!-- favicon generics -->
+  <link rel="icon" href="/images/favicons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="/images/favicons/favicon-57.png" sizes="57x57">
+  <link rel="icon" href="/images/favicons/favicon-76.png" sizes="76x76">
+  <link rel="icon" href="/images/favicons/favicon-96.png" sizes="96x96">
+  <link rel="icon" href="/images/favicons/favicon-128.png" sizes="128x128">
+  <link rel="icon" href="/images/favicons/favicon-192.png" sizes="192x192">
+  <link rel="icon" href="/images/favicons/favicon-228.png" sizes="228x228">
+  <!-- Android -->
+  <link rel="shortcut icon" sizes="196x196" href=“/images/favicons/favicon-196.png">
+  <!-- iOS -->
+  <link rel="apple-touch-icon" href="/images/favicons/favicon-120.png" sizes="120x120">
+  <link rel="apple-touch-icon" href="/images/favicons/favicon-152.png" sizes="152x152">
+  <link rel="apple-touch-icon" href="/images/favicons/favicon-180.png" sizes="180x180">
 </head>
 <body>
 <main>
-  <h1>Project Spyglass</h1>
-  <p>Spyglass is a 3-week, augmented reality (AR) proof of concept (POC) by <a href="https://www.valtech.com/" rel="nofollow">Valtech</a> and <a href="https://contentstack.com/">Contentstack</a>.</p>
-  <p>The Spyglass POC uses AR to help demystify skincare products in a retail and home setting. We explain much more in <a href="https://www.contentstack.com/blog/all-about-headless/how-to-concept-and-pitch-an-augmented-reality-demo-in-one-week">the behind-the-scenes blogposts</a>.</p> 
-  <p class="warning">⚠️ We're still inside those three weeks, so this repository is <strong>very much</strong> in-progress. Right now, the demo focuses on the second of three scenarios, when a user has taken the product home for the first time and is learning about it.</p>
-  <section>
-  <h2>Want to test the in-progress build?</h2>
+  <section id="intro">
+    <h1>
+    <img src="./images/spyglass_logo.svg" alt="Project Spyglass logo" class="logo spyglass"></h1>
+    <p class="byline">by 
+      <a href="https://contentstack.com/" target="_blank"><img src="./images/contentstack_logo.svg" alt="Contentstack" class="logo contentstack"></a> 
+      <span>&amp;</span> 
+      <a href="https://valtech.com/" target="_blank"><img src="./images/valtech_logo.svg" alt="Valtech" class="logo valtech"></a>
+    </p>
+    <h1>Welcome to <span>Project Spyglass!</span></h1>
+    <p>Spyglass is a 3-week, augmented reality (AR) proof of concept (POC) by <a href="https://www.valtech.com/" rel="nofollow">Valtech</a> and <a href="https://contentstack.com/">Contentstack</a>.</p>
+    <p>The Spyglass POC uses AR to help demystify skincare products in a retail and home setting. We explain much more in <a href="https://www.contentstack.com/blog/all-about-headless/how-to-concept-and-pitch-an-augmented-reality-demo-in-one-week">the behind-the-scenes blogposts</a>.</p> 
+  </section>
+  <aside class="warning">
+    This repository is <em>very much</em> a proof of concept. You may find some things still do not work as you might as expect. Right now, the demo has three scenarios, but they are not seamlessly connected to each other.
+  </aside>
+  <section id="instructions">
+  <h1>Try it now:</h1>
   <ol>
-    <li>Download and print <a href="./images/Serum_Label_For_Print_All.jpg">this sheet of bottle labels</a>.</li>
-    <li>Cut out the label for <strong>Serum No. 1</strong> and wrap it around a small bottle in your home.</li>
+    <li>Download and print a sheet of bottle labels. 
+      <p>
+      <a href="./images/Serum_Label_Letter.pdf" class="sheet" download><img src="./images/LabelsLetterPreview.png" alt="Letter-sized labels as PDF"></a>
+      <a href="./images/Serum_Label_A4.pdf" class="sheet" download><img src="./images/LabelsA4Preview.png" alt="A4-sized labels as PDF"></a>
+      </p>
+    </li>
+    <li>Cut out the labels and wrap them around small bottles in your home. (We used 30mL eyedropper bottles.)</li>
     <li>
       Open the demo on your phone or tablet:<br>
-      <a href="./skincare/">https://spyglass.valtech.engineering/skincare/</a><br>
+      <a href="./skincare/" class="long">https://spyglass.valtech.engineering/<span>skincare/</span></a><br>
       <img src="./images/qr_spyglass_skincare.gif" alt="(QR code)"></li>
     <li>Hold the bottle in front of your phone's camera and rotate it.</li>
   </ol>
   </section>
+  <!-- <section id="video">
 
-  <p class="fin">Stay tuned for future updates...</p>
+  </section> -->
+  <section id="credits">
+    <p class="byline">by <a href="https://contentstack.com/" target="_blank"><img src="./images/contentstack_logo.svg" alt="Contentstack" class="logo contentstack"></a> <span>&</span> <a href="https://contentstack.com" target="_blank"><img src="./images/valtech_logo.svg" alt="Valtech" class="logo valtech"></a></p>
+  </section>
 </main>
 </body>
 </html>

@@ -1,0 +1,241 @@
+ /*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */html,body,p,ol,ul,li,dl,dt,dd,blockquote,figure,fieldset,legend,textarea,pre,iframe,hr,h1,h2,h3,h4,h5,h6{margin:0;padding:0}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}ul{list-style:none}button,input,select,textarea{margin:0}html{box-sizing:border-box}*,*::before,*::after{box-sizing:inherit}img{height:auto;max-width:100%}iframe{border:0}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}td:not([align]),th:not([align]){text-align:left}
+
+/* *** FONTS *** */
+/* latin-ext */
+@font-face {
+  font-family: 'DINOT-Light';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local('DINOT Light'), local('DINOT-Light'), url(./fonts/DINOT-Light.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U  +20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'DINOT-Light';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local('DINOT Light'), local('DINOT-Light'), url(./fonts/DINOT-Light.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153,   +02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074,   +20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,   +FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'DINOT-Light';
+  font-style: bold;
+  font-weight: 600;
+  font-display: swap;
+  src: local('DINOT Bold'), local('DINOT-Bold'), url(./fonts/DINOT-Bold.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U  +20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'DINOT-Light';
+  font-style: bold;
+  font-weight: 600;
+  font-display: swap;
+  src: local('DINOT Bold'), local('DINOT-Bold'), url(./fonts/DINOT-Bold.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153,   +02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074,   +20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,   +FFFD;
+}
+
+/* *** GLOBAL */
+body {
+  font-family: 'DINOT-Light', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 18px;
+  line-height: 1.4em;
+  text-align: center;
+  color: white;
+  background-color: white;
+  min-width: calc(320px + 2em);
+}
+
+main {
+  margin: 0 auto;
+  text-align: left;
+}
+h1 {
+  font-size: 1.5em;
+  font-weight: bold;
+  line-height: 1.2em;
+  padding: 1em 0 0.7em;
+}
+h1 span {
+  white-space: pre;
+}
+p {
+  padding-bottom: 0.7em;
+}
+a {
+  color: #2CF7F6;
+  text-decoration: none;
+  word-wrap: break-word;
+}
+a:hover, a:active, a:visited {
+  color: #2CF7F6;
+  text-decoration: none;
+}
+h1, p, ol, aside {
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+/* *** WARNING */
+
+aside.warning {
+  color: black;
+  padding: 2em 0 3em;
+}
+
+aside.warning::before {
+  display: block;
+  content: '!';
+  text-align: center;
+  color: white;
+  font-size: 0.77778em;
+  background: transparent url(./images/circle_warning.svg) scroll no-repeat center center;
+  background-size: 100% 100%;
+  height: 2.2142857em;
+  width: 2.2142857em;
+  padding: 0.2em 0 0 0.2em;
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+aside.warning em {
+  background-color: #F7F536;
+  font-style: normal;
+  border: none;
+  border-radius: 4px 2px 3px 2px;
+  padding: 0 0.1em;
+}
+
+/* *** INSTRUCTIONS */
+
+ol {
+  padding: 1em 0;
+  counter-reset: directioncount;
+}
+li {
+  padding-bottom: 2em;
+  list-style: none;
+  position: relative;
+}
+li::before {
+  display: block;
+  counter-increment: directioncount;
+  content: "0" counter(directioncount);
+  font-size: 0.77778em;
+  background: transparent url(./images/circle_number.svg) scroll no-repeat center center;
+  background-size: 100% 100%;
+  height: 2.2142857em;
+  width: 2.2142857em;
+  padding: 0.2em 0 0 0.2em;
+  text-align: center;
+  margin-bottom: 0.5em;
+}
+li img {
+  padding: 0.5em 0 0;
+  margin: 0 auto;
+}
+li a.sheet {
+  display: inline-block;
+  width: 49%;
+  vertical-align: top;
+  padding: 0.5em 0.5em 0 0;
+}
+li a.sheet img {
+  padding: 0;
+  border: solid 2px #2CF7F6;
+}
+/* have to do this because Safari doesn't wrap well */
+a.long span {
+  display: inline-block;
+}
+
+/* *** SECTIONS */
+
+section {
+  position: relative;
+}
+#intro {
+  background: transparent url(./images/bg_intro.svg) scroll no-repeat center top;
+  background-size: cover;
+  padding: 0 0 4em;
+}
+@media screen and (min-width: 656px) {
+  #intro {
+    background-size: 100% 100%;
+  }
+}
+#instructions {
+  background: transparent url(./images/bg_instructions.svg) scroll no-repeat center top;
+  background-size: cover;
+  z-index: 5;
+  padding: 3em 0;
+}
+@media screen and (min-width: 1154px) {
+  #instructions {
+    background-size: 100% 100%;
+  }
+}
+#credits {
+  background: transparent url(./images/bg_credits.svg) scroll no-repeat center bottom;
+  background-size: cover;
+  min-height: 25.77778em;
+  margin-top: -7em;
+  z-index: 0;
+  padding: 9em 0 0 0;
+}
+@media screen and (min-width: 517px) {
+  #credits {
+    background-size: 100% 100%;
+  }
+}
+
+/* *** INTRO */
+
+.logo.spyglass {
+  display: block;
+  width: 108px;
+}
+
+p.byline {
+  text-transform: uppercase;
+}
+p.byline span {
+  visibility: collapse;
+  opacity: 0;
+}
+
+#intro {
+  padding: 0 0 3em;
+}
+#intro p.byline {
+  font-size: 0.444444em;
+  position: relative;
+}
+#intro p.byline img {
+  display: inline-block;
+  vertical-align: middle;
+}
+#intro .logo.contentstack {
+  width: 11.625em;
+  padding: 0.2em 0.2em;
+  margin-left: 1em;
+}
+#intro .logo.valtech {
+  width: 6.875em;
+  padding: 0.2em 0.2em;
+}
+
+/* *** CREDITS */
+
+#credits p.byline {
+  padding: 1.5em 0 0;
+}
+#credits a {
+  display: block;
+}
+#credits .logo.contentstack {
+  padding: 1em 0 0;
+}
