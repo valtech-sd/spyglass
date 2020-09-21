@@ -88,7 +88,7 @@ async function getStackData() {
     }
   }`;
   function rearrangeAPIResponse(response) {
-    let newData = [];
+    let newData = {};
     if (response?.data?.all_product) {
       newData = {'serums': [...response.data.all_product.items]};
       for (let i = 0; i < newData.serums.length; i++) {
@@ -142,6 +142,8 @@ async function getStackData() {
       }
     }
     console.log(newData);
+    // Sort the serums
+    newData.serums.sort((a,b) => a._id - b._id);
     return newData;
   }
 
