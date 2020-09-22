@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Valtech + Contentstack + AR</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="../main.6cb770a1.css" rel="stylesheet">
+    <link href="../main.cb1edd52.css" rel="stylesheet">
     <!-- A-Frame -->
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <!--    <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>-->
@@ -12,22 +12,24 @@
     <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>-->
     <!-- A-Frame version of AR.js with marker tracking + location-based AR -->
     <!--    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>-->
-    <script src="https://raw.githack.com/aolivier/AR.js/alex/root-2/aframe/build/aframe-ar.js"></script>
+    <!-- Have to host this custom AR.js build on CDN, because Parcel does not allow you to ignore already-transpiled files? -->
+    <!-- It is originally at github.com/aolivier/AR.js/alex/root-2/aframe/build/aframe-ar.js -->
+    <script src="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt53c4bd908b2e7ed5/5f67ccc8a4d7b56a23866977/aframe-ar.js"></script>
     <!--    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>-->
     <!--    <script src="../components/raycaster-listen.js"></script>-->
-    <script src="../marker-tracker-no-rotation.3da89084.js"></script>
-    <script src="../content-type.a1d40da1.js"></script>
-    <script src="../numbered-text.e88926dd.js"></script>
-    <script src="../text-with-icon.2bc4a5a4.js"></script>
-    <script src="../webcam-overlay.b9928355.js"></script>
-    <script src="../content-group.fbec0f86.js"></script>
-    <script src="../tab-menu-item.9d28d19e.js"></script>
-    <script src="../icon-tab-menu-item.ed912b87.js"></script>
-    <script src="../tab-menu.8bbcf9b6.js"></script>
-    <script src="../content-fan.d8144373.js"></script>
-    <script src="../smoothed-marker-tracker.85cdce73.js"></script>
-    <script src="../adjusted-rotation.e1468c87.js"></script>
-    <script src="../multi-marker-rotation-interpolator.973efdce.js"></script>
+    <script src="../marker-tracker-no-rotation.572346fb.js"></script>
+    <script src="../content-type.896b0f9e.js"></script>
+    <script src="../numbered-text.05f93e69.js"></script>
+    <script src="../text-with-icon.22278198.js"></script>
+    <script src="../webcam-overlay.7a80f8a3.js"></script>
+    <script src="../content-group.aa5fc31e.js"></script>
+    <script src="../tab-menu-item.916c1ef0.js"></script>
+    <script src="../icon-tab-menu-item.998a0e39.js"></script>
+    <script src="../tab-menu.41f7b7c1.js"></script>
+    <script src="../content-fan.ae1d576d.js"></script>
+    <script src="../smoothed-marker-tracker.152e2cc6.js"></script>
+    <script src="../adjusted-rotation.64dffd76.js"></script>
+    <script src="../multi-marker-rotation-interpolator.a2ade3fb.js"></script>
 </head>
 <body>
 <main>
@@ -36,37 +38,38 @@
         <a-scene embedded="" vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true; antialias: true;" arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
 
             <a-assets>
-                <img id="panthenol" src="../panthenol.506d5325.png">
-                <img id="ylangylang" src="../ylangylang.f6b8fb61.png">
-                <img id="step1" src="../1.1113bbda.png">
-                <img id="step2" src="../2.bfaf5357.png">
-                <img id="step3" src="../3.6ba20e39.png">
+                <img id="panthenol" src="../panthenol.3d357d1d.png">
+                <img id="ylangylang" src="../ylangylang.41566ffe.png">
+                <img id="warning" src="../warning.8208f5b7.png">
+                <img id="step1" src="../1.9be96cb3.png">
+                <img id="step2" src="../2.2c7fcc9e.png">
+                <img id="step3" src="../3.8e3e98a2.png">
 
                 <!-- Tab Menu Icons -->
-                <img id="benefits" src="../benefits_icon.fcb152e2.png">
-                <img id="usage" src="../usage_icon.760d9e08.png">
-                <img id="for-you" src="../for_you_icon.48cc7cbd.png">
-                <img id="reviews" src="../reviews_icon.6bf747e3.png">
-                <img id="check" src="../check_icon.c22527bf.png">
+                <img id="benefits" src="../benefits_icon.de076cd1.png">
+                <img id="usage" src="../usage_icon.e78c6330.png">
+                <img id="for-you" src="../for_you_icon.ffc0ba20.png">
+                <img id="reviews" src="../reviews_icon.41efad21.png">
+                <img id="check" src="../check_icon.f3205693.png">
 
-                <img id="reclabel" src="../recommended_square.7769c088.png">
+                <img id="reclabel" src="../recommended_square.beca367a.png">
 
                 <a-mixin id="body-text" text="align: left; anchor: left; baseline: top; width: 13.0; wrapCount: 35;
-               font: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.fnt;
-               fontImage: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.png;
+               font: https://assets.contentstack.io/v3/assets/blte63f7056be4da683/bltd5d203e4c4450857/5f67d680128a9c4e4d50b7d4/din_ot.fnt;
+               fontImage: https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt8bfb56d15a62feaf/5f67d6802b93e84e4c329976/din_ot.png;
                value: hello there;">
                 </a-mixin>
 
                 <a-mixin id="menu-text" text="align: center; anchor: center; baseline: top; width: 13.0; wrapCount: 35;
-               font: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.fnt;
-               fontImage: https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/din_ot.png;
+               font: https://assets.contentstack.io/v3/assets/blte63f7056be4da683/bltd5d203e4c4450857/5f67d680128a9c4e4d50b7d4/din_ot.fnt;
+               fontImage: https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt8bfb56d15a62feaf/5f67d6802b93e84e4c329976/din_ot.png;
                value: hello there;">
                 </a-mixin>
             </a-assets>
 
 
             <!--Serum 1 Bottle-->
-            <a-marker id="serum_1_marker" type="pattern" adjusted-rotation="" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/serum_1.patt" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5" size="1">
+            <a-marker id="serum_1_marker" type="pattern" adjusted-rotation="" preset="custom" url="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt8e856b85781bfdfd/5f5b94b5025cc24b5e0a0b46/serum_1.patt" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5" size="1">
 
                 <a-plane material="shader: gaussian-blur" webcam-overlay-helper="" opacity="0.4" rotation="0 0 0" position="0.0 0 -0.25" width="0.55" height="1.0&quot;">
                     <a-circle mask="" position="0 0 0.375" radius="0.75" rotation="90 0 0" material="opacity: 0.0; side: double;"></a-circle>
@@ -74,7 +77,7 @@
             </a-marker>
 
             <!--Serum 2 Bottle-->
-            <a-marker id="serum_2_marker" type="pattern" adjusted-rotation="" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/serum_2.patt" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5" size="1">
+            <a-marker id="serum_2_marker" type="pattern" adjusted-rotation="" preset="custom" url="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/bltcb4306bd3d80bb15/5f67d53aa4d7b56a2386697b/serum_2.patt" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5" size="1">
 
                 <a-plane material="shader: gaussian-blur" webcam-overlay-helper="" opacity="0.4" rotation="0 0 0" position="0.0 0 -0.25" width="0.55" height="1.0&quot;">
                     <a-circle mask="" position="0 0 0.375" radius="0.75" rotation="90 0 0" material="opacity: 0.0; side: double;"></a-circle>
@@ -83,7 +86,7 @@
 
 
             <!--Serum 3 Bottle-->
-            <a-marker id="serum_3_marker" type="pattern" adjusted-rotation="" preset="custom" url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/aolivier/file_hosting/master/serum_3.patt" smooth="true" smoothCount="15" smoothTolerance=".01" smoothThreshold="5" size="1">
+            <a-marker id="serum_3_marker" type="pattern" adjusted-rotation="" preset="custom" url="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt5f0f3131daf353de/5f67d53bad6ff34788c04e94/serum_3.patt" smooth="true" smoothCount="15" smoothTolerance=".01" smoothThreshold="5" size="1">
 
                 <a-plane material="shader: gaussian-blur" webcam-overlay-helper="" opacity="0.4" rotation="0 0 0" position="0.0 0 -0.25" width="0.55" height="1.0&quot;">
                     <a-circle mask="" position="0 0 0.375" radius="0.75" rotation="90 0 0" material="opacity: 0.0; side: double;"></a-circle>
@@ -235,7 +238,7 @@
             </g>
         </svg>
     </section>
-    <script src="../in-store.c13b7029.js"></script>
+    <script src="../in-store.62f48f78.js"></script>
 </main>
 </body>
 </html>
