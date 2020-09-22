@@ -148,6 +148,60 @@ body {
   opacity: 0.2;
 }
 
+.serum1 #tray.step-4 #serum1,
+.serum2 #tray.step-4 #serum2,
+.serum3 #tray.step-4 #serum3 {
+  opacity: 1;
+  transform-origin: 50% 50%;
+  transform: scale(0.75,0.75) translate(22px, 175px);
+}
+#tray.step-4 #serum_check {
+  opacity: 1;
+}
+.serum1 #tray.step-4 #serum2,
+.serum1 #tray.step-4 #serum3,
+.serum2 #tray.step-4 #serum1,
+.serum2 #tray.step-4 #serum3,
+.serum3 #tray.step-4 #serum1,
+.serum3 #tray.step-4 #serum2 {
+  opacity: 0;
+}
+#tray.step-4 #serum {
+  /* transform: translate(-130px -15px); */
+  opacity: 0;
+}
+#tray.step-4 #moisturizer {
+  /* transform-origin: 50% 50%;
+  transform: translate(169.5px, 29.5px); */
+  cx: 238px;
+  cy: 351px;
+  r: 6px;
+  stroke: #ffffff;
+  fill: #000000;
+}
+#tray.step-4  #moisturizer0 {
+  opacity: 0;
+}
+#tray.step-4 #moisturizer1,
+#tray.step-4 #moisturizer7 {
+  opacity: 1;
+}
+#tray.step-4 #moisturizer1 image,
+#tray.step-4 #moisturizer7 image {
+  width: 80px;
+}
+#tray.step-4 #moisturizer1 ellipse,
+#tray.step-4 #moisturizer7 ellipse {
+  r: 38px;
+  
+}
+#tray.step-4 #moisturizer1 {
+  transform: translate(151px, 221px);
+}
+#tray.step-4 #moisturizer7 {
+  transform: translate(232px, 216px);
+}
+
 /* *** S1 BUTTONS *** */
 a {
   text-decoration: none;
