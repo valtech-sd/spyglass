@@ -495,16 +495,17 @@ ready(async () => {
   async function productRecognized(productID) {
     // TODO: recognize which product it is and cue up the data in A-Frame here
     currentProduct = productID; // Kick off the animation to scan.
+    // $statusLabel.innerHTML = 'Scanning...';
+    // $scanner.classList.add('scanning');
+    // await pauseUntilEnd('a', $scanLine, 'blip');
 
-    $statusLabel.innerHTML = 'Scanning...';
-    $scanner.classList.add('scanning');
-    await pauseUntilEnd('a', $scanLine, 'blip');
-    $statusLabel.textContent = 'Found!';
+    $statusLabel.innerHTML = `Found Serum No. ${productID}!`;
     $scanner.classList.add('complete');
     $main.classList.add('serum' + productID);
-    await pause(750);
+    await pause(900);
     $main.classList.add('found');
-    $main.classList.remove('serum' + productID);
+    await pauseUntilEnd('t', $tray, 'bottom'); // $main.classList.remove('serum'+productID);
+
     $scanner.classList.remove('scanning');
     $scanner.classList.remove('complete');
   }
@@ -513,9 +514,11 @@ ready(async () => {
     currentProduct = 0; // Remove all classes from scanner
 
     $scanner.classList.remove('scanning');
-    $scanner.classList.remove('complete'); // Reset the label
+    $scanner.classList.remove('complete');
+    let productLine = 'Serums';
+    if ($tray.classList.contains('step-4')) productLine = 'Moisturizers'; // Reset the label
 
-    $statusLabel.innerHTML = 'Explore Serums';
+    $statusLabel.innerHTML = 'Exploring ' + productLine;
   }
 
   function backToExplore(e) {
@@ -525,7 +528,7 @@ ready(async () => {
 
     currentProduct = 0; // Reset the label
 
-    $statusLabel.innerHTML = 'Explore Serums';
+    $statusLabel.innerHTML = 'Exploring Serums';
     $scanner.classList.remove('scanning');
     $scanner.classList.remove('complete');
     $main.classList.remove('found');
@@ -541,16 +544,15 @@ ready(async () => {
     // Prevent link from going anywhere
     e.stopPropagation();
     e.preventDefault();
-    currentProduct = 0;
-    $statusLabel.textContent = 'Explore Serums';
+    $statusLabel.textContent = `Serum No. ${currentProduct} added!`;
     $scanner.classList.remove('scanning');
     $scanner.classList.remove('complete');
+    $tray.classList.remove('step-3'); // currentProduct = 0;
+
     $main.classList.remove('found');
-    await pauseUntilEnd('transition', $tray, 'bottom');
-    $statusLabel.textContent = 'Explore Moisturizers';
-    $tray.classList.remove('step-3');
+    await pause(1300);
+    $statusLabel.textContent = 'Exploring Moisturizers';
     $tray.classList.add('step-4');
-    await pause(1000);
     console.log('moving to scenario 2'); // TODO: Add listener when click on going-home interstitial
 
     $main.classList.add('going-home'); // Prevent changing the URL?
