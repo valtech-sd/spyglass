@@ -120,7 +120,7 @@ ready(async () => {
     let productLine = 'Serums';
     if ($tray.classList.contains('step-4')) productLine = 'Moisturizers';
     // Reset the label
-    $statusLabel.innerHTML = 'Explore '+productLine;
+    $statusLabel.innerHTML = 'Exploring '+productLine;
   }
   function backToExplore(e) {
     // Prevent link from going anywhere
