@@ -1,11 +1,17 @@
 # Spyglass
 
 A Valtech and Contentstack project.
-This readme is in progress :)
+
+[**spyglass.valtech.engineering**](https://spyglass.valtech.engineering)
+
+This readme is in progress! 🚧  
+Please pardon the dust. 
 
 ## Background
 
-Spyglass is an AR-enabled demo that will use AR-tracking to display and control different types of content pulled from Contentstack (hand waving).
+Project Spyglass is a web-based augmented reality demo using [Contentstack](https://www.contentstack.com) as a headless content management system. Our current demo is focused on retail skincare products.
+
+[![A video explaining Spyglass.](https://spyglass.valtech.engineering/images/demo_poster.jpg)](https://spyglass.valtech.engineering/images/demo.mp4)
 
 ##### High-level Dev Tasks
 * Pull data from Contentstack
@@ -15,27 +21,21 @@ Spyglass is an AR-enabled demo that will use AR-tracking to display and control 
 
 
 ## Libraries
-We are currently using [AR.js](https://ar-js-org.github.io/AR.js-Docs/) and [A-Frame](https://aframe.io/) for image / marker-based tracking and displaying graphics. A-Frame uses Three.js under the hood, but provides some convenient features like an entity-component system and a handy way to inspect a scene in the browser. It's based on HTML tags, but can be manipulated programatically as well.
+We are using [AR.js](https://ar-js-org.github.io/AR.js-Docs/) and [A-Frame](https://aframe.io/) for image / marker-based tracking and displaying graphics. A-Frame uses Three.js under the hood, but provides some convenient features like an entity-component system and a handy way to inspect a scene in the browser. It's based on HTML tags, but can be manipulated programatically as well.
 
-AR.js has separate builds for both Three.js and A-Frame compatibliity. In addition, there are separate builds for accessing the marker tracking and image tracking (NFT) features. Add versions of AR.js are included in script tags in our inital `index.html` file (but some are commented out).
+AR.js has separate builds for both Three.js and A-Frame compatibliity. In addition, there are separate builds for accessing the marker tracking and image tracking (NFT) features. Additional versions of AR.js are included in script tags in our inital `index.html` file (but some are commented out).
 
 ##### Notes
 * [Three.js has an NPM module](https://www.npmjs.com/package/three)
 * [A-Frame has an NPM module](https://www.npmjs.com/package/aframe)
-* AR.js's NPM module is currently non-functional...and including some things as modules and some things as scripts is not playing nicely at the moment (to be examined)
+* AR.js's NPM module is currently non-functional...and including some things as modules and some things as scripts is not playing nicely at the moment *(to be examined)*
 
 ## Setup
-
-##### Our first example
-We have a basic app running in `index.html` and `index.js`. All we're doing at the moment is showing a sample A-Frame scene with some cool shapes.
-
-##### Getting Ready
-As of now, this library has an npm package file, but no NPM packages! Blame this on AR.js not having a working module at the moment. Everything is included in script tags in our `index.html` file.
 
 ##### Before starting, run:
 
 ```npm install``` 
-to install currently non-existent dependencies
+to install dependencies. (We currently only have development dependencies, as the libraries that we are using are hosted on CDNs.)
 
 ##### To run our initial dev app:
 ```npm run dev``` to run a script that will serve the app on `https://localhost:1234` with self-signed certificates. You may need to enable self-signed certificates in your browser's security settings. HTTPS is required because we are accessing the device's camera.
@@ -61,10 +61,13 @@ If you need to _actively develop_ while sharing, you may want to temporarily poi
 
 ## Adding Samples
 
-We plan to add sample projects to a separate directory, so that they can exist as a reference. We may also add additional script commands for running different samples. More on this later, when we actually create our first sample.
+The `samples` folder contains the code sketches we created as we were building this project. We plan to clean these up a bit, but they exist here as a reference. You can launch them individually with the `dev:` scripts in the `package.json`.
 
 ## Adding images / markers to track
-TBD
+Originally we were going to keep the marker files in this repo (and you can still find them in the `src/markers` folder), but we are now hosting them on Contentstack as assets. They are served as `.patt.txt` to ensure they have a `text/?` content type, rather than `application/octet-stream`. *To be added here: notes on how to generate your own custom markers.*
+
+## Creating your own stack
+*To be added here: notes on how to import our content types into your own Contentstack account to create a new stack to use with a fork of this code.*
 
 ## Live Site and Deployment
 
@@ -74,7 +77,7 @@ All files in the `docs` directory on the `main` branch will be served at [https:
 
 Running ```npm run build``` should put the latest into `docs/skincare/`. 
 
-Unfortunately, as of right now, `parcel build`'s output does not reference the paths correctly for CSS `link`s, `script` tags, and `img` elements — so you'll have to manually change all of those to add a `../` in front of the filename. (We aim to fix that this week.)
+Unfortunately, as of right now, `parcel build`'s output does not reference the paths correctly for CSS `link`s, `script` tags, and `img` elements — so you'll have to manually change all of those to add a `../` in front of the filename. (We aim to fix that in the future, but for now, it's an extra step you must do every time after `npm run build`.)
 
 ### Contributing
 
