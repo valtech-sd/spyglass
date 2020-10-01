@@ -227,6 +227,9 @@ p.byline span {
   width: 6.875em;
   padding: 0.2em 0.2em;
 }
+#intro .demo {
+  width: 100%;
+}
 
 /* *** CREDITS */
 
