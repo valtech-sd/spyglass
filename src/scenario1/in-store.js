@@ -1,4 +1,5 @@
 import data_sources from '../js/data_sources';
+import buildImgAssets from '../utils/buildImgAssets';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -13,7 +14,11 @@ ready(async () => {
   console.log('DOM is ready.');
   // Wait for the Contentstack data to come back before proceeding!
   await data_sources.getData();
-  console.log(data_sources);
+
+  // build img a-assets
+  const assetContainer = document.querySelector('a-assets');
+  buildImgAssets(data_sources, assetContainer);
+
   const $statusLabel = document.querySelector('#status_label');
   const $scanner = document.querySelector('#scanner');
   const $scanLine = document.querySelector('#scanner svg line');
@@ -23,7 +28,6 @@ ready(async () => {
   const $addButton = document.querySelector('a.add');
   const $serumMarkers = document.querySelectorAll('a-marker');
   let currentProduct = 0;
-
 
   // TODO: Jason please fix my selectors to be smarter T_T
 

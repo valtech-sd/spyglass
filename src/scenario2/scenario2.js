@@ -1,4 +1,5 @@
 import data_sources from '../js/data_sources';
+import buildImgAssets from '../utils/buildImgAssets';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -15,6 +16,10 @@ ready(async function() {
   console.log( "DOM loaded" );
   await data_sources.getData();
   console.log(data_sources);
+
+  // build img a-assets
+  const assetContainer = document.querySelector('a-assets');
+  buildImgAssets(data_sources, assetContainer);
 
   const usageType = "textwithicon";
   const benefitsType = "textwithicon";
