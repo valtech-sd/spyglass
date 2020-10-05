@@ -1,4 +1,5 @@
 import data_sources from '../js/data_sources';
+import getAssetURLs from '../utils/getAssetURLs';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -16,7 +17,19 @@ ready(async function() {
   await data_sources.getData();
   console.log(data_sources);
 
-  const forYouType = "text-paragraph-bar";
+  // get dynamic URLs from data response
+  const { ingredientURLs } = getAssetURLs(data_sources);
+
+  // build and append img elements with ingredient URLs
+  const aAssetContainer = document.querySelector('a-assets');
+
+  Object.keys(ingredientURLs).forEach(domId => {
+    const imgEl = document.createElement('img'); 
+    imgEl.setAttribute('id', domId);
+    imgEl.setAttribute('src', ingredientURLs[domId]);
+    aAssetContainer.prepend(imgEl);
+  })
+
   const usageType = "textwithicon";
   const benefitsType = "textwithicon";
 
@@ -30,13 +43,6 @@ ready(async function() {
         forYou: [],
         usage: [],
         benefits: []
-      }
-      for (let j = 0; j < localProduct.for_you.length; j++) {
-        productData.forYou.push({
-          title: localProduct.for_you[j].title.toUpperCase(),
-          body: localProduct.for_you[j].text,
-          type: forYouType
-        })
       }
       for (let j = 0; j < csProduct.directions.length; j++) {
         productData.usage.push({
@@ -60,7 +66,6 @@ ready(async function() {
   generateContentFanData();
 
 
-
   // This is a duplicated helper that should be consolidated!
   let makePanel = function(data) {
     // Build content panels with "data"
@@ -76,38 +81,17 @@ ready(async function() {
   let $contentFan = document.getElementById("contentFan");
   let contentFan = $contentFan.components.contentfan
   let $tabMenu = document.getElementById('tab-menu');
-  let $reviewContent= document.getElementById('review-content'); // menu and text
-  let $productContent = document.getElementById('product-content');
-  let $reviewMenu = document.getElementById('review-product-menu');
 
   // These are out of order bc I'm bad: 3 1 2
+  // The angle of the content fan looks better w/3 pieces of data!
+  // It's a hack
   contentFan.buildWithContentElements([
     makePanel(scenarioData[0].benefits), 
-    makePanel(scenarioData[0].forYou), 
-    makePanel(scenarioData[0].usage)
+    makePanel(scenarioData[0].usage),
+    makePanel(scenarioData[0].benefits)
   ]);
 
   var anchorRef = document.getElementById('twistParent');
-  var mainMarkerRef = document.getElementById('mainMarker');
-
-  // Get reference to menu confirm
-  $reviewMenu.addEventListener('tab-confirm', (e)=>{ // your code here}
-    // Hide review menu
-    // Remove marker tracker from review content
-    $reviewContent.removeAttribute("marker-tracker");
-    $reviewContent.object3D.visible = false;
-
-    // Once we've reviewed the product, add the component to our content so it's trackable"
-    $productContent.setAttribute("marker-tracker", "isPromiscuous: true; lossThreshold: 3000;")
-  })
-
-  mainMarkerRef.addEventListener("tilt-side", (e)=>{ // your code here}
-    $reviewMenu.components["tab-menu"].incrementSelectedIndex()
-  })
-
-  mainMarkerRef.addEventListener("tilt-forward", (e)=>{ // your code here}
-    $reviewMenu.components["tab-menu"].confirmSelectedIndex()
-  })
 
   anchorRef.addEventListener("tag-index-trigger", (e)=>{ // your code here}
     let index = e.detail.index

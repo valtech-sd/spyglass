@@ -1,4 +1,5 @@
 import data_sources from '../js/data_sources';
+import getAssetURLs from '../utils/getAssetURLs';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -13,7 +14,32 @@ ready(async () => {
   console.log('DOM is ready.');
   // Wait for the Contentstack data to come back before proceeding!
   await data_sources.getData();
-  console.log(data_sources);
+
+  // get dynamic URLs from data response
+  const { ingredientURLs, productURLs } = getAssetURLs(data_sources);
+
+  // build and append img elements with ingredient URLs
+  const aAssetContainer = document.querySelector('a-assets');
+  Object.keys(ingredientURLs).forEach(domId => {
+    const imgEl = document.createElement('img'); 
+    imgEl.setAttribute('id', domId);
+    imgEl.setAttribute('src', ingredientURLs[domId]);
+    aAssetContainer.prepend(imgEl);
+  })
+
+  // target product ids and set hrefs
+  Object.keys(productURLs).forEach(productName => {
+    const productEl = document.getElementById(productName);
+    if (productEl) {
+      const imageEls = productEl.getElementsByTagName('image');
+      if (imageEls.length) {
+        const imageEl = imageEls[0];
+        imageEl.setAttribute('href', productURLs[productName])
+      }
+    }
+  })
+
+
   const $statusLabel = document.querySelector('#status_label');
   const $scanner = document.querySelector('#scanner');
   const $scanLine = document.querySelector('#scanner svg line');
@@ -23,7 +49,6 @@ ready(async () => {
   const $addButton = document.querySelector('a.add');
   const $serumMarkers = document.querySelectorAll('a-marker');
   let currentProduct = 0;
-
 
   // TODO: Jason please fix my selectors to be smarter T_T
 

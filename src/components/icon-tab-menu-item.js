@@ -55,7 +55,7 @@ AFRAME.registerComponent('icon-tab-menu-item', {
     this.width = icon.getAttribute("width")
   },
   getWidth: function() {
-    console.log("width is ", this.width);
+    // console.log("width is ", this.width);
     return this.width;
   },
   select: function() {
