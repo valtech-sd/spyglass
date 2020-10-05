@@ -138,14 +138,26 @@ li img {
   margin: 0 auto;
 }
 li a.sheet {
-  display: inline-block;
-  width: 49%;
-  vertical-align: top;
-  padding: 0.5em 0.5em 0 0;
+  display: block;
+  color: #22172F;
+  background-color: #2CF7F6;
+  line-height: 4em;
+  font-size: 0.95em;
+  margin: 2em 0;
+}
+li a.sheet:hover {
+  background-color:white;
 }
 li a.sheet img {
   padding: 0;
-  border: solid 2px #2CF7F6;
+  margin: 0 1.1em 0 1.4em;
+  position: relative;
+  top: 2px;
+}
+li a.sheet span {
+  color: #2CF7F6;
+  font-size: 0.8em;
+  margin-left: 1.5em;
 }
 /* have to do this because Safari doesn't wrap well */
 a.long span {
@@ -184,13 +196,14 @@ section {
   min-height: 25.77778em;
   margin-top: -7em;
   z-index: 0;
-  padding: 9em 0 0 0;
+  padding: 9em 0 3em 0;
 }
 @media screen and (min-width: 517px) {
   #credits {
     background-size: 100% 100%;
   }
 }
+
 
 /* *** INTRO */
 
@@ -238,7 +251,15 @@ p.byline span {
 }
 #credits a {
   display: block;
+  color: white;
+  text-decoration: underline;
 }
-#credits .logo.contentstack {
-  padding: 1em 0 0;
+#credits .github {
+  margin-bottom: 1em;
+}
+#credits .github img {
+  width: 30%;
+  margin-left: 0.4em;
+  position: relative;
+  top: 3px;
 }
