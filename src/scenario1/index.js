@@ -1,5 +1,5 @@
 import data_sources from '../js/data_sources';
-import buildImgAssets from '../utils/buildImgAssets';
+import getAssetURLs from '../utils/getAssetURLs';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -15,9 +15,30 @@ ready(async () => {
   // Wait for the Contentstack data to come back before proceeding!
   await data_sources.getData();
 
-  // build img a-assets
-  const assetContainer = document.querySelector('a-assets');
-  buildImgAssets(data_sources, assetContainer);
+  // get dynamic URLs from data response
+  const { ingredientURLs, productURLs } = getAssetURLs(data_sources);
+
+  // build and append img elements with ingredient URLs
+  const aAssetContainer = document.querySelector('a-assets');
+  Object.keys(ingredientURLs).forEach(domId => {
+    const imgEl = document.createElement('img'); 
+    imgEl.setAttribute('id', domId);
+    imgEl.setAttribute('src', ingredientURLs[domId]);
+    aAssetContainer.prepend(imgEl);
+  })
+
+  // target product ids and set hrefs
+  Object.keys(productURLs).forEach(productName => {
+    const productEl = document.getElementById(productName);
+    if (productEl) {
+      const imageEls = productEl.getElementsByTagName('image');
+      if (imageEls.length) {
+        const imageEl = imageEls[0];
+        imageEl.setAttribute('href', productURLs[productName])
+      }
+    }
+  })
+
 
   const $statusLabel = document.querySelector('#status_label');
   const $scanner = document.querySelector('#scanner');

@@ -1,5 +1,5 @@
 import data_sources from '../js/data_sources';
-import buildImgAssets from '../utils/buildImgAssets';
+import getAssetURLs from '../utils/getAssetURLs';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -17,9 +17,18 @@ ready(async function() {
   await data_sources.getData();
   console.log(data_sources);
 
-  // build img a-assets
-  const assetContainer = document.querySelector('a-assets');
-  buildImgAssets(data_sources, assetContainer);
+  // get dynamic URLs from data response
+  const { ingredientURLs } = getAssetURLs(data_sources);
+
+  // build and append img elements with ingredient URLs
+  const aAssetContainer = document.querySelector('a-assets');
+
+  Object.keys(ingredientURLs).forEach(domId => {
+    const imgEl = document.createElement('img'); 
+    imgEl.setAttribute('id', domId);
+    imgEl.setAttribute('src', ingredientURLs[domId]);
+    aAssetContainer.prepend(imgEl);
+  })
 
   const usageType = "textwithicon";
   const benefitsType = "textwithicon";
