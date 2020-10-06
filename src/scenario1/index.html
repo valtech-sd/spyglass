@@ -50,6 +50,17 @@
 <main>
     <!-- Have to comment out the a-frame scene because it is making the window larger than the device. -->
     <div id="scene_root">
+        <!-- <a-scene>
+            <a-box position="0 0 -8" scale="1 1 1">
+                <a-entity
+                    geometry="primitive: plane; width: auto; height: auto"
+                    position="0 1 -0.01"
+                    material="color: blue; opacity: 0.5"
+                    text="width: 2; wrapCount: 20; zOffset: 0.1;
+                    value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis pretium diam. Fusce ligula erat, consectetur condimentum viverra vel, mattis eu mi. Vestibulum dictum enim vel lacinia pulvinar. Suspendisse id erat consequat, porttitor felis vel, placerat augue. Vestibulum convallis eu est vitae maximus. Suspendisse volutpat turpis sed ornare sollicitudin. Phasellus dapibus tristique vestibulum. Praesent euismod tristique libero, sed venenatis urna luctus et. Mauris sed justo sodales, gravida justo eu, eleifend libero. Mauris in ligula sit amet lacus placerat dictum id non sapien.;">
+                </a-entity>
+            </a-box>
+        </a-scene> -->
         <a-scene
                 embedded
                 vr-mode-ui="enabled: false;"
@@ -72,7 +83,7 @@
                 <img id="reclabel" src="../assets/recommended_square.png">
 
                 <a-mixin id="body-text"
-                         text="align: left; anchor: left; baseline: top; width: 13.0; wrapCount: 35;
+                         text="align: left; anchor: left; baseline: top; width: 10.0;
                font: https://assets.contentstack.io/v3/assets/blte63f7056be4da683/bltd5d203e4c4450857/5f67d680128a9c4e4d50b7d4/din_ot.fnt;
                fontImage: https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt8bfb56d15a62feaf/5f67d6802b93e84e4c329976/din_ot.png;
                value: hello there;">

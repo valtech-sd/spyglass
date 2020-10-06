@@ -33,9 +33,14 @@ AFRAME.registerComponent('numbered-text', {
 
     var body = document.createElement('a-text');
     body.setAttribute('mixin', "body-text");
+
+    const minWrapCount = 25;
+
+    const wrapCount = Math.max(minWrapCount, this.data.bodyLabel.length / 30);
+    body.setAttribute('wrap-count', wrapCount);
+    // console.log('WRAP COUNT =', wrapCount);
+
     body.setAttribute('value', this.data.bodyLabel);
-
-
     body.setAttribute('position', '0 -1 0');
 
 
