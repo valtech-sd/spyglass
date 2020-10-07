@@ -46,19 +46,20 @@ main {
 
 .nav-container .navlink {
   position: absolute;
-  bottom: 5px;
+  top: 12px;
   opacity: 1;
   visibility: visible;
   color: black !important;
+  text-shadow: 0 0 1px white;
   font-size: 0.8em;
 }
 
 .nav-container .navlink-right {
-  right: 5px;
+  right: 12px;
 }
 
 .nav-container .navlink-left {
-  left: 5px;
+  left: 12px;
 }
 
 .nav-container .navlink-center {
@@ -66,7 +67,7 @@ main {
   height: 30px;
   top: 5px;
   left: 50%;
-  transform: translateX(-60%);
+  transform: translateX(-50%);
   background-image: url(../assets/spyglass_logo.svg);
   background-size: 100% 100%;
 }
