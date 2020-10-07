@@ -166,7 +166,7 @@ AFRAME.registerComponent('icon-tab-menu-item', {
     this.width = icon.getAttribute("width");
   },
   getWidth: function () {
-    console.log("width is ", this.width);
+    // console.log("width is ", this.width);
     return this.width;
   },
   select: function () {
@@ -197,4 +197,4 @@ AFRAME.registerComponent('icon-tab-menu-item', {
   play: function () {}
 });
 },{}]},{},["mG4y"], null)
-//# sourceMappingURL=icon-tab-menu-item.998a0e39.js.map
+//# sourceMappingURL=../icon-tab-menu-item.998a0e39.js.map

@@ -159,4 +159,4 @@ AFRAME.registerComponent('smoothed-marker-tracker', {
   play: function () {}
 });
 },{}]},{},["XbfR"], null)
-//# sourceMappingURL=smoothed-marker-tracker.152e2cc6.js.map
+//# sourceMappingURL=../smoothed-marker-tracker.152e2cc6.js.map

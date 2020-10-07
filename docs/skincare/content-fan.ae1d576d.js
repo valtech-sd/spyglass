@@ -301,4 +301,4 @@ AFRAME.registerComponent('contentfan', {
   play: function () {}
 });
 },{}]},{},["dyAr"], null)
-//# sourceMappingURL=content-fan.ae1d576d.js.map
+//# sourceMappingURL=../content-fan.ae1d576d.js.map

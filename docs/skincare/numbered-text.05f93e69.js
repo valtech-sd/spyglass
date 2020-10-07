@@ -146,6 +146,10 @@ AFRAME.registerComponent('numbered-text', {
     this.title = title;
     var body = document.createElement('a-text');
     body.setAttribute('mixin', "body-text");
+    const minWrapCount = 25;
+    const wrapCount = Math.max(minWrapCount, this.data.bodyLabel.length / 30);
+    body.setAttribute('wrap-count', wrapCount); // console.log('WRAP COUNT =', wrapCount);
+
     body.setAttribute('value', this.data.bodyLabel);
     body.setAttribute('position', '0 -1 0');
     this.textContainer.appendChild(body);
@@ -166,4 +170,4 @@ AFRAME.registerComponent('numbered-text', {
   play: function () {}
 });
 },{}]},{},["j457"], null)
-//# sourceMappingURL=numbered-text.05f93e69.js.map
+//# sourceMappingURL=../numbered-text.05f93e69.js.map

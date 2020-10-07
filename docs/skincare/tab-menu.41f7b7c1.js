@@ -143,8 +143,8 @@ AFRAME.registerComponent('tab-menu', {
       self.tabComponents.push(tabComponent);
     });
     this.tabComponents.forEach(function (tabComponent, index) {
-      let tabWidth = tabComponent.getWidth();
-      console.log(tabComponent);
+      let tabWidth = tabComponent.getWidth(); // console.log(tabComponent)
+
       tabComponent.el.object3D.position.x = tabWidth * 0.5 + index * self.data.tabSpacing;
 
       if (index == self.selectedIndex) {
@@ -211,4 +211,4 @@ AFRAME.registerComponent('tab-menu', {
   play: function () {}
 });
 },{}]},{},["k6zh"], null)
-//# sourceMappingURL=tab-menu.41f7b7c1.js.map
+//# sourceMappingURL=../tab-menu.41f7b7c1.js.map

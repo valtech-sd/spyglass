@@ -215,4 +215,4 @@ AFRAME.registerComponent('content-group', {
   play: function () {}
 });
 },{}]},{},["Poyw"], null)
-//# sourceMappingURL=content-group.aa5fc31e.js.map
+//# sourceMappingURL=../content-group.aa5fc31e.js.map

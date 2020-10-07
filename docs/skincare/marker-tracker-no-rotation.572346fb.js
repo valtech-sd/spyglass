@@ -243,4 +243,4 @@ AFRAME.registerComponent('marker-tracker', {
   play: function () {}
 });
 },{}]},{},["vcWR"], null)
-//# sourceMappingURL=marker-tracker-no-rotation.572346fb.js.map
+//# sourceMappingURL=../marker-tracker-no-rotation.572346fb.js.map
