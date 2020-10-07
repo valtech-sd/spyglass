@@ -40,6 +40,37 @@ main {
   overflow:hidden;
 }
 
+.nav-container {
+  width: 100%;
+}
+
+.nav-container .navlink {
+  position: absolute;
+  bottom: 5px;
+  opacity: 1;
+  visibility: visible;
+  color: black !important;
+  font-size: 0.8em;
+}
+
+.nav-container .navlink-right {
+  right: 5px;
+}
+
+.nav-container .navlink-left {
+  left: 5px;
+}
+
+.nav-container .navlink-center {
+  width: 30px;
+  height: 30px;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-60%);
+  background-image: url(../assets/spyglass_logo.svg);
+  background-size: 100% 100%;
+}
+
 a {
   text-decoration: none;
   text-align: center;
