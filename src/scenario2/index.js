@@ -19,13 +19,20 @@ ready(async function() {
 
   // get dynamic URLs from data response
   const { ingredientURLs } = getAssetURLs(data_sources);
+  console.log('ingredientURLs:', ingredientURLs); 
 
   // build and append img elements with ingredient URLs
   const aAssetContainer = document.querySelector('a-assets');
+  const fallbackImageURL = 'https://images.contentstack.io/v3/assets/blte63f7056be4da683/bltb57173579e7bb2b3/5f7e5c583dea860e7be3e122/generic.png';
 
   Object.keys(ingredientURLs).forEach(domId => {
     const imgEl = document.createElement('img'); 
     imgEl.setAttribute('id', domId);
+    // add a generic fallback image if the ingredientURL is undefined
+    if (ingredientURLs[domId] === undefined) {
+      ingredientURLs[domId] = fallbackImageURL;
+      console.log(`updated undefined ${domId} to fallbackImageURL`);
+    }
     imgEl.setAttribute('src', ingredientURLs[domId]);
     aAssetContainer.prepend(imgEl);
   })
