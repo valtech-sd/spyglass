@@ -1,5 +1,6 @@
 import data_sources from '../js/data_sources';
 import getAssetURLs from '../utils/getAssetURLs';
+import makePanel from '../utils/makePanel';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -272,17 +273,6 @@ ready(async () => {
     }
   }
   generateContentFanData();
-
-  let makePanel = function(data) {
-    // Build content panels with "data"
-    var panel = document.createElement('a-entity');
-    panel.setAttribute("content-group", "");
-
-    let content = panel.components['content-group'];
-    content.initializeFromData(data);
-
-    return panel
-  }
 
   setTimeout(initializeScenario1, 1000);
 
