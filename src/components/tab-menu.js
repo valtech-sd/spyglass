@@ -1,6 +1,7 @@
 // Register custom components before loading HTML
 // TODO: This should actually be a combo of a component and a system...!
 // We shouldn't do all the math in the component
+import data_sources from '../js/data_sources';
 
 AFRAME.registerComponent('tab-menu', {
   schema: {
@@ -90,6 +91,16 @@ AFRAME.registerComponent('tab-menu', {
   },
   confirmSelectedIndex: function() {
     this.confirmIndex(this.selectedIndex);
+  },
+  saveReviewData: function (productID) {
+    const positiveReview = this.selectedIndex === 0;
+    // find serum in the personalized data
+    const serum = data_sources.personalized.serums.find(serum => serum._id === productID);
+    // record review
+    if (serum) {
+      serum.ratings.personal.positive = positiveReview;
+      console.log(`Review for product ${productID} is recorded as ${positiveReview ? 'positive' : 'negative'}`);
+    }
   },
   update: function () {},
   tick: function () {
