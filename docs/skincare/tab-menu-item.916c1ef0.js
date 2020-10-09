@@ -169,8 +169,7 @@ AFRAME.registerComponent('tabitem', {
     this.icon = icon;
   },
   onTabSelected: function (data) {
-    console.log("on tab selected", data.detail.tabName);
-
+    // console.log("on tab selected", data.detail.tabName)
     if (data.detail.tabName) {
       if (data.detail.tabName === this.data.textLabel) {
         this.select();
@@ -180,7 +179,7 @@ AFRAME.registerComponent('tabitem', {
     }
   },
   getWidth: function () {
-    console.log("width is ", this.width);
+    // console.log("width is ", this.width);
     return this.width;
   },
   select: function () {

@@ -300,9 +300,9 @@ async function getStackData() {
         delete entry.instructions;
         newData.serums[i] = entry;
       }
-    }
+    } // console.log(newData);
+    // Sort the serums
 
-    console.log(newData); // Sort the serums
 
     newData.serums.sort((a, b) => a._id - b._id);
     return newData;
@@ -348,7 +348,7 @@ data_sources.personalized = {
       reviews: [{
         user: 'yourfriendjen',
         title: 'THE BEST SERUM OUT THERE',
-        testimonial: '"This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even."'
+        testimonial: '"This made such a huge difference with my combination-dry skin. My pores seem smaller, my skin brighter, and my complexion more even. I could go on for daaays about how great this Serum is, but trust me, you need to try it!"'
       }]
     }
   }, {
@@ -370,7 +370,7 @@ data_sources.personalized = {
       reviews: [{
         user: 'yourfriendjen',
         title: 'THE BEST SERUM OUT THERE',
-        testimonial: '"This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even."'
+        testimonial: '"This made such a huge difference with my combination-dry skin. My pores seem smaller, my skin brighter, and my complexion more even."'
       }]
     }
   }, {
@@ -392,7 +392,7 @@ data_sources.personalized = {
       reviews: [{
         user: 'yourfriendjen',
         title: 'THE BEST SERUM OUT THERE',
-        testimonial: '"This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even."'
+        testimonial: '"This made such a huge difference with my combination-dry skin. My pores seem smaller, my skin brighter, and my complexion more even."'
       }]
     }
   }]
@@ -429,7 +429,7 @@ var _default = data => {
       // remove white space and lowercase to create the dom id
       const domId = ingredient.name.replace(/ /g, '').toLowerCase(); // no duplicates
 
-      if (ingredientURLs[domId] === undefined) {
+      if (ingredientURLs[domId] === undefined && ingredient.image_url) {
         ingredientURLs[domId] = ingredient.image_url;
       } // perhaps we need to be more clever and check the also_known_as names
 
@@ -447,7 +447,34 @@ var _default = data => {
 };
 
 exports.default = _default;
-},{}],"QOCG":[function(require,module,exports) {
+},{}],"rQpU":[function(require,module,exports) {
+module.exports = "/skincare/generic.0c8bcf62.png";
+},{}],"P96M":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _default = (assets, container) => {
+  Object.keys(assets).forEach(assetName => {
+    const imgEl = document.createElement('img');
+    imgEl.setAttribute('id', assetName);
+    imgEl.setAttribute('crossorigin', "anonymous"); // add a generic fallback image if the ingredientURL is undefined
+
+    if (assets[assetName] === undefined) {
+      assets[assetName] = require('../assets/generic.png');
+      console.log(`updated undefined ${assetName} to fallbackImageURL`);
+    }
+
+    imgEl.setAttribute('src', assets[assetName]);
+    container.prepend(imgEl);
+  });
+};
+
+exports.default = _default;
+},{"../assets/generic.png":"rQpU"}],"QOCG":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -610,6 +637,8 @@ var _data_sources = _interopRequireDefault(require("../js/data_sources"));
 
 var _getAssetURLs = _interopRequireDefault(require("../utils/getAssetURLs"));
 
+var _buildDynamicAssets = _interopRequireDefault(require("../utils/buildDynamicAssets"));
+
 var _createNavLinks = _interopRequireDefault(require("../utils/createNavLinks"));
 
 var _detectDesktop = _interopRequireDefault(require("../utils/detectDesktop"));
@@ -646,19 +675,13 @@ ready(async function () {
     alert('For a better experience, use on mobile!');
   }
 
-  let productID = null; // get dynamic URLs from data response
+  let productID = null; // get dynamic URLs from data response, build assets and add them to the asset container
 
   const {
     ingredientURLs
-  } = (0, _getAssetURLs.default)(_data_sources.default); // build and append img elements with ingredient URLs
-
+  } = (0, _getAssetURLs.default)(_data_sources.default);
   const aAssetContainer = document.querySelector('a-assets');
-  Object.keys(ingredientURLs).forEach(domId => {
-    const imgEl = document.createElement('img');
-    imgEl.setAttribute('id', domId);
-    imgEl.setAttribute('src', ingredientURLs[domId]);
-    aAssetContainer.prepend(imgEl);
-  });
+  (0, _buildDynamicAssets.default)(ingredientURLs, aAssetContainer);
   const forYouType = "text-paragraph-bar";
   const usageType = "textwithicon";
   const benefitsType = "textwithicon";
@@ -753,5 +776,5 @@ ready(async function () {
     contentFan.animateToContent(index);
   });
 });
-},{"../js/data_sources":"tBe1","../utils/getAssetURLs":"WonQ","../utils/createNavLinks":"QOCG","../utils/detectDesktop":"Ony6","../utils/makePanel":"TNkT","../utils/addMarkerEvents":"NDo1"}]},{},["bi7f"], null)
+},{"../js/data_sources":"tBe1","../utils/getAssetURLs":"WonQ","../utils/buildDynamicAssets":"P96M","../utils/createNavLinks":"QOCG","../utils/detectDesktop":"Ony6","../utils/makePanel":"TNkT","../utils/addMarkerEvents":"NDo1"}]},{},["bi7f"], null)
 //# sourceMappingURL=/skincare/scenario3.07e4cdf5.js.map

@@ -174,7 +174,7 @@ AFRAME.registerComponent('content-group', {
 
       switch (content.type) {
         case "numbered-text":
-          console.log("Adding numbered text");
+          // console.log("Adding numbered text")
           contentEl.setAttribute(content.type, {
             titleLabel: content.title,
             bodyLabel: content.body
@@ -182,7 +182,7 @@ AFRAME.registerComponent('content-group', {
           break;
 
         case "textwithicon":
-          console.log("adding text with icon");
+          // console.log("adding text with icon")
           contentEl.setAttribute(content.type, {
             hasTitle: hasTitle,
             icon: content.icon,
@@ -192,7 +192,7 @@ AFRAME.registerComponent('content-group', {
           break;
 
         case "text-paragraph-bar":
-          console.log("adding text with bar");
+          // console.log("adding text with bar")
           contentEl.setAttribute(content.type, {
             titleLabel: content.title,
             bodyLabel: content.body
