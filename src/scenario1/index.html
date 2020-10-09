@@ -50,6 +50,17 @@
 <main>
     <!-- Have to comment out the a-frame scene because it is making the window larger than the device. -->
     <div id="scene_root">
+        <!-- <a-scene>
+            <a-box position="0 0 -8" scale="1 1 1">
+                <a-entity
+                    geometry="primitive: plane; width: auto; height: auto"
+                    position="0 1 -0.01"
+                    material="color: blue; opacity: 0.5"
+                    text="width: 2; wrapCount: 20; zOffset: 0.1;
+                    value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis pretium diam. Fusce ligula erat, consectetur condimentum viverra vel, mattis eu mi. Vestibulum dictum enim vel lacinia pulvinar. Suspendisse id erat consequat, porttitor felis vel, placerat augue. Vestibulum convallis eu est vitae maximus. Suspendisse volutpat turpis sed ornare sollicitudin. Phasellus dapibus tristique vestibulum. Praesent euismod tristique libero, sed venenatis urna luctus et. Mauris sed justo sodales, gravida justo eu, eleifend libero. Mauris in ligula sit amet lacus placerat dictum id non sapien.;">
+                </a-entity>
+            </a-box>
+        </a-scene> -->
         <a-scene
                 embedded
                 vr-mode-ui="enabled: false;"
@@ -57,8 +68,6 @@
                 arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
 
             <a-assets>
-                <img id="panthenol" src="../assets/panthenol.png">
-                <img id="ylangylang" src="../assets/ylangylang.png">
                 <img id="warning" src="../assets/warning.png">
                 <img id="step1" src="../assets/1.png">
                 <img id="step2" src="../assets/2.png">
@@ -74,7 +83,7 @@
                 <img id="reclabel" src="../assets/recommended_square.png">
 
                 <a-mixin id="body-text"
-                         text="align: left; anchor: left; baseline: top; width: 13.0; wrapCount: 35;
+                         text="align: left; anchor: left; baseline: top; width: 10.0;
                font: https://assets.contentstack.io/v3/assets/blte63f7056be4da683/bltd5d203e4c4450857/5f67d680128a9c4e4d50b7d4/din_ot.fnt;
                fontImage: https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt8bfb56d15a62feaf/5f67d6802b93e84e4c329976/din_ot.png;
                value: hello there;">
@@ -276,9 +285,7 @@
                              rx="45.5" ry="14"></ellipse>
                     <rect id="Rectangle-Copy-14" stroke="#979797" fill="#D8D8D8" x="16.5" y="0.5" width="58"
                           height="177" opacity="0"></rect>
-                    <image x="16.5" y="0.5" width="58" height="177" preserveAspectRatio="xMidYMax meet"
-                        href="https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt3595aa1d1da5609c/5f5d73effef72a4b5f9659d5/03_Serum_1.png" 
-                        ></image>
+                    <image x="16.5" y="0.5" width="58" height="177" preserveAspectRatio="xMidYMax meet"></image>
 
                 </g>
                 <g id="serum3" transform="translate(250.000000, 143.000000)">
@@ -286,18 +293,14 @@
                              rx="45.5" ry="14"></ellipse>
                     <rect id="Rectangle-Copy-14" stroke="#979797" fill="#D8D8D8" x="16.5" y="0.5" width="58"
                           height="177" opacity="0"></rect>
-                    <image x="16.5" y="0.5" width="58" height="177" preserveAspectRatio="xMidYMax meet"
-                        href="https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt16ac7cabb029c9de/5f5d73fb69d060498b8e5124/03_Serum_3.png" 
-                        ></image>
+                    <image x="16.5" y="0.5" width="58" height="177" preserveAspectRatio="xMidYMax meet"></image>
                 </g>
                 <g id="serum2" transform="translate(191.000000, 154.000000)">
                     <ellipse id="Oval-Copy-9" fill="url(#radialGradient-1)" opacity="0.351376488" cx="45.5" cy="174"
                     rx="45.5" ry="14"></ellipse>
                     <rect id="Rectangle-Copy-14" stroke="#979797" fill="#D8D8D8" x="16.5" y="0.5" width="58"
                     height="177" opacity="0"></rect>
-                    <image x="16.5" y="0.5" width="58" height="177" preserveAspectRatio="xMidYMax meet"
-                        href="https://images.contentstack.io/v3/assets/blte63f7056be4da683/bltb88ebefea9a85482/5f5d73dc36d9394cdeeec9b9/03_Serum_2.png" 
-                        ></image>
+                    <image x="16.5" y="0.5" width="58" height="177" preserveAspectRatio="xMidYMax meet"></image>
                 </g>
                 <g id="protectant" transform="translate(402.000000, 156.000000)">
                     <ellipse id="Oval-Copy-9" fill="url(#radialGradient-2)" opacity="0.351376488" cx="24.5" cy="113.5"
@@ -339,7 +342,7 @@
             </g>
         </svg>
     </section>
-    <script src="./in-store.js"></script>
+    <script src="./index.js"></script>
 </main>
 </body>
 </html>

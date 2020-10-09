@@ -223,4 +223,4 @@ AFRAME.registerComponent('textwithicon', {
   play: function () {}
 });
 },{}]},{},["EewT"], null)
-//# sourceMappingURL=text-with-icon.22278198.js.map
+//# sourceMappingURL=/skincare/text-with-icon.22278198.js.map

@@ -1,4 +1,10 @@
 import data_sources from '../js/data_sources';
+import getAssetURLs from '../utils/getAssetURLs';
+import buildDynamicAssets from '../utils/buildDynamicAssets';
+import createNavLinks from '../utils/createNavLinks';
+import detectDesktop from '../utils/detectDesktop';
+import makePanel from '../utils/makePanel';
+import addMarkerEvents from '../utils/addMarkerEvents';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -11,9 +17,41 @@ function ready(fn) {
 
 ready(async () => {
   console.log('DOM is ready.');
+
+  // create nav links
+  const main = document.querySelector('main');
+  const navContainer = document.createElement('section');
+  navContainer.className = 'nav-container';
+  const navLinks = createNavLinks();
+  navLinks.forEach(navLink => navContainer.appendChild(navLink))
+  main.appendChild(navContainer);
+
   // Wait for the Contentstack data to come back before proceeding!
   await data_sources.getData();
-  console.log(data_sources);
+
+  // detect desktop and alert
+  if (detectDesktop()) {
+    alert('For a better experience, use on mobile!');
+  }
+
+  // get dynamic URLs from data response, build assets and add them to the asset container
+  const { ingredientURLs, productURLs } = getAssetURLs(data_sources);
+  const aAssetContainer = document.querySelector('a-assets');
+  buildDynamicAssets(ingredientURLs, aAssetContainer);
+
+  // target product ids and set hrefs
+  Object.keys(productURLs).forEach(productName => {
+    const productEl = document.getElementById(productName);
+    if (productEl) {
+      const imageEls = productEl.getElementsByTagName('image');
+      if (imageEls.length) {
+        const imageEl = imageEls[0];
+        imageEl.setAttribute('href', productURLs[productName])
+      }
+    }
+  })
+
+
   const $statusLabel = document.querySelector('#status_label');
   const $scanner = document.querySelector('#scanner');
   const $scanLine = document.querySelector('#scanner svg line');
@@ -24,17 +62,16 @@ ready(async () => {
   const $serumMarkers = document.querySelectorAll('a-marker');
   let currentProduct = 0;
 
-
   // TODO: Jason please fix my selectors to be smarter T_T
 
-  let $contentFan_1 = document.getElementById("contentFan_serum1");
-  let $tabMenu_1 = document.getElementById('tab-menu-1');
+  const $contentFan_1 = document.getElementById("contentFan_serum1");
+  const $tabMenu_1 = document.getElementById('tab-menu-1');
 
-  let $tabMenu_2 = document.getElementById('tab-menu-2');
-  let $contentFan_2 = document.getElementById("contentFan_serum2");
+  const $tabMenu_2 = document.getElementById('tab-menu-2');
+  const $contentFan_2 = document.getElementById("contentFan_serum2");
 
-  let $tabMenu_3 = document.getElementById('tab-menu-3');
-  let $contentFan_3 = document.getElementById("contentFan_serum3");
+  const $tabMenu_3 = document.getElementById('tab-menu-3');
+  const $contentFan_3 = document.getElementById("contentFan_serum3");
 
   /** Two useful functions:
     * - pause(X) 
@@ -92,7 +129,7 @@ ready(async () => {
     });
   }
   
-  async function productRecognized(productID) {
+  const productRecognized = async productID => {
     // TODO: recognize which product it is and cue up the data in A-Frame here
     currentProduct = productID;
 
@@ -111,7 +148,7 @@ ready(async () => {
     $scanner.classList.remove('complete');
   }
 
-  function productOutOfView(e) {
+  const productOutOfView = () => {
     currentProduct = 0;
 
     // Remove all classes from scanner
@@ -165,52 +202,15 @@ ready(async () => {
     return false;
   }
 
-  function tagToProduct(target) {
-    switch(target) {
-      case "serum_1_marker":
-        return 1;
-      case "serum_2_marker":
-        return 2;
-      case "serum_3_marker":
-        return 3;
-      default:
-      return null;
-    }
-  }
+  // add marker found and lost events
+  addMarkerEvents($serumMarkers, productRecognized, productOutOfView);
 
-
-  $serumMarkers.forEach(function($marker) {
-
-    $marker.addEventListener("markerFound", (e)=>{ // your code here}
-      let target = e.target;
-      let productID = tagToProduct(target.id);
-
-      if (productID) {
-        console.log("Detected product ", productID);
-
-        // call productRecognized
-        productRecognized(productID);
-      }
-    })
-
-    $marker.addEventListener("markerLost", (e)=>{ // your code here}
-      let target = e.target;
-      let productID = tagToProduct(target.id);
-
-      if (productID) {
-        console.log("Lost product ", productID);
-
-        // Call productOutOfView
-        productOutOfView(productID);
-      }
-    })
-  });
 
   // Create data for scenario 1 for all three serums
   const checkType = "numbered-text";
   const reviewType = "numbered-text";
   const ingredientsType = "textwithicon";
-  let scenarioData = [];
+  const scenarioData = [];
   
   function generateContentFanData() {
     for (let i = 0; i < data_sources.contentstack.serums.length; i++) {
@@ -248,25 +248,14 @@ ready(async () => {
   }
   generateContentFanData();
 
-  let makePanel = function(data) {
-    // Build content panels with "data"
-    var panel = document.createElement('a-entity');
-    panel.setAttribute("content-group", "");
-
-    let content = panel.components['content-group'];
-    content.initializeFromData(data);
-
-    return panel
-  }
-
   setTimeout(initializeScenario1, 1000);
 
   function initializeScenario1() {
 
     // Build content panels with "data"
-    let contentFan_1 = $contentFan_1.components.contentfan
-    let contentFan_2 = $contentFan_2.components.contentfan
-    let contentFan_3 = $contentFan_3.components.contentfan
+    const contentFan_1 = $contentFan_1.components.contentfan
+    const contentFan_2 = $contentFan_2.components.contentfan
+    const contentFan_3 = $contentFan_3.components.contentfan
 
     // Add content to content fan
     // At some point we can find a better way to sync this w/the tab menu
@@ -313,8 +302,8 @@ ready(async () => {
     }
 
     // Originally from https://stackoverflow.com/a/23230280
-    var xDown = null;
-    var yDown = null;
+    let xDown = null;
+    let yDown = null;
 
     function getTouches(evt) {
       return evt.touches;
@@ -331,11 +320,11 @@ ready(async () => {
         return;
       }
 
-      var xUp = evt.touches[0].clientX;
-      var yUp = evt.touches[0].clientY;
+      const xUp = evt.touches[0].clientX;
+      const yUp = evt.touches[0].clientY;
 
-      var xDiff = xDown - xUp;
-      var yDiff = yDown - yUp;
+      const xDiff = xDown - xUp;
+      const yDiff = yDown - yUp;
 
       if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
         if (xDiff > 0) {

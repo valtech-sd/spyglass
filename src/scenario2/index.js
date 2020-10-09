@@ -1,4 +1,9 @@
 import data_sources from '../js/data_sources';
+import getAssetURLs from '../utils/getAssetURLs';
+import buildDynamicAssets from '../utils/buildDynamicAssets';
+import createNavLinks from '../utils/createNavLinks';
+import detectDesktop from '../utils/detectDesktop';
+import makePanel from '../utils/makePanel';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -13,14 +18,33 @@ function ready(fn) {
 
 ready(async function() {
   console.log( "DOM loaded" );
-  await data_sources.getData();
-  console.log(data_sources);
 
-  const forYouType = "text-paragraph-bar";
+  // create nav links
+  const main = document.querySelector('main');
+  const navContainer = document.createElement('section');
+  navContainer.className = 'nav-container';
+  const navLinks = createNavLinks();
+  navLinks.forEach(navLink => navContainer.appendChild(navLink))
+  main.appendChild(navContainer);
+
+  await data_sources.getData();
+  
+  // detect desktop and alert
+  if (detectDesktop()) {
+    alert('For a better experience, use on mobile!');
+  }
+
+  // get dynamic URLs from data response, build assets and add them to the asset container
+  const { ingredientURLs } = getAssetURLs(data_sources);
+  // console.log('ingredientURLs:', ingredientURLs); 
+  const aAssetContainer = document.querySelector('a-assets');
+  buildDynamicAssets(ingredientURLs, aAssetContainer);
+
   const usageType = "textwithicon";
   const benefitsType = "textwithicon";
 
-  let scenarioData = [];
+  const scenarioData = [];
+  let currPanelIndex = 0;
   
   function generateContentFanData() {
     for (let i = 0; i < data_sources.contentstack.serums.length; i++) {
@@ -30,13 +54,6 @@ ready(async function() {
         forYou: [],
         usage: [],
         benefits: []
-      }
-      for (let j = 0; j < localProduct.for_you.length; j++) {
-        productData.forYou.push({
-          title: localProduct.for_you[j].title.toUpperCase(),
-          body: localProduct.for_you[j].text,
-          type: forYouType
-        })
       }
       for (let j = 0; j < csProduct.directions.length; j++) {
         productData.usage.push({
@@ -59,61 +76,34 @@ ready(async function() {
   }
   generateContentFanData();
 
-
-
-  // This is a duplicated helper that should be consolidated!
-  let makePanel = function(data) {
-    // Build content panels with "data"
-    var panel = document.createElement('a-entity');
-    panel.setAttribute("content-group", "");
-
-    let content = panel.components['content-group'];
-    content.initializeFromData(data);
-
-    return panel
-  }
-
   let $contentFan = document.getElementById("contentFan");
   let contentFan = $contentFan.components.contentfan
   let $tabMenu = document.getElementById('tab-menu');
-  let $reviewContent= document.getElementById('review-content'); // menu and text
-  let $productContent = document.getElementById('product-content');
-  let $reviewMenu = document.getElementById('review-product-menu');
 
   // These are out of order bc I'm bad: 3 1 2
+  // The angle of the content fan looks better w/3 pieces of data!
+  // It's a hack
   contentFan.buildWithContentElements([
     makePanel(scenarioData[0].benefits), 
-    makePanel(scenarioData[0].forYou), 
-    makePanel(scenarioData[0].usage)
+    makePanel(scenarioData[0].usage),
+    makePanel(scenarioData[0].benefits)
   ]);
 
   var anchorRef = document.getElementById('twistParent');
-  var mainMarkerRef = document.getElementById('mainMarker');
-
-  // Get reference to menu confirm
-  $reviewMenu.addEventListener('tab-confirm', (e)=>{ // your code here}
-    // Hide review menu
-    // Remove marker tracker from review content
-    $reviewContent.removeAttribute("marker-tracker");
-    $reviewContent.object3D.visible = false;
-
-    // Once we've reviewed the product, add the component to our content so it's trackable"
-    $productContent.setAttribute("marker-tracker", "isPromiscuous: true; lossThreshold: 3000;")
-  })
-
-  mainMarkerRef.addEventListener("tilt-side", (e)=>{ // your code here}
-    $reviewMenu.components["tab-menu"].incrementSelectedIndex()
-  })
-
-  mainMarkerRef.addEventListener("tilt-forward", (e)=>{ // your code here}
-    $reviewMenu.components["tab-menu"].confirmSelectedIndex()
-  })
 
   anchorRef.addEventListener("tag-index-trigger", (e)=>{ // your code here}
     let index = e.detail.index
     $tabMenu.components["tab-menu"].selectIndex(index)
     contentFan.animateToContent(index)
   })
+
+  window.sc2trigger = () => {
+    const newIndex = currPanelIndex === 0 ? 1 : 0;
+    $tabMenu.components["tab-menu"].selectIndex(newIndex);
+    contentFan.animateToContent(newIndex);
+    currPanelIndex = newIndex;
+  }
+
 });
 
 

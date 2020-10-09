@@ -123,7 +123,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 // (Instead of being Y-up oriented)
 AFRAME.registerComponent('adjusted-rotation', {
   init: function () {
-    console.log("adjusted rotation component initialized");
+    // console.log("adjusted rotation component initialized")
     this.adjustedRotation = new THREE.Vector3(0, 0, 0);
     this.updateRotation();
   },
@@ -155,4 +155,4 @@ AFRAME.registerComponent('adjusted-rotation', {
   play: function () {}
 });
 },{}]},{},["aUdb"], null)
-//# sourceMappingURL=adjusted-rotation.64dffd76.js.map
+//# sourceMappingURL=/skincare/adjusted-rotation.64dffd76.js.map

@@ -4,7 +4,7 @@
 AFRAME.registerComponent('adjusted-rotation', {
   init: function () {
 
-    console.log("adjusted rotation component initialized")
+    // console.log("adjusted rotation component initialized")
     this.adjustedRotation = new THREE.Vector3(0,0,0)
     this.updateRotation()
   },
