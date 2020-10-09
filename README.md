@@ -75,9 +75,7 @@ All files in the `docs` directory on the `main` branch will be served at [https:
 
 ### Building the latest for the site
 
-Running ```npm run build``` should put the latest into `docs/skincare/`. 
-
-Unfortunately, as of right now, `parcel build`'s output does not reference the paths correctly for CSS `link`s, `script` tags, and `img` elements — so you'll have to manually change all of those to add a `../` in front of the filename. (We aim to fix that in the future, but for now, it's an extra step you must do every time after `npm run build`.)
+Running ```npm run build``` should put the latest into `docs/skincare/`, which will live at <https://spyglass.valtech.engineering/skincare/>. 
 
 ### Contributing
 
