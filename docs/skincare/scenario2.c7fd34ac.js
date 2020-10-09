@@ -341,10 +341,14 @@ data_sources.personalized = {
     ratings: {
       approval: 86,
       friends_who_like: 6,
+      personal: {
+        //personal review field - positive or negative (potential for text feedback in future)
+        positive: null
+      },
       reviews: [{
         user: 'yourfriendjen',
         title: 'THE BEST SERUM OUT THERE',
-        testimonial: '"This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even."'
+        testimonial: '"This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even."'
       }]
     }
   }, {
@@ -360,6 +364,9 @@ data_sources.personalized = {
     ratings: {
       approval: 47,
       friends_who_like: 2,
+      personal: {
+        positive: null
+      },
       reviews: [{
         user: 'yourfriendjen',
         title: 'THE BEST SERUM OUT THERE',
@@ -379,6 +386,9 @@ data_sources.personalized = {
     ratings: {
       approval: 86,
       friends_who_like: 6,
+      personal: {
+        positive: null
+      },
       reviews: [{
         user: 'yourfriendjen',
         title: 'THE BEST SERUM OUT THERE',
@@ -391,10 +401,163 @@ data_sources.getData = getStackData; // console.log('inside data_sources.js and 
 
 var _default = data_sources;
 exports.default = _default;
-},{"../../samples/contentstack-integration/secrets":"JOOh"}],"WyqO":[function(require,module,exports) {
+},{"../../samples/contentstack-integration/secrets":"JOOh"}],"WonQ":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _default = data => {
+  var _data$contentstack, _data$contentstack$se;
+
+  /**
+   * The job of this function is to:
+   * go through the data, identify ingredient and product assets URLs,
+   * return them in organized format
+   * 
+   * future work:
+   * expand data response to include other assets, eg. videos, moisturizer images
+   */
+  const ingredientURLs = {};
+  const productURLs = {};
+  (_data$contentstack = data.contentstack) === null || _data$contentstack === void 0 ? void 0 : (_data$contentstack$se = _data$contentstack.serums) === null || _data$contentstack$se === void 0 ? void 0 : _data$contentstack$se.forEach(serum => {
+    var _serum$ingredients;
+
+    (_serum$ingredients = serum.ingredients) === null || _serum$ingredients === void 0 ? void 0 : _serum$ingredients.forEach(ingredient => {
+      // remove white space and lowercase to create the dom id
+      const domId = ingredient.name.replace(/ /g, '').toLowerCase(); // no duplicates
+
+      if (ingredientURLs[domId] === undefined) {
+        ingredientURLs[domId] = ingredient.image_url;
+      } // perhaps we need to be more clever and check the also_known_as names
+
+    });
+    const productId = `serum${serum._id}`;
+
+    if (serum.product_image_urls.length) {
+      productURLs[productId] = serum.product_image_urls[0];
+    }
+  });
+  return {
+    ingredientURLs,
+    productURLs
+  };
+};
+
+exports.default = _default;
+},{}],"QOCG":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+const createAnchor = (href, text, classNames) => {
+  const anchorEl = document.createElement('a');
+  anchorEl.href = href;
+  anchorEl.innerHTML = text;
+  anchorEl.className = classNames;
+  return anchorEl;
+};
+
+var _default = () => {
+  // returns an array of nav links depending on the current page
+  const navLinks = [];
+  const allPages = {
+    scenario1: 'IN STORE',
+    scenario2: 'AT HOME',
+    scenario3: 'LATER'
+  };
+  const pagesArray = Object.keys(allPages).sort();
+  const homeText = ''; // get current route
+
+  const splitPath = window.location.pathname.split('/');
+  const routeIndex = splitPath.length - 2;
+  const currRoute = splitPath[routeIndex];
+  const pageIndex = pagesArray.indexOf(currRoute);
+
+  if (!currRoute || pageIndex === -1) {
+    // we are on the home page and already have our navlinks
+    return navLinks;
+  }
+
+  const prevPage = pagesArray[pageIndex - 1];
+  const nextPage = pagesArray[pageIndex + 1]; // add prev page link
+
+  if (prevPage) {
+    splitPath[routeIndex] = prevPage;
+    const href = splitPath.join('/');
+    const text = `&larr; ${allPages[prevPage]}`;
+    const classNames = 'navlink navlink-left';
+    navLinks.push(createAnchor(href, text, classNames));
+  } // add next page link
+
+
+  if (nextPage) {
+    splitPath[routeIndex] = nextPage;
+    const href = splitPath.join('/');
+    const text = `${allPages[nextPage]} &rarr;`;
+    const classNames = 'navlink navlink-right';
+    navLinks.push(createAnchor(href, text, classNames));
+  } // add home page link
+
+
+  const homeSplit = splitPath.slice(0, routeIndex);
+  const homeHref = homeSplit.length > 1 ? homeSplit.join('/') : '/';
+  const classNames = 'navlink navlink-center';
+  navLinks.push(createAnchor(homeHref, homeText, classNames));
+  return navLinks;
+};
+
+exports.default = _default;
+},{}],"Ony6":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _default = () => {
+  const isTouchDevice = () => 'ontouchstart' in window || 'onmsgesturechange' in window;
+
+  return window.screenX != 0 && !isTouchDevice() ? true : false;
+};
+
+exports.default = _default;
+},{}],"TNkT":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _default = data => {
+  // Build content panels with "data"
+  var panel = document.createElement('a-entity');
+  panel.setAttribute("content-group", "");
+  let content = panel.components['content-group'];
+  content.initializeFromData(data);
+  return panel;
+};
+
+exports.default = _default;
+},{}],"cN1f":[function(require,module,exports) {
 "use strict";
 
 var _data_sources = _interopRequireDefault(require("../js/data_sources"));
+
+var _getAssetURLs = _interopRequireDefault(require("../utils/getAssetURLs"));
+
+var _createNavLinks = _interopRequireDefault(require("../utils/createNavLinks"));
+
+var _detectDesktop = _interopRequireDefault(require("../utils/detectDesktop"));
+
+var _makePanel = _interopRequireDefault(require("../utils/makePanel"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -410,9 +573,32 @@ function ready(fn) {
 }
 
 ready(async function () {
-  console.log("DOM loaded");
-  await _data_sources.default.getData();
-  console.log(_data_sources.default);
+  console.log("DOM loaded"); // create nav links
+
+  const main = document.querySelector('main');
+  const navContainer = document.createElement('section');
+  navContainer.className = 'nav-container';
+  const navLinks = (0, _createNavLinks.default)();
+  navLinks.forEach(navLink => navContainer.appendChild(navLink));
+  main.appendChild(navContainer);
+  await _data_sources.default.getData(); // detect desktop and alert
+
+  if ((0, _detectDesktop.default)()) {
+    alert('For a better experience, use on mobile!');
+  } // get dynamic URLs from data response
+
+
+  const {
+    ingredientURLs
+  } = (0, _getAssetURLs.default)(_data_sources.default); // build and append img elements with ingredient URLs
+
+  const aAssetContainer = document.querySelector('a-assets');
+  Object.keys(ingredientURLs).forEach(domId => {
+    const imgEl = document.createElement('img');
+    imgEl.setAttribute('id', domId);
+    imgEl.setAttribute('src', ingredientURLs[domId]);
+    aAssetContainer.prepend(imgEl);
+  });
   const usageType = "textwithicon";
   const benefitsType = "textwithicon";
   let scenarioData = [];
@@ -449,24 +635,14 @@ ready(async function () {
     }
   }
 
-  generateContentFanData(); // This is a duplicated helper that should be consolidated!
-
-  let makePanel = function (data) {
-    // Build content panels with "data"
-    var panel = document.createElement('a-entity');
-    panel.setAttribute("content-group", "");
-    let content = panel.components['content-group'];
-    content.initializeFromData(data);
-    return panel;
-  };
-
+  generateContentFanData();
   let $contentFan = document.getElementById("contentFan");
   let contentFan = $contentFan.components.contentfan;
   let $tabMenu = document.getElementById('tab-menu'); // These are out of order bc I'm bad: 3 1 2
   // The angle of the content fan looks better w/3 pieces of data!
   // It's a hack
 
-  contentFan.buildWithContentElements([makePanel(scenarioData[0].benefits), makePanel(scenarioData[0].usage), makePanel(scenarioData[0].benefits)]);
+  contentFan.buildWithContentElements([(0, _makePanel.default)(scenarioData[0].benefits), (0, _makePanel.default)(scenarioData[0].usage), (0, _makePanel.default)(scenarioData[0].benefits)]);
   var anchorRef = document.getElementById('twistParent');
   anchorRef.addEventListener("tag-index-trigger", e => {
     // your code here}
@@ -475,5 +651,5 @@ ready(async function () {
     contentFan.animateToContent(index);
   });
 });
-},{"../js/data_sources":"tBe1"}]},{},["WyqO"], null)
-//# sourceMappingURL=scenario2.f1463b0f.js.map
+},{"../js/data_sources":"tBe1","../utils/getAssetURLs":"WonQ","../utils/createNavLinks":"QOCG","../utils/detectDesktop":"Ony6","../utils/makePanel":"TNkT"}]},{},["cN1f"], null)
+//# sourceMappingURL=/skincare/scenario2.c7fd34ac.js.map

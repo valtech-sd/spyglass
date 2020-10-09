@@ -205,4 +205,4 @@ AFRAME.registerComponent('tabitem', {
   play: function () {}
 });
 },{}]},{},["pLOR"], null)
-//# sourceMappingURL=tab-menu-item.916c1ef0.js.map
+//# sourceMappingURL=/skincare/tab-menu-item.916c1ef0.js.map

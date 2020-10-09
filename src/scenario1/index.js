@@ -1,5 +1,7 @@
 import data_sources from '../js/data_sources';
 import getAssetURLs from '../utils/getAssetURLs';
+import createNavLinks from '../utils/createNavLinks';
+import detectDesktop from '../utils/detectDesktop';
 import makePanel from '../utils/makePanel';
 import addMarkerEvents from '../utils/addMarkerEvents';
 
@@ -14,8 +16,22 @@ function ready(fn) {
 
 ready(async () => {
   console.log('DOM is ready.');
+
+  // create nav links
+  const main = document.querySelector('main');
+  const navContainer = document.createElement('section');
+  navContainer.className = 'nav-container';
+  const navLinks = createNavLinks();
+  navLinks.forEach(navLink => navContainer.appendChild(navLink))
+  main.appendChild(navContainer);
+
   // Wait for the Contentstack data to come back before proceeding!
   await data_sources.getData();
+
+  // detect desktop and alert
+  if (detectDesktop()) {
+    alert('For a better experience, use on mobile!');
+  }
 
   // get dynamic URLs from data response
   const { ingredientURLs, productURLs } = getAssetURLs(data_sources);
