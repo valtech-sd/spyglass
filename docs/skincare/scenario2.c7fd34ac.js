@@ -125,9 +125,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 const secrets = {
-  apiKey: "blte63f7056be4da683",
-  environment: "localhost-dev",
-  deliveryToken: "cs01d945711b0bb626d33ad776"
+  apiKey: 'blte63f7056be4da683',
+  environment: 'localhost-dev',
+  deliveryToken: 'cs01d945711b0bb626d33ad776'
 };
 var _default = secrets;
 exports.default = _default;
@@ -341,6 +341,10 @@ data_sources.personalized = {
     ratings: {
       approval: 86,
       friends_who_like: 6,
+      personal: {
+        //personal review field - positive or negative (potential for text feedback in future)
+        positive: null
+      },
       reviews: [{
         user: 'yourfriendjen',
         title: 'THE BEST SERUM OUT THERE',
@@ -360,6 +364,9 @@ data_sources.personalized = {
     ratings: {
       approval: 47,
       friends_who_like: 2,
+      personal: {
+        positive: null
+      },
       reviews: [{
         user: 'yourfriendjen',
         title: 'THE BEST SERUM OUT THERE',
@@ -379,6 +386,9 @@ data_sources.personalized = {
     ratings: {
       approval: 86,
       friends_who_like: 6,
+      personal: {
+        positive: null
+      },
       reviews: [{
         user: 'yourfriendjen',
         title: 'THE BEST SERUM OUT THERE',
@@ -518,6 +528,24 @@ var _default = () => {
 };
 
 exports.default = _default;
+},{}],"TNkT":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _default = data => {
+  // Build content panels with "data"
+  var panel = document.createElement('a-entity');
+  panel.setAttribute("content-group", "");
+  let content = panel.components['content-group'];
+  content.initializeFromData(data);
+  return panel;
+};
+
+exports.default = _default;
 },{}],"cN1f":[function(require,module,exports) {
 "use strict";
 
@@ -528,6 +556,8 @@ var _getAssetURLs = _interopRequireDefault(require("../utils/getAssetURLs"));
 var _createNavLinks = _interopRequireDefault(require("../utils/createNavLinks"));
 
 var _detectDesktop = _interopRequireDefault(require("../utils/detectDesktop"));
+
+var _makePanel = _interopRequireDefault(require("../utils/makePanel"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -605,24 +635,14 @@ ready(async function () {
     }
   }
 
-  generateContentFanData(); // This is a duplicated helper that should be consolidated!
-
-  let makePanel = function (data) {
-    // Build content panels with "data"
-    var panel = document.createElement('a-entity');
-    panel.setAttribute("content-group", "");
-    let content = panel.components['content-group'];
-    content.initializeFromData(data);
-    return panel;
-  };
-
+  generateContentFanData();
   let $contentFan = document.getElementById("contentFan");
   let contentFan = $contentFan.components.contentfan;
   let $tabMenu = document.getElementById('tab-menu'); // These are out of order bc I'm bad: 3 1 2
   // The angle of the content fan looks better w/3 pieces of data!
   // It's a hack
 
-  contentFan.buildWithContentElements([makePanel(scenarioData[0].benefits), makePanel(scenarioData[0].usage), makePanel(scenarioData[0].benefits)]);
+  contentFan.buildWithContentElements([(0, _makePanel.default)(scenarioData[0].benefits), (0, _makePanel.default)(scenarioData[0].usage), (0, _makePanel.default)(scenarioData[0].benefits)]);
   var anchorRef = document.getElementById('twistParent');
   anchorRef.addEventListener("tag-index-trigger", e => {
     // your code here}
@@ -631,5 +651,5 @@ ready(async function () {
     contentFan.animateToContent(index);
   });
 });
-},{"../js/data_sources":"tBe1","../utils/getAssetURLs":"WonQ","../utils/createNavLinks":"QOCG","../utils/detectDesktop":"Ony6"}]},{},["cN1f"], null)
+},{"../js/data_sources":"tBe1","../utils/getAssetURLs":"WonQ","../utils/createNavLinks":"QOCG","../utils/detectDesktop":"Ony6","../utils/makePanel":"TNkT"}]},{},["cN1f"], null)
 //# sourceMappingURL=/skincare/scenario2.c7fd34ac.js.map
