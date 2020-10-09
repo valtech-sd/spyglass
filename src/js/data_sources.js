@@ -205,7 +205,7 @@ data_sources.personalized = {
           {
             user: 'yourfriendjen',
             title: 'THE BEST SERUM OUT THERE',
-            testimonial: '"This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even."'
+            testimonial: '"This made such a huge difference with my combination-dry skin. My pores seem smaller, my skin brighter, and my complexion more even. I could go on for daaays about how great this Serum is, but trust me, you need to try it!"'
           }
         ]
       }
@@ -238,7 +238,7 @@ data_sources.personalized = {
           {
             user: 'yourfriendjen',
             title: 'THE BEST SERUM OUT THERE',
-            testimonial: '"This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even."'
+            testimonial: '"This made such a huge difference with my combination-dry skin. My pores seem smaller, my skin brighter, and my complexion more even."'
           }
         ]
       }
@@ -271,7 +271,7 @@ data_sources.personalized = {
           {
             user: 'yourfriendjen',
             title: 'THE BEST SERUM OUT THERE',
-            testimonial: '"This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even."'
+            testimonial: '"This made such a huge difference with my combination-dry skin. My pores seem smaller, my skin brighter, and my complexion more even."'
           }
         ]
       }
