@@ -155,4 +155,4 @@ AFRAME.registerComponent('adjusted-rotation', {
   play: function () {}
 });
 },{}]},{},["aUdb"], null)
-//# sourceMappingURL=../adjusted-rotation.64dffd76.js.map
+//# sourceMappingURL=/skincare/adjusted-rotation.64dffd76.js.map

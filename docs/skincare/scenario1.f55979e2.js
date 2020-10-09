@@ -341,6 +341,10 @@ data_sources.personalized = {
     ratings: {
       approval: 86,
       friends_who_like: 6,
+      personal: {
+        //personal review field - positive or negative (potential for text feedback in future)
+        positive: null
+      },
       reviews: [{
         user: 'yourfriendjen',
         title: 'THE BEST SERUM OUT THERE',
@@ -360,6 +364,9 @@ data_sources.personalized = {
     ratings: {
       approval: 47,
       friends_who_like: 2,
+      personal: {
+        positive: null
+      },
       reviews: [{
         user: 'yourfriendjen',
         title: 'THE BEST SERUM OUT THERE',
@@ -379,6 +386,9 @@ data_sources.personalized = {
     ratings: {
       approval: 86,
       friends_who_like: 6,
+      personal: {
+        positive: null
+      },
       reviews: [{
         user: 'yourfriendjen',
         title: 'THE BEST SERUM OUT THERE',
@@ -518,6 +528,81 @@ var _default = () => {
 };
 
 exports.default = _default;
+},{}],"TNkT":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _default = data => {
+  // Build content panels with "data"
+  var panel = document.createElement('a-entity');
+  panel.setAttribute("content-group", "");
+  let content = panel.components['content-group'];
+  content.initializeFromData(data);
+  return panel;
+};
+
+exports.default = _default;
+},{}],"NDo1":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+const tagToProduct = target => {
+  switch (target) {
+    case "serum_1_marker":
+    case "mainMarker":
+      return 1;
+
+    case "serum_2_marker":
+      return 2;
+
+    case "serum_3_marker":
+      return 3;
+
+    default:
+      return null;
+  }
+};
+
+var _default = (markerArray, found, lost) => {
+  markerArray.forEach(marker => {
+    if (typeof found === 'function') {
+      marker.addEventListener("markerFound", e => {
+        console.log('a-marker with id', e.target.id);
+        const productID = tagToProduct(e.target.id);
+
+        if (productID) {
+          console.log("Detected product ", productID); // call found function
+
+          found(productID);
+        }
+      });
+    }
+
+    if (typeof lost === 'function') {
+      marker.addEventListener("markerLost", e => {
+        var _e$target;
+
+        const productID = tagToProduct(e === null || e === void 0 ? void 0 : (_e$target = e.target) === null || _e$target === void 0 ? void 0 : _e$target.id);
+
+        if (productID) {
+          console.log("Lost product ", productID); // call lost function
+
+          lost(productID);
+        }
+      });
+    }
+  });
+};
+
+exports.default = _default;
 },{}],"ev72":[function(require,module,exports) {
 "use strict";
 
@@ -528,6 +613,10 @@ var _getAssetURLs = _interopRequireDefault(require("../utils/getAssetURLs"));
 var _createNavLinks = _interopRequireDefault(require("../utils/createNavLinks"));
 
 var _detectDesktop = _interopRequireDefault(require("../utils/detectDesktop"));
+
+var _makePanel = _interopRequireDefault(require("../utils/makePanel"));
+
+var _addMarkerEvents = _interopRequireDefault(require("../utils/addMarkerEvents"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -662,7 +751,7 @@ ready(async () => {
     });
   }
 
-  async function productRecognized(productID) {
+  const productRecognized = async productID => {
     // TODO: recognize which product it is and cue up the data in A-Frame here
     currentProduct = productID; // Kick off the animation to scan.
     // $statusLabel.innerHTML = 'Scanning...';
@@ -678,9 +767,9 @@ ready(async () => {
 
     $scanner.classList.remove('scanning');
     $scanner.classList.remove('complete');
-  }
+  };
 
-  function productOutOfView(e) {
+  const productOutOfView = () => {
     currentProduct = 0; // Remove all classes from scanner
 
     $scanner.classList.remove('scanning');
@@ -689,7 +778,7 @@ ready(async () => {
     if ($tray.classList.contains('step-4')) productLine = 'Moisturizers'; // Reset the label
 
     $statusLabel.innerHTML = 'Exploring ' + productLine;
-  }
+  };
 
   function backToExplore(e) {
     // Prevent link from going anywhere
@@ -728,48 +817,10 @@ ready(async () => {
     $main.classList.add('going-home'); // Prevent changing the URL?
 
     return false;
-  }
+  } // add marker found and lost events
 
-  function tagToProduct(target) {
-    switch (target) {
-      case "serum_1_marker":
-        return 1;
 
-      case "serum_2_marker":
-        return 2;
-
-      case "serum_3_marker":
-        return 3;
-
-      default:
-        return null;
-    }
-  }
-
-  $serumMarkers.forEach(function ($marker) {
-    $marker.addEventListener("markerFound", e => {
-      // your code here}
-      let target = e.target;
-      let productID = tagToProduct(target.id);
-
-      if (productID) {
-        console.log("Detected product ", productID); // call productRecognized
-
-        productRecognized(productID);
-      }
-    });
-    $marker.addEventListener("markerLost", e => {
-      // your code here}
-      let target = e.target;
-      let productID = tagToProduct(target.id);
-
-      if (productID) {
-        console.log("Lost product ", productID); // Call productOutOfView
-
-        productOutOfView(productID);
-      }
-    });
-  }); // Create data for scenario 1 for all three serums
+  (0, _addMarkerEvents.default)($serumMarkers, productRecognized, productOutOfView); // Create data for scenario 1 for all three serums
 
   const checkType = "numbered-text";
   const reviewType = "numbered-text";
@@ -816,16 +867,6 @@ ready(async () => {
   }
 
   generateContentFanData();
-
-  let makePanel = function (data) {
-    // Build content panels with "data"
-    var panel = document.createElement('a-entity');
-    panel.setAttribute("content-group", "");
-    let content = panel.components['content-group'];
-    content.initializeFromData(data);
-    return panel;
-  };
-
   setTimeout(initializeScenario1, 1000);
 
   function initializeScenario1() {
@@ -835,9 +876,9 @@ ready(async () => {
     let contentFan_3 = $contentFan_3.components.contentfan; // Add content to content fan
     // At some point we can find a better way to sync this w/the tab menu
 
-    contentFan_1.buildWithContentElements([makePanel(scenarioData[0].warnings), makePanel(scenarioData[0].why), makePanel(scenarioData[0].reviews)]);
-    contentFan_2.buildWithContentElements([makePanel(scenarioData[1].warnings), makePanel(scenarioData[1].why), makePanel(scenarioData[1].reviews)]);
-    contentFan_3.buildWithContentElements([makePanel(scenarioData[2].warnings), makePanel(scenarioData[2].why), makePanel(scenarioData[2].reviews)]); // Add listeners for buttons
+    contentFan_1.buildWithContentElements([(0, _makePanel.default)(scenarioData[0].warnings), (0, _makePanel.default)(scenarioData[0].why), (0, _makePanel.default)(scenarioData[0].reviews)]);
+    contentFan_2.buildWithContentElements([(0, _makePanel.default)(scenarioData[1].warnings), (0, _makePanel.default)(scenarioData[1].why), (0, _makePanel.default)(scenarioData[1].reviews)]);
+    contentFan_3.buildWithContentElements([(0, _makePanel.default)(scenarioData[2].warnings), (0, _makePanel.default)(scenarioData[2].why), (0, _makePanel.default)(scenarioData[2].reviews)]); // Add listeners for buttons
 
     $backButton.addEventListener('click', backToExplore);
     $addButton.addEventListener('click', addToRoutine); // This is temporary, until we have onmarkerfound event...
@@ -921,5 +962,5 @@ ready(async () => {
     ;
   }
 });
-},{"../js/data_sources":"tBe1","../utils/getAssetURLs":"WonQ","../utils/createNavLinks":"QOCG","../utils/detectDesktop":"Ony6"}]},{},["ev72"], null)
-//# sourceMappingURL=../scenario1.f55979e2.js.map
+},{"../js/data_sources":"tBe1","../utils/getAssetURLs":"WonQ","../utils/createNavLinks":"QOCG","../utils/detectDesktop":"Ony6","../utils/makePanel":"TNkT","../utils/addMarkerEvents":"NDo1"}]},{},["ev72"], null)
+//# sourceMappingURL=/skincare/scenario1.f55979e2.js.map

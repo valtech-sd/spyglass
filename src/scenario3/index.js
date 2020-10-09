@@ -2,6 +2,8 @@ import data_sources from '../js/data_sources';
 import getAssetURLs from '../utils/getAssetURLs';
 import createNavLinks from '../utils/createNavLinks';
 import detectDesktop from '../utils/detectDesktop';
+import makePanel from '../utils/makePanel';
+import addMarkerEvents from '../utils/addMarkerEvents';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -31,6 +33,7 @@ ready(async function() {
   if (detectDesktop()) {
     alert('For a better experience, use on mobile!');
   }
+  let productID = null;
 
   // get dynamic URLs from data response
   const { ingredientURLs } = getAssetURLs(data_sources);
@@ -49,7 +52,7 @@ ready(async function() {
   const usageType = "textwithicon";
   const benefitsType = "textwithicon";
 
-  let scenarioData = [];
+  const scenarioData = [];
   
   function generateContentFanData() {
     for (let i = 0; i < data_sources.contentstack.serums.length; i++) {
@@ -88,26 +91,23 @@ ready(async function() {
   }
   generateContentFanData();
 
+  const $contentFan = document.getElementById("contentFan");
+  const contentFan = $contentFan.components.contentfan
+  const $tabMenu = document.getElementById('tab-menu');
+  const $reviewContent= document.getElementById('review-content'); // menu and text
+  const $productContent = document.getElementById('product-content');
+  const $reviewMenu = document.getElementById('review-product-menu');
+  const $serumMarkers = document.querySelectorAll('a-marker');
 
-
-  // This is a duplicated helper that should be consolidated!
-  let makePanel = function(data) {
-    // Build content panels with "data"
-    var panel = document.createElement('a-entity');
-    panel.setAttribute("content-group", "");
-
-    let content = panel.components['content-group'];
-    content.initializeFromData(data);
-
-    return panel
+  const foundProduct = id => {
+    productID = id;
   }
 
-  let $contentFan = document.getElementById("contentFan");
-  let contentFan = $contentFan.components.contentfan
-  let $tabMenu = document.getElementById('tab-menu');
-  let $reviewContent= document.getElementById('review-content'); // menu and text
-  let $productContent = document.getElementById('product-content');
-  let $reviewMenu = document.getElementById('review-product-menu');
+  const lostProduct = () => {
+    productID = null;
+  }
+
+  addMarkerEvents($serumMarkers, foundProduct, lostProduct);
 
   // These are out of order bc I'm bad: 3 1 2
   contentFan.buildWithContentElements([
@@ -135,7 +135,8 @@ ready(async function() {
   })
 
   mainMarkerRef.addEventListener("tilt-forward", (e)=>{ // your code here}
-    $reviewMenu.components["tab-menu"].confirmSelectedIndex()
+    $reviewMenu.components["tab-menu"].confirmSelectedIndex();
+    $reviewMenu.components["tab-menu"].saveReviewData(productID);
   })
 
   anchorRef.addEventListener("tag-index-trigger", (e)=>{ // your code here}

@@ -68,7 +68,7 @@ main {
   top: 5px;
   left: 50%;
   transform: translateX(-50%);
-  background-image: url(spyglass_logo.e4288f20.svg);
+  background-image: url(/skincare/spyglass_logo.e4288f20.svg);
   background-size: 100% 100%;
 }
 
@@ -79,4 +79,4 @@ a {
   text-transform: uppercase;
 }
 
-/*# sourceMappingURL=../main.c52e0fe2.css.map */
+/*# sourceMappingURL=/skincare/main.c52e0fe2.css.map */

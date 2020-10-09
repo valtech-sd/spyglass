@@ -271,4 +271,4 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
   play: function () {}
 });
 },{}]},{},["ckvF"], null)
-//# sourceMappingURL=../multi-marker-rotation-interpolator.a2ade3fb.js.map
+//# sourceMappingURL=/skincare/multi-marker-rotation-interpolator.a2ade3fb.js.map

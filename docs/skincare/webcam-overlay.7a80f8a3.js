@@ -290,4 +290,4 @@ void main() {
 `
 });
 },{}]},{},["J0VN"], null)
-//# sourceMappingURL=../webcam-overlay.7a80f8a3.js.map
+//# sourceMappingURL=/skincare/webcam-overlay.7a80f8a3.js.map

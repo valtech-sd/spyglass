@@ -341,6 +341,10 @@ data_sources.personalized = {
     ratings: {
       approval: 86,
       friends_who_like: 6,
+      personal: {
+        //personal review field - positive or negative (potential for text feedback in future)
+        positive: null
+      },
       reviews: [{
         user: 'yourfriendjen',
         title: 'THE BEST SERUM OUT THERE',
@@ -360,6 +364,9 @@ data_sources.personalized = {
     ratings: {
       approval: 47,
       friends_who_like: 2,
+      personal: {
+        positive: null
+      },
       reviews: [{
         user: 'yourfriendjen',
         title: 'THE BEST SERUM OUT THERE',
@@ -379,6 +386,9 @@ data_sources.personalized = {
     ratings: {
       approval: 86,
       friends_who_like: 6,
+      personal: {
+        positive: null
+      },
       reviews: [{
         user: 'yourfriendjen',
         title: 'THE BEST SERUM OUT THERE',
@@ -518,6 +528,81 @@ var _default = () => {
 };
 
 exports.default = _default;
+},{}],"TNkT":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _default = data => {
+  // Build content panels with "data"
+  var panel = document.createElement('a-entity');
+  panel.setAttribute("content-group", "");
+  let content = panel.components['content-group'];
+  content.initializeFromData(data);
+  return panel;
+};
+
+exports.default = _default;
+},{}],"NDo1":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+const tagToProduct = target => {
+  switch (target) {
+    case "serum_1_marker":
+    case "mainMarker":
+      return 1;
+
+    case "serum_2_marker":
+      return 2;
+
+    case "serum_3_marker":
+      return 3;
+
+    default:
+      return null;
+  }
+};
+
+var _default = (markerArray, found, lost) => {
+  markerArray.forEach(marker => {
+    if (typeof found === 'function') {
+      marker.addEventListener("markerFound", e => {
+        console.log('a-marker with id', e.target.id);
+        const productID = tagToProduct(e.target.id);
+
+        if (productID) {
+          console.log("Detected product ", productID); // call found function
+
+          found(productID);
+        }
+      });
+    }
+
+    if (typeof lost === 'function') {
+      marker.addEventListener("markerLost", e => {
+        var _e$target;
+
+        const productID = tagToProduct(e === null || e === void 0 ? void 0 : (_e$target = e.target) === null || _e$target === void 0 ? void 0 : _e$target.id);
+
+        if (productID) {
+          console.log("Lost product ", productID); // call lost function
+
+          lost(productID);
+        }
+      });
+    }
+  });
+};
+
+exports.default = _default;
 },{}],"bi7f":[function(require,module,exports) {
 "use strict";
 
@@ -528,6 +613,10 @@ var _getAssetURLs = _interopRequireDefault(require("../utils/getAssetURLs"));
 var _createNavLinks = _interopRequireDefault(require("../utils/createNavLinks"));
 
 var _detectDesktop = _interopRequireDefault(require("../utils/detectDesktop"));
+
+var _makePanel = _interopRequireDefault(require("../utils/makePanel"));
+
+var _addMarkerEvents = _interopRequireDefault(require("../utils/addMarkerEvents"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -555,8 +644,9 @@ ready(async function () {
 
   if ((0, _detectDesktop.default)()) {
     alert('For a better experience, use on mobile!');
-  } // get dynamic URLs from data response
+  }
 
+  let productID = null; // get dynamic URLs from data response
 
   const {
     ingredientURLs
@@ -572,7 +662,7 @@ ready(async function () {
   const forYouType = "text-paragraph-bar";
   const usageType = "textwithicon";
   const benefitsType = "textwithicon";
-  let scenarioData = [];
+  const scenarioData = [];
 
   function generateContentFanData() {
     for (let i = 0; i < _data_sources.default.contentstack.serums.length; i++) {
@@ -614,26 +704,27 @@ ready(async function () {
     }
   }
 
-  generateContentFanData(); // This is a duplicated helper that should be consolidated!
+  generateContentFanData();
+  const $contentFan = document.getElementById("contentFan");
+  const contentFan = $contentFan.components.contentfan;
+  const $tabMenu = document.getElementById('tab-menu');
+  const $reviewContent = document.getElementById('review-content'); // menu and text
 
-  let makePanel = function (data) {
-    // Build content panels with "data"
-    var panel = document.createElement('a-entity');
-    panel.setAttribute("content-group", "");
-    let content = panel.components['content-group'];
-    content.initializeFromData(data);
-    return panel;
+  const $productContent = document.getElementById('product-content');
+  const $reviewMenu = document.getElementById('review-product-menu');
+  const $serumMarkers = document.querySelectorAll('a-marker');
+
+  const foundProduct = id => {
+    productID = id;
   };
 
-  let $contentFan = document.getElementById("contentFan");
-  let contentFan = $contentFan.components.contentfan;
-  let $tabMenu = document.getElementById('tab-menu');
-  let $reviewContent = document.getElementById('review-content'); // menu and text
+  const lostProduct = () => {
+    productID = null;
+  };
 
-  let $productContent = document.getElementById('product-content');
-  let $reviewMenu = document.getElementById('review-product-menu'); // These are out of order bc I'm bad: 3 1 2
+  (0, _addMarkerEvents.default)($serumMarkers, foundProduct, lostProduct); // These are out of order bc I'm bad: 3 1 2
 
-  contentFan.buildWithContentElements([makePanel(scenarioData[0].benefits), makePanel(scenarioData[0].forYou), makePanel(scenarioData[0].usage)]);
+  contentFan.buildWithContentElements([(0, _makePanel.default)(scenarioData[0].benefits), (0, _makePanel.default)(scenarioData[0].forYou), (0, _makePanel.default)(scenarioData[0].usage)]);
   var anchorRef = document.getElementById('twistParent');
   var mainMarkerRef = document.getElementById('mainMarker'); // Get reference to menu confirm
 
@@ -653,6 +744,7 @@ ready(async function () {
   mainMarkerRef.addEventListener("tilt-forward", e => {
     // your code here}
     $reviewMenu.components["tab-menu"].confirmSelectedIndex();
+    $reviewMenu.components["tab-menu"].saveReviewData(productID);
   });
   anchorRef.addEventListener("tag-index-trigger", e => {
     // your code here}
@@ -661,5 +753,5 @@ ready(async function () {
     contentFan.animateToContent(index);
   });
 });
-},{"../js/data_sources":"tBe1","../utils/getAssetURLs":"WonQ","../utils/createNavLinks":"QOCG","../utils/detectDesktop":"Ony6"}]},{},["bi7f"], null)
-//# sourceMappingURL=../scenario3.07e4cdf5.js.map
+},{"../js/data_sources":"tBe1","../utils/getAssetURLs":"WonQ","../utils/createNavLinks":"QOCG","../utils/detectDesktop":"Ony6","../utils/makePanel":"TNkT","../utils/addMarkerEvents":"NDo1"}]},{},["bi7f"], null)
+//# sourceMappingURL=/skincare/scenario3.07e4cdf5.js.map
