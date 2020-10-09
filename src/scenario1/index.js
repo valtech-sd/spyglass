@@ -1,5 +1,6 @@
 import data_sources from '../js/data_sources';
 import getAssetURLs from '../utils/getAssetURLs';
+import buildDynamicAssets from '../utils/buildDynamicAssets';
 import createNavLinks from '../utils/createNavLinks';
 import detectDesktop from '../utils/detectDesktop';
 import makePanel from '../utils/makePanel';
@@ -33,17 +34,10 @@ ready(async () => {
     alert('For a better experience, use on mobile!');
   }
 
-  // get dynamic URLs from data response
+  // get dynamic URLs from data response, build assets and add them to the asset container
   const { ingredientURLs, productURLs } = getAssetURLs(data_sources);
-
-  // build and append img elements with ingredient URLs
   const aAssetContainer = document.querySelector('a-assets');
-  Object.keys(ingredientURLs).forEach(domId => {
-    const imgEl = document.createElement('img'); 
-    imgEl.setAttribute('id', domId);
-    imgEl.setAttribute('src', ingredientURLs[domId]);
-    aAssetContainer.prepend(imgEl);
-  })
+  buildDynamicAssets(ingredientURLs, aAssetContainer);
 
   // target product ids and set hrefs
   Object.keys(productURLs).forEach(productName => {
@@ -70,14 +64,14 @@ ready(async () => {
 
   // TODO: Jason please fix my selectors to be smarter T_T
 
-  let $contentFan_1 = document.getElementById("contentFan_serum1");
-  let $tabMenu_1 = document.getElementById('tab-menu-1');
+  const $contentFan_1 = document.getElementById("contentFan_serum1");
+  const $tabMenu_1 = document.getElementById('tab-menu-1');
 
-  let $tabMenu_2 = document.getElementById('tab-menu-2');
-  let $contentFan_2 = document.getElementById("contentFan_serum2");
+  const $tabMenu_2 = document.getElementById('tab-menu-2');
+  const $contentFan_2 = document.getElementById("contentFan_serum2");
 
-  let $tabMenu_3 = document.getElementById('tab-menu-3');
-  let $contentFan_3 = document.getElementById("contentFan_serum3");
+  const $tabMenu_3 = document.getElementById('tab-menu-3');
+  const $contentFan_3 = document.getElementById("contentFan_serum3");
 
   /** Two useful functions:
     * - pause(X) 
@@ -216,7 +210,7 @@ ready(async () => {
   const checkType = "numbered-text";
   const reviewType = "numbered-text";
   const ingredientsType = "textwithicon";
-  let scenarioData = [];
+  const scenarioData = [];
   
   function generateContentFanData() {
     for (let i = 0; i < data_sources.contentstack.serums.length; i++) {
@@ -259,9 +253,9 @@ ready(async () => {
   function initializeScenario1() {
 
     // Build content panels with "data"
-    let contentFan_1 = $contentFan_1.components.contentfan
-    let contentFan_2 = $contentFan_2.components.contentfan
-    let contentFan_3 = $contentFan_3.components.contentfan
+    const contentFan_1 = $contentFan_1.components.contentfan
+    const contentFan_2 = $contentFan_2.components.contentfan
+    const contentFan_3 = $contentFan_3.components.contentfan
 
     // Add content to content fan
     // At some point we can find a better way to sync this w/the tab menu
@@ -308,8 +302,8 @@ ready(async () => {
     }
 
     // Originally from https://stackoverflow.com/a/23230280
-    var xDown = null;
-    var yDown = null;
+    let xDown = null;
+    let yDown = null;
 
     function getTouches(evt) {
       return evt.touches;
@@ -326,11 +320,11 @@ ready(async () => {
         return;
       }
 
-      var xUp = evt.touches[0].clientX;
-      var yUp = evt.touches[0].clientY;
+      const xUp = evt.touches[0].clientX;
+      const yUp = evt.touches[0].clientY;
 
-      var xDiff = xDown - xUp;
-      var yDiff = yDown - yUp;
+      const xDiff = xDown - xUp;
+      const yDiff = yDown - yUp;
 
       if (Math.abs(xDiff) > Math.abs(yDiff)) {/*most significant*/
         if (xDiff > 0) {

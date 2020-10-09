@@ -1,5 +1,6 @@
 import data_sources from '../js/data_sources';
 import getAssetURLs from '../utils/getAssetURLs';
+import buildDynamicAssets from '../utils/buildDynamicAssets';
 import createNavLinks from '../utils/createNavLinks';
 import detectDesktop from '../utils/detectDesktop';
 import makePanel from '../utils/makePanel';
@@ -33,23 +34,17 @@ ready(async function() {
     alert('For a better experience, use on mobile!');
   }
 
-  // get dynamic URLs from data response
+  // get dynamic URLs from data response, build assets and add them to the asset container
   const { ingredientURLs } = getAssetURLs(data_sources);
-
-  // build and append img elements with ingredient URLs
+  // console.log('ingredientURLs:', ingredientURLs); 
   const aAssetContainer = document.querySelector('a-assets');
-
-  Object.keys(ingredientURLs).forEach(domId => {
-    const imgEl = document.createElement('img'); 
-    imgEl.setAttribute('id', domId);
-    imgEl.setAttribute('src', ingredientURLs[domId]);
-    aAssetContainer.prepend(imgEl);
-  })
+  buildDynamicAssets(ingredientURLs, aAssetContainer);
 
   const usageType = "textwithicon";
   const benefitsType = "textwithicon";
 
-  let scenarioData = [];
+  const scenarioData = [];
+  let currPanelIndex = 0;
   
   function generateContentFanData() {
     for (let i = 0; i < data_sources.contentstack.serums.length; i++) {
@@ -101,6 +96,14 @@ ready(async function() {
     $tabMenu.components["tab-menu"].selectIndex(index)
     contentFan.animateToContent(index)
   })
+
+  window.sc2trigger = () => {
+    const newIndex = currPanelIndex === 0 ? 1 : 0;
+    $tabMenu.components["tab-menu"].selectIndex(newIndex);
+    contentFan.animateToContent(newIndex);
+    currPanelIndex = newIndex;
+  }
+
 });
 
 
