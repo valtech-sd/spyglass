@@ -1,6 +1,8 @@
 import data_sources from '../js/data_sources';
 import getAssetURLs from '../utils/getAssetURLs';
 import buildDynamicAssets from '../utils/buildDynamicAssets';
+import createNavLinks from '../utils/createNavLinks';
+import detectDesktop from '../utils/detectDesktop';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -13,8 +15,22 @@ function ready(fn) {
 
 ready(async () => {
   console.log('DOM is ready.');
+
+  // create nav links
+  const main = document.querySelector('main');
+  const navContainer = document.createElement('section');
+  navContainer.className = 'nav-container';
+  const navLinks = createNavLinks();
+  navLinks.forEach(navLink => navContainer.appendChild(navLink))
+  main.appendChild(navContainer);
+
   // Wait for the Contentstack data to come back before proceeding!
   await data_sources.getData();
+
+  // detect desktop and alert
+  if (detectDesktop()) {
+    alert('For a better experience, use on mobile!');
+  }
 
   // get dynamic URLs from data response, build assets and add them to the asset container
   const { ingredientURLs, productURLs } = getAssetURLs(data_sources);

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Spyglass Scenario 2 • Contentstack + Valtech + AR</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="../main.c52e0fe2.css" rel="stylesheet">
+    <link href="/skincare/main.c52e0fe2.css" rel="stylesheet">
     <!-- favicon generics -->
 	<link rel="icon" href="https://spyglass.valtech.engineering/images/favicons/favicon-32.png" sizes="32x32">
 	<link rel="icon" href="https://spyglass.valtech.engineering/images/favicons/favicon-57.png" sizes="57x57">
@@ -29,21 +29,21 @@
     <script src="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt53c4bd908b2e7ed5/5f681de4d70e764f32921c0a/aframe-ar.js"></script>
     <!--    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>-->
     <!--    <script src="../components/raycaster-listen.js"></script>-->
-    <script src="../rotation-trigger.f860d6c2.js"></script>
-    <script src="../marker-tracker-no-rotation.572346fb.js"></script>
-    <script src="../content-type.896b0f9e.js"></script>
-    <script src="../text-paragraph-bar.276cfd09.js"></script>
-    <script src="../numbered-text.05f93e69.js"></script>
-    <script src="../text-with-icon.22278198.js"></script>
-    <script src="../webcam-overlay.7a80f8a3.js"></script>
-    <script src="../content-group.aa5fc31e.js"></script>
-    <script src="../tab-menu-item.916c1ef0.js"></script>
-    <script src="../icon-tab-menu-item.998a0e39.js"></script>
-    <script src="../tab-menu.41f7b7c1.js"></script>
-    <script src="../content-fan.ae1d576d.js"></script>
-    <script src="../smoothed-marker-tracker.152e2cc6.js"></script>
-    <script src="../adjusted-rotation.64dffd76.js"></script>
-    <script src="../multi-marker-rotation-interpolator.a2ade3fb.js"></script>
+    <script src="/skincare/rotation-trigger.f860d6c2.js"></script>
+    <script src="/skincare/marker-tracker-no-rotation.572346fb.js"></script>
+    <script src="/skincare/content-type.896b0f9e.js"></script>
+    <script src="/skincare/text-paragraph-bar.276cfd09.js"></script>
+    <script src="/skincare/numbered-text.05f93e69.js"></script>
+    <script src="/skincare/text-with-icon.22278198.js"></script>
+    <script src="/skincare/webcam-overlay.7a80f8a3.js"></script>
+    <script src="/skincare/content-group.aa5fc31e.js"></script>
+    <script src="/skincare/tab-menu-item.916c1ef0.js"></script>
+    <script src="/skincare/icon-tab-menu-item.998a0e39.js"></script>
+    <script src="/skincare/tab-menu.41f7b7c1.js"></script>
+    <script src="/skincare/content-fan.ae1d576d.js"></script>
+    <script src="/skincare/smoothed-marker-tracker.152e2cc6.js"></script>
+    <script src="/skincare/adjusted-rotation.64dffd76.js"></script>
+    <script src="/skincare/multi-marker-rotation-interpolator.a2ade3fb.js"></script>
 </head>
 <body>
 <main>
@@ -52,24 +52,22 @@
         <a-scene embedded="" vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true; antialias: true;" arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
 
             <a-assets>
-                <img id="panthenol" src="../panthenol.3d357d1d.png">
-                <img id="ylangylang" src="../ylangylang.41566ffe.png">
-                <img id="step1" src="../1.9be96cb3.png">
-                <img id="step2" src="../2.2c7fcc9e.png">
-                <img id="step3" src="../3.8e3e98a2.png">
+                <img id="step1" src="/skincare/1.9be96cb3.png">
+                <img id="step2" src="/skincare/2.2c7fcc9e.png">
+                <img id="step3" src="/skincare/3.8e3e98a2.png">
 
                 <!-- Tab Menu Icons -->
-                <img id="benefits" src="../benefits_icon.de076cd1.png">
-                <img id="usage" src="../usage_icon.e78c6330.png">
-                <img id="for-you" src="../for_you_icon.ffc0ba20.png">
-                <img id="reviews" src="../reviews_icon.41efad21.png">
-                <img id="check" src="../check_icon.f3205693.png">
+                <img id="benefits" src="/skincare/benefits_icon.de076cd1.png">
+                <img id="usage" src="/skincare/usage_icon.e78c6330.png">
+                <img id="for-you" src="/skincare/for_you_icon.ffc0ba20.png">
+                <img id="reviews" src="/skincare/reviews_icon.41efad21.png">
+                <img id="check" src="/skincare/check_icon.f3205693.png">
 
-                <img id="reclabel" src="../recommended_square.beca367a.png">
-                <img id="happy" src="../happy_icon.19f21c66.png">
-                <img id="sad" src="../sad_icon.27ef7de8.png">
+                <img id="reclabel" src="/skincare/recommended_square.beca367a.png">
+                <img id="happy" src="/skincare/happy_icon.19f21c66.png">
+                <img id="sad" src="/skincare/sad_icon.27ef7de8.png">
 
-                <a-mixin id="body-text" text="align: left; anchor: left; baseline: top; width: 13.0; wrapCount: 35;
+                <a-mixin id="body-text" text="align: left; anchor: left; baseline: top; width: 10.0;
                font: https://assets.contentstack.io/v3/assets/blte63f7056be4da683/bltd5d203e4c4450857/5f67d680128a9c4e4d50b7d4/din_ot.fnt;
                fontImage: https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt8bfb56d15a62feaf/5f67d6802b93e84e4c329976/din_ot.png;
                value: hello there;">
@@ -115,7 +113,7 @@
             <a-entity camera=""></a-entity>
         </a-scene>
     </div>
-    <script src="../scenario2.f1463b0f.js"></script>
+    <script src="/skincare/scenario2.c7fd34ac.js"></script>
 </main>
 </body>
 </html>

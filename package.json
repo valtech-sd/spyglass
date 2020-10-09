@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel build ./src/index.html --target browser --no-minify --no-cache --no-content-hash --out-dir ./docs/skincare --public-url ./",
+    "build": "parcel build ./src/index.html --target browser --no-minify --no-cache --no-content-hash --out-dir ./docs/skincare --public-url /skincare",
     "dev": "parcel ./src/index.html --no-hmr --target browser --https --out-dir ./dev",
     "dev:contentstack": "parcel ./samples/contentstack-integration/index.html --no-hmr --target browser --out-dir ./samples/contentstack-integration/dev",
     "dev:rotation": "parcel ./samples/rotation/rotation-marker.html --https --no-hmr --target browser --out-dir ./samples/rotation/dev",

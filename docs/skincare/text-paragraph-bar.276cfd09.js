@@ -170,4 +170,4 @@ AFRAME.registerComponent('text-paragraph-bar', {
   play: function () {}
 });
 },{}]},{},["pk82"], null)
-//# sourceMappingURL=text-paragraph-bar.276cfd09.js.map
+//# sourceMappingURL=/skincare/text-paragraph-bar.276cfd09.js.map
