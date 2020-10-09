@@ -2,6 +2,8 @@ import data_sources from '../js/data_sources';
 import getAssetURLs from '../utils/getAssetURLs';
 import createNavLinks from '../utils/createNavLinks';
 import detectDesktop from '../utils/detectDesktop';
+import makePanel from '../utils/makePanel';
+import addMarkerEvents from '../utils/addMarkerEvents';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -133,7 +135,7 @@ ready(async () => {
     });
   }
   
-  async function productRecognized(productID) {
+  const productRecognized = async productID => {
     // TODO: recognize which product it is and cue up the data in A-Frame here
     currentProduct = productID;
 
@@ -152,7 +154,7 @@ ready(async () => {
     $scanner.classList.remove('complete');
   }
 
-  function productOutOfView(e) {
+  const productOutOfView = () => {
     currentProduct = 0;
 
     // Remove all classes from scanner
@@ -206,46 +208,9 @@ ready(async () => {
     return false;
   }
 
-  function tagToProduct(target) {
-    switch(target) {
-      case "serum_1_marker":
-        return 1;
-      case "serum_2_marker":
-        return 2;
-      case "serum_3_marker":
-        return 3;
-      default:
-      return null;
-    }
-  }
+  // add marker found and lost events
+  addMarkerEvents($serumMarkers, productRecognized, productOutOfView);
 
-
-  $serumMarkers.forEach(function($marker) {
-
-    $marker.addEventListener("markerFound", (e)=>{ // your code here}
-      let target = e.target;
-      let productID = tagToProduct(target.id);
-
-      if (productID) {
-        console.log("Detected product ", productID);
-
-        // call productRecognized
-        productRecognized(productID);
-      }
-    })
-
-    $marker.addEventListener("markerLost", (e)=>{ // your code here}
-      let target = e.target;
-      let productID = tagToProduct(target.id);
-
-      if (productID) {
-        console.log("Lost product ", productID);
-
-        // Call productOutOfView
-        productOutOfView(productID);
-      }
-    })
-  });
 
   // Create data for scenario 1 for all three serums
   const checkType = "numbered-text";
@@ -288,17 +253,6 @@ ready(async () => {
     }
   }
   generateContentFanData();
-
-  let makePanel = function(data) {
-    // Build content panels with "data"
-    var panel = document.createElement('a-entity');
-    panel.setAttribute("content-group", "");
-
-    let content = panel.components['content-group'];
-    content.initializeFromData(data);
-
-    return panel
-  }
 
   setTimeout(initializeScenario1, 1000);
 
