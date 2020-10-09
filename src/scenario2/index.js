@@ -1,5 +1,6 @@
 import data_sources from '../js/data_sources';
 import getAssetURLs from '../utils/getAssetURLs';
+import makePanel from '../utils/makePanel';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -64,19 +65,6 @@ ready(async function() {
     }
   }
   generateContentFanData();
-
-
-  // This is a duplicated helper that should be consolidated!
-  let makePanel = function(data) {
-    // Build content panels with "data"
-    var panel = document.createElement('a-entity');
-    panel.setAttribute("content-group", "");
-
-    let content = panel.components['content-group'];
-    content.initializeFromData(data);
-
-    return panel
-  }
 
   let $contentFan = document.getElementById("contentFan");
   let contentFan = $contentFan.components.contentfan

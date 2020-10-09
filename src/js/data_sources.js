@@ -193,14 +193,19 @@ data_sources.personalized = {
           text: 'The UV index is super high today in your area! Make sure to apply sunscreen throughout the day after using this serum.'
         }  
       ],
+      
       ratings: {
         approval: 86,
         friends_who_like: 6,
+        personal: {
+          //personal review field - positive or negative (potential for text feedback in future)
+          positive: null,
+        },
         reviews: [
           {
             user: 'yourfriendjen',
             title: 'THE BEST SERUM OUT THERE',
-            testimonial: '"This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even. This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even."'
+            testimonial: '"This made such a huge difference with my combination-dry skin. My pores seem smaller, my skin brighter, and my complexion more even. I could go on for daaays about how great this Serum is, but trust me, you need to try it!"'
           }
         ]
       }
@@ -226,11 +231,14 @@ data_sources.personalized = {
       ratings: {
         approval: 47,
         friends_who_like: 2,
+        personal: {
+          positive: null,
+        },
         reviews: [
           {
             user: 'yourfriendjen',
             title: 'THE BEST SERUM OUT THERE',
-            testimonial: '"This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even."'
+            testimonial: '"This made such a huge difference with my combination-dry skin. My pores seem smaller, my skin brighter, and my complexion more even."'
           }
         ]
       }
@@ -256,11 +264,14 @@ data_sources.personalized = {
       ratings: {
         approval: 86,
         friends_who_like: 6,
+        personal: {
+          positive: null,
+        },
         reviews: [
           {
             user: 'yourfriendjen',
             title: 'THE BEST SERUM OUT THERE',
-            testimonial: '"This made such a huge difference with my combination-dry skin. My pore seem smaller, my skin brighter, and my complexion more even."'
+            testimonial: '"This made such a huge difference with my combination-dry skin. My pores seem smaller, my skin brighter, and my complexion more even."'
           }
         ]
       }
