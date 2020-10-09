@@ -141,7 +141,7 @@ async function getStackData() {
         newData.serums[i] = entry;
       }
     }
-    console.log(newData);
+    // console.log(newData);
     // Sort the serums
     newData.serums.sort((a,b) => a._id - b._id);
     return newData;

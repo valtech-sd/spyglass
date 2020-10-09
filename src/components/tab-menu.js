@@ -54,7 +54,7 @@ AFRAME.registerComponent('tab-menu', {
       if (i == index) {
         self.selectedIndex = index;
         tabComponent.select();
-        console.log("selecting", index)
+        // console.log("selecting", index)
       } else {
         tabComponent.deselect();
       }

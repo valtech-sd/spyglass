@@ -1,5 +1,6 @@
 import data_sources from '../js/data_sources';
 import getAssetURLs from '../utils/getAssetURLs';
+import buildDynamicAssets from '../utils/buildDynamicAssets';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -15,32 +16,19 @@ function ready(fn) {
 ready(async function() {
   console.log( "DOM loaded" );
   await data_sources.getData();
-  console.log(data_sources);
+  // console.log(data_sources);
 
-  // get dynamic URLs from data response
+  // get dynamic URLs from data response, build assets and add them to the asset container
   const { ingredientURLs } = getAssetURLs(data_sources);
-  console.log('ingredientURLs:', ingredientURLs); 
-
-  // build and append img elements with ingredient URLs
+  // console.log('ingredientURLs:', ingredientURLs); 
   const aAssetContainer = document.querySelector('a-assets');
-  const fallbackImageURL = 'https://images.contentstack.io/v3/assets/blte63f7056be4da683/bltb57173579e7bb2b3/5f7e5c583dea860e7be3e122/generic.png';
-
-  Object.keys(ingredientURLs).forEach(domId => {
-    const imgEl = document.createElement('img'); 
-    imgEl.setAttribute('id', domId);
-    // add a generic fallback image if the ingredientURL is undefined
-    if (ingredientURLs[domId] === undefined) {
-      ingredientURLs[domId] = fallbackImageURL;
-      console.log(`updated undefined ${domId} to fallbackImageURL`);
-    }
-    imgEl.setAttribute('src', ingredientURLs[domId]);
-    aAssetContainer.prepend(imgEl);
-  })
+  buildDynamicAssets(ingredientURLs, aAssetContainer);
 
   const usageType = "textwithicon";
   const benefitsType = "textwithicon";
 
-  let scenarioData = [];
+  const scenarioData = [];
+  let currPanelIndex = 0;
   
   function generateContentFanData() {
     for (let i = 0; i < data_sources.contentstack.serums.length; i++) {
@@ -105,6 +93,14 @@ ready(async function() {
     $tabMenu.components["tab-menu"].selectIndex(index)
     contentFan.animateToContent(index)
   })
+
+  window.sc2trigger = () => {
+    const newIndex = currPanelIndex === 0 ? 1 : 0;
+    $tabMenu.components["tab-menu"].selectIndex(newIndex);
+    contentFan.animateToContent(newIndex);
+    currPanelIndex = newIndex;
+  }
+
 });
 
 

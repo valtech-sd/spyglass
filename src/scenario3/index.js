@@ -1,5 +1,6 @@
 import data_sources from '../js/data_sources';
 import getAssetURLs from '../utils/getAssetURLs';
+import buildDynamicAssets from '../utils/buildDynamicAssets';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -17,18 +18,10 @@ ready(async function() {
   await data_sources.getData();
   console.log(data_sources);
 
-  // get dynamic URLs from data response
+  // get dynamic URLs from data response, build assets and add them to the asset container
   const { ingredientURLs } = getAssetURLs(data_sources);
-
-  // build and append img elements with ingredient URLs
   const aAssetContainer = document.querySelector('a-assets');
-
-  Object.keys(ingredientURLs).forEach(domId => {
-    const imgEl = document.createElement('img'); 
-    imgEl.setAttribute('id', domId);
-    imgEl.setAttribute('src', ingredientURLs[domId]);
-    aAssetContainer.prepend(imgEl);
-  })
+  buildDynamicAssets(ingredientURLs, aAssetContainer);
 
   const forYouType = "text-paragraph-bar";
   const usageType = "textwithicon";
