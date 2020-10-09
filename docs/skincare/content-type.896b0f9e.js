@@ -140,4 +140,4 @@ AFRAME.registerComponent('content-type', {
   play: function () {}
 });
 },{}]},{},["xtKt"], null)
-//# sourceMappingURL=../content-type.896b0f9e.js.map
+//# sourceMappingURL=/skincare/content-type.896b0f9e.js.map

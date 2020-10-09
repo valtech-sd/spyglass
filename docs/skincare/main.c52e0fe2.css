@@ -40,6 +40,38 @@ main {
   overflow:hidden;
 }
 
+.nav-container {
+  width: 100%;
+}
+
+.nav-container .navlink {
+  position: absolute;
+  top: 12px;
+  opacity: 1;
+  visibility: visible;
+  color: black !important;
+  text-shadow: 0 0 1px white;
+  font-size: 0.8em;
+}
+
+.nav-container .navlink-right {
+  right: 12px;
+}
+
+.nav-container .navlink-left {
+  left: 12px;
+}
+
+.nav-container .navlink-center {
+  width: 30px;
+  height: 30px;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url(/skincare/spyglass_logo.e4288f20.svg);
+  background-size: 100% 100%;
+}
+
 a {
   text-decoration: none;
   text-align: center;
@@ -47,4 +79,4 @@ a {
   text-transform: uppercase;
 }
 
-/*# sourceMappingURL=../main.c52e0fe2.css.map */
+/*# sourceMappingURL=/skincare/main.c52e0fe2.css.map */

@@ -437,12 +437,97 @@ var _default = data => {
 };
 
 exports.default = _default;
+},{}],"QOCG":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+const createAnchor = (href, text, classNames) => {
+  const anchorEl = document.createElement('a');
+  anchorEl.href = href;
+  anchorEl.innerHTML = text;
+  anchorEl.className = classNames;
+  return anchorEl;
+};
+
+var _default = () => {
+  // returns an array of nav links depending on the current page
+  const navLinks = [];
+  const allPages = {
+    scenario1: 'IN STORE',
+    scenario2: 'AT HOME',
+    scenario3: 'LATER'
+  };
+  const pagesArray = Object.keys(allPages).sort();
+  const homeText = ''; // get current route
+
+  const splitPath = window.location.pathname.split('/');
+  const routeIndex = splitPath.length - 2;
+  const currRoute = splitPath[routeIndex];
+  const pageIndex = pagesArray.indexOf(currRoute);
+
+  if (!currRoute || pageIndex === -1) {
+    // we are on the home page and already have our navlinks
+    return navLinks;
+  }
+
+  const prevPage = pagesArray[pageIndex - 1];
+  const nextPage = pagesArray[pageIndex + 1]; // add prev page link
+
+  if (prevPage) {
+    splitPath[routeIndex] = prevPage;
+    const href = splitPath.join('/');
+    const text = `&larr; ${allPages[prevPage]}`;
+    const classNames = 'navlink navlink-left';
+    navLinks.push(createAnchor(href, text, classNames));
+  } // add next page link
+
+
+  if (nextPage) {
+    splitPath[routeIndex] = nextPage;
+    const href = splitPath.join('/');
+    const text = `${allPages[nextPage]} &rarr;`;
+    const classNames = 'navlink navlink-right';
+    navLinks.push(createAnchor(href, text, classNames));
+  } // add home page link
+
+
+  const homeSplit = splitPath.slice(0, routeIndex);
+  const homeHref = homeSplit.length > 1 ? homeSplit.join('/') : '/';
+  const classNames = 'navlink navlink-center';
+  navLinks.push(createAnchor(homeHref, homeText, classNames));
+  return navLinks;
+};
+
+exports.default = _default;
+},{}],"Ony6":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _default = () => {
+  const isTouchDevice = () => 'ontouchstart' in window || 'onmsgesturechange' in window;
+
+  return window.screenX != 0 && !isTouchDevice() ? true : false;
+};
+
+exports.default = _default;
 },{}],"ev72":[function(require,module,exports) {
 "use strict";
 
 var _data_sources = _interopRequireDefault(require("../js/data_sources"));
 
 var _getAssetURLs = _interopRequireDefault(require("../utils/getAssetURLs"));
+
+var _createNavLinks = _interopRequireDefault(require("../utils/createNavLinks"));
+
+var _detectDesktop = _interopRequireDefault(require("../utils/detectDesktop"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -456,9 +541,21 @@ function ready(fn) {
 }
 
 ready(async () => {
-  console.log('DOM is ready.'); // Wait for the Contentstack data to come back before proceeding!
+  console.log('DOM is ready.'); // create nav links
 
-  await _data_sources.default.getData(); // get dynamic URLs from data response
+  const main = document.querySelector('main');
+  const navContainer = document.createElement('section');
+  navContainer.className = 'nav-container';
+  const navLinks = (0, _createNavLinks.default)();
+  navLinks.forEach(navLink => navContainer.appendChild(navLink));
+  main.appendChild(navContainer); // Wait for the Contentstack data to come back before proceeding!
+
+  await _data_sources.default.getData(); // detect desktop and alert
+
+  if ((0, _detectDesktop.default)()) {
+    alert('For a better experience, use on mobile!');
+  } // get dynamic URLs from data response
+
 
   const {
     ingredientURLs,
@@ -824,5 +921,5 @@ ready(async () => {
     ;
   }
 });
-},{"../js/data_sources":"tBe1","../utils/getAssetURLs":"WonQ"}]},{},["ev72"], null)
-//# sourceMappingURL=../scenario1.f55979e2.js.map
+},{"../js/data_sources":"tBe1","../utils/getAssetURLs":"WonQ","../utils/createNavLinks":"QOCG","../utils/detectDesktop":"Ony6"}]},{},["ev72"], null)
+//# sourceMappingURL=/skincare/scenario1.f55979e2.js.map

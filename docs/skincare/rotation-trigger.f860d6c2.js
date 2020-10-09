@@ -277,4 +277,4 @@ AFRAME.registerComponent('rotation-trigger', {
   play: function () {}
 });
 },{}]},{},["ewd3"], null)
-//# sourceMappingURL=../rotation-trigger.f860d6c2.js.map
+//# sourceMappingURL=/skincare/rotation-trigger.f860d6c2.js.map

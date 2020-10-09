@@ -211,4 +211,4 @@ AFRAME.registerComponent('tab-menu', {
   play: function () {}
 });
 },{}]},{},["k6zh"], null)
-//# sourceMappingURL=../tab-menu.41f7b7c1.js.map
+//# sourceMappingURL=/skincare/tab-menu.41f7b7c1.js.map

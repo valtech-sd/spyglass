@@ -170,4 +170,4 @@ AFRAME.registerComponent('numbered-text', {
   play: function () {}
 });
 },{}]},{},["j457"], null)
-//# sourceMappingURL=../numbered-text.05f93e69.js.map
+//# sourceMappingURL=/skincare/numbered-text.05f93e69.js.map
