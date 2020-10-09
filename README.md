@@ -77,7 +77,7 @@ All files in the `docs` directory on the `main` branch will be served at [https:
 
 Running ```npm run build``` should put the latest into `docs/skincare/`. 
 
-Unfortunately, as of right now, `parcel build`'s output does not reference the paths correctly for CSS `link`s, `script` tags, and `img` elements in the root directory. We've modified the `--public-url` from `./` to `../` and this fixes the HTML inside each of the scenario folders, but you will still need to manually change `docs/skincare/index.html` to remove the `../` in front of each filename. (We aim to fix that in the future, but for now, it's an extra step you must do every time after `npm run build`.)
+Unfortunately, as of right now, `parcel build`'s output does not reference the paths correctly for CSS `link`s, `script` tags, and `img` elements — so you'll have to manually change all of those to add a `../` in front of the filename. (We aim to fix that in the future, but for now, it's an extra step you must do every time after `npm run build`.)
 
 ### Contributing
 
