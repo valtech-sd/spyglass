@@ -94,7 +94,7 @@ AFRAME.registerComponent('multi-marker-rotation-interpolator', {
               self.el.emit("tag-index-trigger", { index: lastTrackedIndex });
               self.emittedIndexEvent = true
 
-              console.log("emitting trigger")
+              // console.log("emitting trigger")
             }
           }
         }

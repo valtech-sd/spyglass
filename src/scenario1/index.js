@@ -5,6 +5,7 @@ import createNavLinks from '../utils/createNavLinks';
 import detectDesktop from '../utils/detectDesktop';
 import makePanel from '../utils/makePanel';
 import addMarkerEvents from '../utils/addMarkerEvents';
+import Hint from '../utils/Hint';
 
 function ready(fn) {
   // replaces $(document).ready() in jQuery
@@ -60,8 +61,15 @@ ready(async () => {
   const $backButton = document.querySelector('a.back');
   const $addButton = document.querySelector('a.add');
   const $serumMarkers = document.querySelectorAll('a-marker');
-  let currentProduct = 0;
 
+  const hintEl = document.querySelector('#hint');
+  const hint = new Hint({
+    duration: 3000,
+    delay: 4000,
+    hintEl
+  });
+  let currentProduct = 0;
+  
   // TODO: Jason please fix my selectors to be smarter T_T
 
   const $contentFan_1 = document.getElementById("contentFan_serum1");
@@ -87,6 +95,8 @@ ready(async () => {
     *   await pause(750)
     * ...and it will wait before moving on.
     */
+
+
   async function pause(millis) {
     const endTime = new Date(new Date().getTime() + millis);
     return new Promise((resolve) => {
@@ -133,6 +143,9 @@ ready(async () => {
     // TODO: recognize which product it is and cue up the data in A-Frame here
     currentProduct = productID;
 
+    // start hint
+    hint.start();
+
     // Kick off the animation to scan.
     // $statusLabel.innerHTML = 'Scanning...';
     // $scanner.classList.add('scanning');
@@ -146,6 +159,7 @@ ready(async () => {
     // $main.classList.remove('serum'+productID);
     $scanner.classList.remove('scanning');
     $scanner.classList.remove('complete');
+    
   }
 
   const productOutOfView = () => {
@@ -158,6 +172,8 @@ ready(async () => {
     if ($tray.classList.contains('step-4')) productLine = 'Moisturizers';
     // Reset the label
     $statusLabel.innerHTML = 'Exploring '+productLine;
+    // stop hint
+    hint.stop();
   }
   function backToExplore(e) {
     // Prevent link from going anywhere
@@ -271,6 +287,7 @@ ready(async () => {
 
     // Swipe detection
     document.addEventListener('touchstart', handleTouchStart, false);
+    document.addEventListener('touchstart', handleTouchEnd, false);
     document.addEventListener('touchmove', handleTouchMove, false);
 
     // document.addEventListener('swipeleft', handleSwipeLeft, false);
@@ -313,6 +330,15 @@ ready(async () => {
       const firstTouch = getTouches(evt)[0];
       xDown = firstTouch.clientX;
       yDown = firstTouch.clientY;
+      hint.stop();
+    };
+
+    function handleTouchEnd(evt) {
+      // if we have the product in shot, we can start the hint timer again
+      if (currentProduct !== 0) {
+        hint.start();
+      }
+      
     };
 
     function handleTouchMove(evt) {

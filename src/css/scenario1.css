@@ -212,3 +212,31 @@ a.skip {
   top: 0; 
   right: 0;
 }
+
+
+/* HINT */
+
+section#hint {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 200ms ease-out;
+}
+
+section#hint div {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  opacity: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+section#hint span {
+  font-size: 20px;
+  color: white;
+  margin-bottom: 100px;
+}
