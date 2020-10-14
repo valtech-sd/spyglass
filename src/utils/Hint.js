@@ -5,7 +5,7 @@ export default class Hint {
    * understand the interactive elements.
    */
 
-  constructor({duration, delay, maxNumDisplays, hintEl}) {
+  constructor({duration, delay, maxNumDisplays, animation}) {
 
     // default vars
     const defMaxNumDisplays = 1;
@@ -16,7 +16,7 @@ export default class Hint {
     this.duration = duration || duration === 0 ? duration : defDuration;
     this.delay = delay || defDelay;
     this.maxNumDisplays = maxNumDisplays || defMaxNumDisplays;
-    this.hintEl = hintEl;
+    this.animation = animation;
 
     // state vars
     this.currNumDisplays = 0;
@@ -30,8 +30,14 @@ export default class Hint {
   setVisible(visible, incrementNumDisplays) {
 
     console.log(`setting hint visibility to ${visible}.`);
-    this.hintEl.style.opacity = visible ? 1 : 0;
-    this.hintEl.style.visibility = visible ? 'visible' : 'hidden';
+
+    // rather than directly controlling elements, we can call passed-in play/stop functions
+    if (visible) {
+      typeof this.animation?.start === 'function' && this.animation.start();
+    } else {
+      typeof this.animation?.stop === 'function' && this.animation.stop();
+    }
+    
     this.isVisible = visible;
 
     // incrementing the number of displays must be done actively
@@ -40,6 +46,7 @@ export default class Hint {
     // we probably shouldnt count it.
 
     if (incrementNumDisplays) {
+      console.log('NumDisplays incremented!');
       this.currNumDisplays++;
       this.enabled = !(this.currNumDisplays >= this.maxNumDisplays);
     }
@@ -95,18 +102,18 @@ export default class Hint {
 
   }
 
-  start() {
+  start(playAnimation) {
 
     if (!this.enabled) {
       console.log('hints not enabled.');
       return;
     }
-
+    this.playAnimation = playAnimation;
     this.startDelayTimer();
 
   }
 
-  stop() {
+  stop(stopAnimation) {
 
     // check if we are in the delay timer, or the display timer
 
@@ -118,6 +125,7 @@ export default class Hint {
       this.cancelDisplayTimer();
     }
     // always set visible to false
+    this.stopAnimation = stopAnimation;
     this.setVisible(false);
 
   }

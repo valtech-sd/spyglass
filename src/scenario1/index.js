@@ -62,11 +62,31 @@ ready(async () => {
   const $addButton = document.querySelector('a.add');
   const $serumMarkers = document.querySelectorAll('a-marker');
 
-  const hintEl = document.querySelector('#hint');
+
+  const hintEl = document.querySelector('.hint');
+  const circle = hintEl.querySelector('.circle');
+
+  const hintAnimation = {
+    start: () => {
+      console.log('playing hint animation');
+      const slideLeftDelay = 700;
+      const slideRightDelay = 2000;
+      hintEl.classList.add('show');
+      setTimeout(() => circle.classList.add('slide-left'), slideLeftDelay);
+      setTimeout(() => circle.classList.add('slide-right'), slideRightDelay);
+    },
+    stop: () => {
+      console.log('stopping hint animation');
+      hintEl.classList.remove('show');
+      circle.classList.remove('slide-left');
+      circle.classList.remove('slide-right');
+    }
+  }
+
   const hint = new Hint({
     duration: 3000,
-    delay: 4000,
-    hintEl
+    delay: 3000,
+    animation: hintAnimation
   });
   let currentProduct = 0;
   
@@ -138,12 +158,14 @@ ready(async () => {
       el.addEventListener(endEvent, endFunction);
     });
   }
+
+  
   
   const productRecognized = async productID => {
     // TODO: recognize which product it is and cue up the data in A-Frame here
     currentProduct = productID;
 
-    // start hint
+    // start hint and pass in start animation function
     hint.start();
 
     // Kick off the animation to scan.
@@ -172,7 +194,7 @@ ready(async () => {
     if ($tray.classList.contains('step-4')) productLine = 'Moisturizers';
     // Reset the label
     $statusLabel.innerHTML = 'Exploring '+productLine;
-    // stop hint
+    // stop hint and pass in stop animation
     hint.stop();
   }
   function backToExplore(e) {

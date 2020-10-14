@@ -216,27 +216,77 @@ a.skip {
 
 /* HINT */
 
-section#hint {
+section.hint {
   opacity: 0;
   visibility: hidden;
   transition: opacity 200ms ease-out;
 }
 
-section#hint div {
+section.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+section.hint>div {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: black;
-  opacity: 0.8;
+  background-color: rgba(0,0,0,0.8);
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
 }
 
-section#hint span {
-  font-size: 20px;
+section.hint span {
+  font-size: 28px;
   color: white;
-  margin-bottom: 100px;
+  margin-bottom: 40px;
+}
+
+section.hint div.hint-img-container {
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+section.hint img.circle {
+  position: relative;
+  bottom: 63px;
+}
+
+/**
+ * ----------------------------------------
+ * animation slide-left and slide-right
+ * ----------------------------------------
+ */
+@keyframes slide-left {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-150px);
+    opacity: 0;
+  }
+}
+@keyframes slide-right {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(150px);
+    opacity: 0;
+  }
+}
+
+section.hint img.slide-left {
+  animation: slide-left 1.2s ease-in-out both;
+}
+section.hint img.slide-right {
+  animation: slide-right 1.2s ease-in-out both;
 }
