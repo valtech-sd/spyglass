@@ -32,7 +32,7 @@ ready(async () => {
 
   // detect desktop and alert
   if (detectDesktop()) {
-    alert('For a better experience, use on mobile!');
+    // alert('For a better experience, use on mobile!');
   }
 
   // get dynamic URLs from data response, build assets and add them to the asset container

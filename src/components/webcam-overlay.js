@@ -21,17 +21,40 @@ AFRAME.registerComponent("webcam-overlay-helper", {
 
   init: function( ){
     this.scene = document.querySelector('a-scene');
-    this.resolution = new THREE.Vector2(1,1);
+    this.resolution = new THREE.Vector2();
+    this.webcamEl = document.getElementById("arjs-video");
 
-    this.isDirty = true
-    this.textureSet = false
+    this.textureSet = false;
 
-    let self = this
 
-    // TODO: Why is this called all of the time?
-    window.addEventListener('resize', function() {
-      self.updateResolution()
-    });
+    this.sWidth = window.innerWidth;
+    this.sHeight = window.innerHeight;
+
+    // Why is this called all of the time? bug in AR.js.
+    // window.addEventListener('resize', () => {
+    //   this.updateResolution()
+    // });
+
+    window.addEventListener('arjs-video-loaded', () => {
+
+      console.log('arjs video loaded, textureSet', this.textureSet);
+
+      const {x,y} = this.scene.renderer.getSize();
+
+      let deltaX = (x - this.sWidth) * 0.5;
+      let offsetX = deltaX / x;
+
+      let deltaY = (y - this.sHeight) * 0.5;
+      let offsetY = deltaY / y;
+
+      this.el.setAttribute('material', 'offset', new THREE.Vector2(offsetX, offsetY));
+
+      this.el.setAttribute('material', 'map', '#arjs-video');
+      this.textureSet = true
+
+      window.plane = this;
+      
+    })
 
     let blurAmount = new THREE.Vector2(this.data.blurAmount, this.data.blurAmount);
     this.el.setAttribute('material', 'blurAmount', blurAmount);
@@ -43,75 +66,32 @@ AFRAME.registerComponent("webcam-overlay-helper", {
   // in our shader
   updateResolution: function() {
 
-    let rendererSize = new THREE.Vector2()
-    this.scene.renderer.getSize(rendererSize)
+    console.log('update resolution');
+    const dpr = this.scene.renderer.getPixelRatio();
 
-    let sWidth = rendererSize.width
-    let sHeight = rendererSize.height
+    this.scene.renderer.setSize(this.sWidth, this.sHeight);
+    this.resolution.set(this.sWidth, this.sHeight);
+    this.el.setAttribute('material', 'resolution', this.resolution);
 
-    var w = window.innerWidth;
-    var h = window.innerHeight;
+    // const { x, y } = this.scene.renderer.getSize();
 
-    // console.log("renderer size")
-    // console.log(rendererSize)
-    //
-    // console.log("window")
-    // console.log(w)
-    // console.log(h)
+    // if (this.resolution.x !== x || this.resolution.y !== y) {
+    //   this.resolution.set(x, y);
+      
+    // }
 
-    let deltaX = (rendererSize.x - w) * 0.5;
-    let offsetX = deltaX / rendererSize.x;
-
-    // We shouldn't have to do this if this is only called on resize...
-    // But trying to avoid triggering a constant update on the attributes
-    if (Math.abs(this.resolution.x - sWidth) + Math.abs(this.resolution.y - sHeight) > 0) {
-      this.isDirty = true
-      this.resolution.set(sWidth, sHeight);
-    }
   },
   tick: function() {
 
-    // If we haven't yet set the material, look up the
-    // arjs video element and pass it through to the shader
-    var webcamEl = document.getElementById("arjs-video");
+    // making a custom resize trigger in the tick as window resize event is called all the time
+    if (this.sWidth !== window.innerWidth || this.sHeight !== window.innerHeight) {
 
-    // TODO: We should check if the video is ready to play too
-    // Right now we get some warnings before the video loads
-    if (webcamEl && !this.textureSet) {
+      this.sWidth = window.innerWidth;
+      this.sHeight = window.innerHeight;
+      this.updateResolution();
 
-      let rendererSize = new THREE.Vector2()
-      this.scene.renderer.getSize(rendererSize)
-
-      let sWidth = rendererSize.width
-      let sHeight = rendererSize.height
-
-      var w = window.innerWidth;
-      var h = window.innerHeight;
-
-      // console.log("renderer size")
-      // console.log(rendererSize)
-      //
-      // console.log("window")
-      // console.log(w)
-      // console.log(h)
-
-      let deltaX = (rendererSize.x - w) * 0.5;
-      let offsetX = deltaX / rendererSize.x;
-
-      let deltaY = (rendererSize.y - h) * 0.5;
-      let offsetY = deltaY / rendererSize.y;
-
-      this.el.setAttribute('material', 'offset', new THREE.Vector2(offsetX, offsetY));
-
-      this.el.setAttribute('material', 'map', '#arjs-video');
-      this.textureSet = true
     }
 
-    // If the screen resolution has been updated, update the shader uniform
-    if (this.isDirty) {
-      this.el.setAttribute('material', 'resolution', this.resolution);
-      this.isDirty = false
-    }
   }
 });
 
