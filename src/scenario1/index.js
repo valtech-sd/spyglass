@@ -168,7 +168,7 @@ ready(async () => {
     currentProduct = productID;
 
     // start hint and pass in start animation function
-    hint.start();
+    // hint.start();
 
     // Kick off the animation to scan.
     // $statusLabel.innerHTML = 'Scanning...';
@@ -359,7 +359,7 @@ ready(async () => {
     function handleTouchEnd(evt) {
       // if we have the product in shot, we can start the hint timer again
       if (currentProduct !== 0) {
-        hint.start();
+        // hint.start();
       }
       
     };

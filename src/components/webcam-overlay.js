@@ -44,11 +44,11 @@ AFRAME.registerComponent("webcam-overlay-helper", {
 
   // We need to update the resolution to pass to the blur function
   // in our shader
-  updateResolution: function({ sWidth, sHeight, rWidth, rHeight, uvAspect }) {
+  updateResolution: function({ sWidth, sHeight, rWidth, rHeight, uvCoeff }) {
 
     this.resolution.set(sWidth, sHeight);
     this.el.setAttribute('material', 'resolution', this.resolution);
-    this.el.setAttribute('material', 'uvAspect', uvAspect);
+    this.el.setAttribute('material', 'uvCoeff', uvCoeff);
 
   }
 });
@@ -57,7 +57,7 @@ AFRAME.registerShader('gaussian-blur', {
   schema: {
     map: {type: 'map', is: 'uniform'},
     resolution: {type: 'vec2', is: 'uniform'},
-    uvAspect: {type: 'float', is: 'uniform'},
+    uvCoeff: {type: 'vec2', is: 'uniform'},
     blurAmount: {type: 'vec2', is: 'uniform'},
     tintAmount: {type: 'float', is: 'uniform'}
   },
@@ -75,7 +75,7 @@ void main() {
 varying vec2 vUv;
 uniform sampler2D map;
 uniform vec2 resolution;
-uniform float uvAspect;
+uniform vec2 uvCoeff;
 uniform vec2 blurAmount;
 uniform float tintAmount;
 
@@ -100,8 +100,8 @@ vec4 blur13(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
 void main() {
 
       vec2 adjustedUV = vUv;
-      // adjustedUV.x *= uvAspect;
-      // adjustedUV.x += (1.0 - uvAspect) * 0.5;
+      adjustedUV *= uvCoeff;
+      adjustedUV += (vec2(1.0) - uvCoeff) * 0.5;
       // Blur our pixels!
       vec4 blurredColor = blur13(map, adjustedUV, resolution, blurAmount);
       

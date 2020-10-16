@@ -7,7 +7,8 @@ AFRAME.registerComponent('scene-component', {
 
     this.sWidth = null;
     this.sHeight = null;
-    this.videoAspect = 1;
+    this.vWidth = null;
+    this.vHeight = null;
 
     window.scene = this.el;
 
@@ -21,15 +22,26 @@ AFRAME.registerComponent('scene-component', {
 
       // then we need to wait until the video data is loaded
       videoEl.onloadeddata = () => {
-        this.videoAspect = videoEl.videoWidth / videoEl.videoHeight;
+
+        this.vWidth = videoEl.videoWidth;
+        this.vHeight = videoEl.videoHeight;
+      
+        window.video = videoEl;
         window.dispatchEvent(new CustomEvent('webcam-ready'));
         this.resize();
       }
     })
+
+    window.onorientationchange = function() { 
+      console.log('orientation change, reloading.');
+      window.location.reload();  
+    };
     
   },
 
   resize: function () {
+
+    if(!this.vWidth || !this.vHeight) return;
 
     // sWidth is screen width, rWidth is render width
 
@@ -39,12 +51,43 @@ AFRAME.registerComponent('scene-component', {
     this.sWidth = window.innerWidth;
     this.sHeight = window.innerHeight;
 
-    const portrait = this.sHeight > this.sWidth;
+    const sPortrait = this.sHeight >= this.sWidth;
+    const sLandscape = this.sHeight < this.sWidth;
+    const vPortrait = this.vHeight >= this.vWidth;
+    const vLandscape = this.vHeight < this.vWidth;
 
-    const rWidth = Math.ceil(this.sHeight * this.videoAspect);
-    const rHeight = this.sHeight;
+    // sometimes the webcam video stays in landscape, even when the device is portrait, COOL!
+    const calcWidthFromHeight = sPortrait;
+    const calcHeightFromWidth = sLandscape;
 
-    const uvAspect = this.sWidth / rWidth;
+    const vAspect = vPortrait ? this.vHeight / this.vWidth : this.vWidth / this.vHeight;
+
+    const rWidth = calcWidthFromHeight ? Math.ceil(this.sHeight * vAspect) : this.sWidth;
+    const rHeight = calcHeightFromWidth ? Math.ceil(this.sWidth * vAspect) : this.sHeight;
+
+    const leftCanvasOffset = (rWidth - this.sWidth) * 0.5;
+    const bottomCanvasOffset = (rHeight - this.sHeight) * 0.5;
+
+    const uvX = vPortrait ? (rWidth / this.vWidth * this.vHeight / rHeight) : 1;
+    const uvY = sLandscape ? 0.58 : 1;
+
+    const uvCoeff = new THREE.Vector2(uvX, uvY);
+
+
+    // alert(
+    //   `sWidth: ${this.sWidth}, sHeight: ${this.sHeight}\n
+    //   rWidth: ${rWidth}, rHeight: ${rHeight}\n
+    //   vWidth: ${this.vWidth}, vHeight: ${this.vHeight}\n
+    //   leftCanvasOffset: ${-leftCanvasOffset}, bottomCanvasOffset: ${-bottomCanvasOffset}\n
+    //   vAspect: ${vAspect}\n
+    //   uvCoeff: ${uvX}, ${uvY}.
+    //   `);
+
+    // console.log('sWidth', this.sWidth);
+    // console.log('sHeight', this.sHeight);
+    // console.log('rWidth', rWidth);
+    // console.log('rHeight', rHeight);
+    // console.log('uvCoeff', uvCoeff);
 
     /**
      * normally our canvas 'width' attribute (not CSS width), would be set to the screen width * dpr
@@ -59,10 +102,10 @@ AFRAME.registerComponent('scene-component', {
 
     const canvas = this.el.canvas;
 
-    const leftX = (rWidth - this.sWidth) * 0.5;
-
-    canvas.style.left = `-${leftX}px`;
+    canvas.style.left = `-${leftCanvasOffset}px`;
+    canvas.style.bottom = `-${bottomCanvasOffset}px`;
     canvas.style.width = `${rWidth}px`;
+    canvas.style.height = `${rHeight}px`;
 
     window.dispatchEvent(new CustomEvent('custom-resize', { 
       detail: { 
@@ -70,7 +113,7 @@ AFRAME.registerComponent('scene-component', {
         sHeight: this.sHeight,
         rWidth,
         rHeight,
-        uvAspect 
+        uvCoeff 
       } 
     }))
 
