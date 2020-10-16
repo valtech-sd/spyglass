@@ -26,12 +26,13 @@
     <!-- Debug GUI -->
     <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>-->
     <!-- A-Frame version of AR.js with marker tracking + location-based AR -->
-    <!--    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>-->
+       <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <!-- Have to host this custom AR.js build on CDN, because Parcel does not allow you to ignore already-transpiled files? -->
     <!-- It is originally at github.com/aolivier/AR.js/alex/root-2/aframe/build/aframe-ar.js -->
-    <script src="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt53c4bd908b2e7ed5/5f67ccc8a4d7b56a23866977/aframe-ar.js"></script>
+    <!-- <script src="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt53c4bd908b2e7ed5/5f67ccc8a4d7b56a23866977/aframe-ar.js"></script> -->
     <!--    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>-->
     <!--    <script src="../components/raycaster-listen.js"></script>-->
+    <script src="../components/scene-component.js"></script>
     <script src="../components/marker-tracker-no-rotation.js"></script>
     <script src="../components/content-type.js"></script>
     <script src="../components/numbered-text.js"></script>
@@ -47,158 +48,156 @@
     <script src="../components/multi-marker-rotation-interpolator.js"></script>
 </head>
 <body>
-<main>
-    <!-- Have to comment out the a-frame scene because it is making the window larger than the device. -->
-    <div id="scene_root">
-        <!-- <a-scene>
-            <a-box position="0 0 -8" scale="1 1 1">
-                <a-entity
-                    geometry="primitive: plane; width: auto; height: auto"
-                    position="0 1 -0.01"
-                    material="color: blue; opacity: 0.5"
-                    text="width: 2; wrapCount: 20; zOffset: 0.1;
-                    value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis pretium diam. Fusce ligula erat, consectetur condimentum viverra vel, mattis eu mi. Vestibulum dictum enim vel lacinia pulvinar. Suspendisse id erat consequat, porttitor felis vel, placerat augue. Vestibulum convallis eu est vitae maximus. Suspendisse volutpat turpis sed ornare sollicitudin. Phasellus dapibus tristique vestibulum. Praesent euismod tristique libero, sed venenatis urna luctus et. Mauris sed justo sodales, gravida justo eu, eleifend libero. Mauris in ligula sit amet lacus placerat dictum id non sapien.;">
-                </a-entity>
-            </a-box>
-        </a-scene> -->
-        <a-scene
-                embedded
-                vr-mode-ui="enabled: false;"
-                renderer="logarithmicDepthBuffer: true; antialias: true;"
-                arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
+    <!-- <a-scene>
+        <a-box position="0 0 -8" scale="1 1 1">
+            <a-entity
+                geometry="primitive: plane; width: auto; height: auto"
+                position="0 1 -0.01"
+                material="color: blue; opacity: 0.5"
+                text="width: 2; wrapCount: 20; zOffset: 0.1;
+                value: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis pretium diam. Fusce ligula erat, consectetur condimentum viverra vel, mattis eu mi. Vestibulum dictum enim vel lacinia pulvinar. Suspendisse id erat consequat, porttitor felis vel, placerat augue. Vestibulum convallis eu est vitae maximus. Suspendisse volutpat turpis sed ornare sollicitudin. Phasellus dapibus tristique vestibulum. Praesent euismod tristique libero, sed venenatis urna luctus et. Mauris sed justo sodales, gravida justo eu, eleifend libero. Mauris in ligula sit amet lacus placerat dictum id non sapien.;">
+            </a-entity>
+        </a-box>
+    </a-scene> -->
+    <a-scene
+        embedded
+        vr-mode-ui="enabled: false;"
+        renderer="logarithmicDepthBuffer: true; antialias: true;"
+        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+        scene-component
+    >
 
-            <a-assets>
-                <img id="warning" src="../assets/warning.png">
-                <img id="step1" src="../assets/1.png">
-                <img id="step2" src="../assets/2.png">
-                <img id="step3" src="../assets/3.png">
+        <a-assets>
+            <img id="warning" src="../assets/warning.png">
+            <img id="step1" src="../assets/1.png">
+            <img id="step2" src="../assets/2.png">
+            <img id="step3" src="../assets/3.png">
 
-                <!-- Tab Menu Icons -->
-                <img id="benefits" src="../assets/benefits_icon.png">
-                <img id="usage" src="../assets/usage_icon.png">
-                <img id="for-you" src="../assets/for_you_icon.png">
-                <img id="reviews" src="../assets/reviews_icon.png">
-                <img id="check" src="../assets/check_icon.png">
+            <!-- Tab Menu Icons -->
+            <img id="benefits" src="../assets/benefits_icon.png">
+            <img id="usage" src="../assets/usage_icon.png">
+            <img id="for-you" src="../assets/for_you_icon.png">
+            <img id="reviews" src="../assets/reviews_icon.png">
+            <img id="check" src="../assets/check_icon.png">
 
-                <img id="reclabel" src="../assets/recommended_square.png">
+            <img id="reclabel" src="../assets/recommended_square.png">
 
-                <a-mixin id="body-text"
-                         text="align: left; anchor: left; baseline: top; width: 10.0;
-               font: https://assets.contentstack.io/v3/assets/blte63f7056be4da683/bltd5d203e4c4450857/5f67d680128a9c4e4d50b7d4/din_ot.fnt;
-               fontImage: https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt8bfb56d15a62feaf/5f67d6802b93e84e4c329976/din_ot.png;
-               value: hello there;">
-                </a-mixin>
+            <a-mixin id="body-text"
+                        text="align: left; anchor: left; baseline: top; width: 10.0;
+            font: https://assets.contentstack.io/v3/assets/blte63f7056be4da683/bltd5d203e4c4450857/5f67d680128a9c4e4d50b7d4/din_ot.fnt;
+            fontImage: https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt8bfb56d15a62feaf/5f67d6802b93e84e4c329976/din_ot.png;
+            value: hello there;">
+            </a-mixin>
 
-                <a-mixin id="menu-text"
-                         text="align: center; anchor: center; baseline: top; width: 13.0; wrapCount: 35;
-               font: https://assets.contentstack.io/v3/assets/blte63f7056be4da683/bltd5d203e4c4450857/5f67d680128a9c4e4d50b7d4/din_ot.fnt;
-               fontImage: https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt8bfb56d15a62feaf/5f67d6802b93e84e4c329976/din_ot.png;
-               value: hello there;">
-                </a-mixin>
-            </a-assets>
-
-
-            <!--Serum 1 Bottle-->
-            <a-marker id="serum_1_marker" type="pattern" adjusted-rotation preset="custom"
-                      url="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt7feeb710b575430e/5f682432b038186a244b9b87/serum_1.patt.txt"
-                      smooth="true"
-                      smoothCount="10"
-                      smoothTolerance=".01"
-                      smoothThreshold="5"
-                      size="1">
-
-                <a-plane material="shader: gaussian-blur" webcam-overlay-helper opacity="1" rotation="0 0 0"
-                         position="0.0 0 -0.25" width="0.55" height=1.0">
-                    <a-circle mask position='0 0 0.375' radius="0.75" rotation='90 0 0'
-                              material='opacity: 0.0; side: double;'></a-circle>
-                </a-plane>
-            </a-marker>
-
-            <!--Serum 2 Bottle-->
-            <a-marker id="serum_2_marker" type="pattern" adjusted-rotation preset="custom"
-                      url="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt07737f7b9d63dc8f/5f6824336f40ab4648b5dcc1/serum_2.patt.txt"
-                      smooth="true"
-                      smoothCount="10"
-                      smoothTolerance=".01"
-                      smoothThreshold="5"
-                      size="1">
-
-                <a-plane material="shader: gaussian-blur" webcam-overlay-helper opacity="0.4" rotation="0 0 0"
-                         position="0.0 0 -0.25" width="0.55" height=1.0">
-                    <a-circle mask position='0 0 0.375' radius="0.75" rotation='90 0 0'
-                              material='opacity: 0.0; side: double;'></a-circle>
-                </a-plane>
-            </a-marker>
+            <a-mixin id="menu-text"
+                        text="align: center; anchor: center; baseline: top; width: 13.0; wrapCount: 35;
+            font: https://assets.contentstack.io/v3/assets/blte63f7056be4da683/bltd5d203e4c4450857/5f67d680128a9c4e4d50b7d4/din_ot.fnt;
+            fontImage: https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt8bfb56d15a62feaf/5f67d6802b93e84e4c329976/din_ot.png;
+            value: hello there;">
+            </a-mixin>
+        </a-assets>
 
 
-            <!--Serum 3 Bottle-->
-            <a-marker id="serum_3_marker" type="pattern" adjusted-rotation preset="custom"
-                      url="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt8573813864015e2e/5f682433a4d7b56a238669b1/serum_3.patt.txt"
-                      smooth="true"
-                      smoothCount="15"
-                      smoothTolerance=".01"
-                      smoothThreshold="5"
-                      size="1">
+        <!--Serum 1 Bottle-->
+        <a-marker id="serum_1_marker" type="pattern" adjusted-rotation preset="custom"
+                    url="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt7feeb710b575430e/5f682432b038186a244b9b87/serum_1.patt.txt"
+                    smooth="true"
+                    smoothCount="10"
+                    smoothTolerance=".01"
+                    smoothThreshold="5"
+                    size="1">
 
-                <a-plane material="shader: gaussian-blur" webcam-overlay-helper opacity="0.4" rotation="0 0 0"
-                         position="0.0 0 -0.25" width="0.55" height=1.0">
-                    <a-circle mask position='0 0 0.375' radius="0.75" rotation='90 0 0'
-                              material='opacity: 0.0; side: double;'></a-circle>
-                </a-plane>
+            <a-plane material="shader: gaussian-blur" webcam-overlay-helper opacity="0.4" rotation="0 0 0"
+                        position="0.0 0 -0.25" width="2" height="2">
+                <a-circle mask position='0 0 0.31' radius="0.75" rotation='90 0 0'
+                            material='opacity: 0.0; side: double;'></a-circle>
+            </a-plane>
+        </a-marker>
 
-            </a-marker>
+        <!--Serum 2 Bottle-->
+        <a-marker id="serum_2_marker" type="pattern" adjusted-rotation preset="custom"
+                    url="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt07737f7b9d63dc8f/5f6824336f40ab4648b5dcc1/serum_2.patt.txt"
+                    smooth="true"
+                    smoothCount="10"
+                    smoothTolerance=".01"
+                    smoothThreshold="5"
+                    size="1">
 
-            <!--Serum 1 content-->
-            <a-image src="#reclabel" marker-tracker="marker: serum_1_marker" height="2" width="2" position="-0.25 1 -2"></a-image>
+            <a-plane material="shader: gaussian-blur" webcam-overlay-helper opacity="0.4" rotation="0 0 0"
+                        position="0.0 0 -0.25" width="2" height=2">
+                <a-circle mask position='0 0 0.375' radius="0.75" rotation='90 0 0'
+                            material='opacity: 0.0; side: double;'></a-circle>
+            </a-plane>
+        </a-marker>
 
-            <a-entity id="serum_1_content" marker-tracker="marker: serum_1_marker" visible="false" rotation="0 0 0" position="0 2 -5" scale="0.2 0.2 0.2">
-                <a-entity id="tab-menu-1" tab-menu position="6 6 0">
-                    <!--        <a-entity tabitem="textLabel: FOR YOU; iconImage: #for-you"></a-entity>-->
-                    <a-entity icon-tab-menu-item="iconImage: #check"></a-entity>
-                    <a-entity icon-tab-menu-item="iconImage: #reviews"></a-entity>
-                    <a-entity icon-tab-menu-item="iconImage: #benefits"></a-entity>
-                </a-entity>
 
-                <a-entity id="contentFan_serum1" contentfan="radius: 5;" opacity="0.4" position="0 -1 0"
-                          rotation="0 0 0"></a-entity>
+        <!--Serum 3 Bottle-->
+        <a-marker id="serum_3_marker" type="pattern" adjusted-rotation preset="custom"
+                    url="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt8573813864015e2e/5f682433a4d7b56a238669b1/serum_3.patt.txt"
+                    smooth="true"
+                    smoothCount="15"
+                    smoothTolerance=".01"
+                    smoothThreshold="5"
+                    size="1">
 
+            <a-plane material="shader: gaussian-blur" webcam-overlay-helper opacity="0.4" rotation="0 0 0"
+                        position="0.0 0 -0.25" width="2" height=2">
+                <a-circle mask position='0 0 0.375' radius="0.75" rotation='90 0 0'
+                            material='opacity: 0.0; side: double;'></a-circle>
+            </a-plane>
+
+        </a-marker>
+
+        <!--Serum 1 content-->
+        <a-image src="#reclabel" marker-tracker="marker: serum_1_marker" height="2" width="2" position="-0.25 1 -2"></a-image>
+
+        <a-entity id="serum_1_content" marker-tracker="marker: serum_1_marker" visible="false" rotation="0 0 0" position="0 2 -5" scale="0.2 0.2 0.2">
+            <a-entity id="tab-menu-1" tab-menu position="6 6 0">
+                <!--        <a-entity tabitem="textLabel: FOR YOU; iconImage: #for-you"></a-entity>-->
+                <a-entity icon-tab-menu-item="iconImage: #check"></a-entity>
+                <a-entity icon-tab-menu-item="iconImage: #reviews"></a-entity>
+                <a-entity icon-tab-menu-item="iconImage: #benefits"></a-entity>
             </a-entity>
 
-            <!--Serum 2 content-->
-            <!-- <a-image src="#reclabel" marker-tracker="marker: serum_2_marker" height="2" width="2" position="-0.25 1 -2"></a-image> -->
+            <a-entity id="contentFan_serum1" contentfan="radius: 5;" opacity="0.4" position="0 -1 0"
+                        rotation="0 0 0"></a-entity>
 
-            <a-entity id="serum_2_content" marker-tracker="marker: serum_2_marker" visible="false" rotation="0 0 0" position="0 2 -5" scale="0.2 0.2 0.2">
-                <a-entity id="tab-menu-2" tab-menu position="6 6 0">
-                    <a-entity icon-tab-menu-item="iconImage: #check"></a-entity>
-                    <a-entity icon-tab-menu-item="iconImage: #reviews"></a-entity>
-                    <a-entity icon-tab-menu-item="iconImage: #benefits"></a-entity>
-                </a-entity>
+        </a-entity>
 
-                <a-entity id="contentFan_serum2" contentfan="radius: 5;" opacity="0.4" position="0 -1 0"
-                          rotation="0 0 0"></a-entity>
+        <!--Serum 2 content-->
+        <!-- <a-image src="#reclabel" marker-tracker="marker: serum_2_marker" height="2" width="2" position="-0.25 1 -2"></a-image> -->
 
+        <a-entity id="serum_2_content" marker-tracker="marker: serum_2_marker" visible="false" rotation="0 0 0" position="0 2 -5" scale="0.2 0.2 0.2">
+            <a-entity id="tab-menu-2" tab-menu position="6 6 0">
+                <a-entity icon-tab-menu-item="iconImage: #check"></a-entity>
+                <a-entity icon-tab-menu-item="iconImage: #reviews"></a-entity>
+                <a-entity icon-tab-menu-item="iconImage: #benefits"></a-entity>
             </a-entity>
 
-            <!--Serum 3 content-->
-            <!-- <a-image src="#reclabel" marker-tracker="marker: serum_3_marker" height="2" width="2" position="-0.25 1 -2"></a-image> -->
+            <a-entity id="contentFan_serum2" contentfan="radius: 5;" opacity="0.4" position="0 -1 0"
+                        rotation="0 0 0"></a-entity>
 
-            <a-entity id="serum_3_content" marker-tracker="marker: serum_3_marker" visible="false" rotation="0 0 0" position="0 2 -5" scale="0.2 0.2 0.2">
-                <a-entity id="tab-menu-3" tab-menu position="6 6 0">
-                    <!--        <a-entity tabitem="textLabel: FOR YOU; iconImage: #for-you"></a-entity>-->
-                    <a-entity icon-tab-menu-item="iconImage: #check"></a-entity>
-                    <a-entity icon-tab-menu-item="iconImage: #reviews"></a-entity>
-                    <a-entity icon-tab-menu-item="iconImage: #benefits"></a-entity>
-                </a-entity>
+        </a-entity>
 
-                <a-entity id="contentFan_serum3" contentfan="radius: 5;" opacity="0.4" position="0 -1 0"
-                          rotation="0 0 0"></a-entity>
+        <!--Serum 3 content-->
+        <!-- <a-image src="#reclabel" marker-tracker="marker: serum_3_marker" height="2" width="2" position="-0.25 1 -2"></a-image> -->
 
+        <a-entity id="serum_3_content" marker-tracker="marker: serum_3_marker" visible="false" rotation="0 0 0" position="0 2 -5" scale="0.2 0.2 0.2">
+            <a-entity id="tab-menu-3" tab-menu position="6 6 0">
+                <!--        <a-entity tabitem="textLabel: FOR YOU; iconImage: #for-you"></a-entity>-->
+                <a-entity icon-tab-menu-item="iconImage: #check"></a-entity>
+                <a-entity icon-tab-menu-item="iconImage: #reviews"></a-entity>
+                <a-entity icon-tab-menu-item="iconImage: #benefits"></a-entity>
             </a-entity>
 
+            <a-entity id="contentFan_serum3" contentfan="radius: 5;" opacity="0.4" position="0 -1 0"
+                        rotation="0 0 0"></a-entity>
 
-            <a-entity camera></a-entity>
-        </a-scene>
-    </div>
+        </a-entity>
+
+
+        <a-entity camera></a-entity>
+    </a-scene>
 
     <div id="scanner">
         <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 308 366" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -352,6 +351,5 @@
         </div>
     </section>
     <script src="./index.js"></script>
-</main>
 </body>
 </html>

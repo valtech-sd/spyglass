@@ -20,19 +20,18 @@ ready(async () => {
   console.log('DOM is ready.');
 
   // create nav links
-  const main = document.querySelector('main');
   const navContainer = document.createElement('section');
   navContainer.className = 'nav-container';
   const navLinks = createNavLinks();
   navLinks.forEach(navLink => navContainer.appendChild(navLink))
-  main.appendChild(navContainer);
+  document.body.appendChild(navContainer);
 
   // Wait for the Contentstack data to come back before proceeding!
   await data_sources.getData();
 
   // detect desktop and alert
   if (detectDesktop()) {
-    // alert('For a better experience, use on mobile!');
+    alert('For a better experience, use on mobile!');
   }
 
   // get dynamic URLs from data response, build assets and add them to the asset container
@@ -56,7 +55,6 @@ ready(async () => {
   const $statusLabel = document.querySelector('#status_label');
   const $scanner = document.querySelector('#scanner');
   const $scanLine = document.querySelector('#scanner svg line');
-  const $main = document.querySelector('main');
   const $tray = document.querySelector('#tray');
   const $backButton = document.querySelector('a.back');
   const $addButton = document.querySelector('a.add');
@@ -65,6 +63,8 @@ ready(async () => {
 
   const hintEl = document.querySelector('.hint');
   const circle = hintEl.querySelector('.circle');
+  let leftSlideTimeout = null;
+  let rightSlideTimeout = null;
 
   const hintAnimation = {
     start: () => {
@@ -72,11 +72,13 @@ ready(async () => {
       const slideLeftDelay = 700;
       const slideRightDelay = 2000;
       hintEl.classList.add('show');
-      setTimeout(() => circle.classList.add('slide-left'), slideLeftDelay);
-      setTimeout(() => circle.classList.add('slide-right'), slideRightDelay);
+      leftSlideTimeout = setTimeout(() => circle.classList.add('slide-left'), slideLeftDelay);
+      rightSlideTimeout = setTimeout(() => circle.classList.add('slide-right'), slideRightDelay);
     },
     stop: () => {
       console.log('stopping hint animation');
+      clearTimeout(leftSlideTimeout);
+      clearTimeout(rightSlideTimeout);
       hintEl.classList.remove('show');
       circle.classList.remove('slide-left');
       circle.classList.remove('slide-right');
@@ -174,11 +176,10 @@ ready(async () => {
     // await pauseUntilEnd('a', $scanLine, 'blip');
     $statusLabel.innerHTML = `Found Serum No. ${productID}!`;
     $scanner.classList.add('complete');
-    $main.classList.add('serum'+productID);
+    document.body.classList.add('serum'+productID);
     await pause(900);
-    $main.classList.add('found');
+    document.body.classList.add('found');
     await pauseUntilEnd('t', $tray, 'bottom');
-    // $main.classList.remove('serum'+productID);
     $scanner.classList.remove('scanning');
     $scanner.classList.remove('complete');
     
@@ -207,10 +208,10 @@ ready(async () => {
     $statusLabel.innerHTML = 'Exploring Serums';
     $scanner.classList.remove('scanning');
     $scanner.classList.remove('complete');
-    $main.classList.remove('found');
-    $main.classList.remove('serum1');
-    $main.classList.remove('serum2');
-    $main.classList.remove('serum3');
+    document.body.classList.remove('found');
+    document.body.classList.remove('serum1');
+    document.body.classList.remove('serum2');
+    document.body.classList.remove('serum3');
     // ...which will slide up the tray.
     // Prevent changing the URL?
     return false;
@@ -227,7 +228,7 @@ ready(async () => {
     $tray.classList.remove('step-3');
 
     // currentProduct = 0;
-    $main.classList.remove('found');
+    document.body.classList.remove('found');
     await pause(1300);
     $statusLabel.textContent = 'Exploring Moisturizers';
     $tray.classList.add('step-4');
@@ -235,7 +236,7 @@ ready(async () => {
 
     console.log('moving to scenario 2');
     // TODO: Add listener when click on going-home interstitial
-    $main.classList.add('going-home');
+    document.body.classList.add('going-home');
     // Prevent changing the URL?
     return false;
   }
