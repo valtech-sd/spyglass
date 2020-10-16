@@ -20,12 +20,11 @@ ready(async function() {
   console.log( "DOM loaded" );
 
   // create nav links
-  const main = document.querySelector('main');
   const navContainer = document.createElement('section');
   navContainer.className = 'nav-container';
   const navLinks = createNavLinks();
   navLinks.forEach(navLink => navContainer.appendChild(navLink))
-  main.appendChild(navContainer);
+  document.body.appendChild(navContainer);
 
   await data_sources.getData();
   

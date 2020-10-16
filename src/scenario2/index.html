@@ -21,14 +21,10 @@
 	<link rel="apple-touch-icon" href="https://spyglass.valtech.engineering/images/favicons/favicon-180.png" sizes="180x180">
     <!-- A-Frame -->
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-    <!--    <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>-->
-    <!-- Debug GUI -->
-    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>-->
     <!-- A-Frame version of AR.js with marker tracking + location-based AR -->
-    <!--    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>-->
-    <script src="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt53c4bd908b2e7ed5/5f681de4d70e764f32921c0a/aframe-ar.js"></script>
-    <!--    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>-->
-    <!--    <script src="../components/raycaster-listen.js"></script>-->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <!-- <script src="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt53c4bd908b2e7ed5/5f681de4d70e764f32921c0a/aframe-ar.js"></script> -->
+    <script src="../components/scene-component.js"></script>
     <script src="../components/rotation-trigger.js"></script>
     <script src="../components/marker-tracker-no-rotation.js"></script>
     <script src="../components/content-type.js"></script>
@@ -46,102 +42,99 @@
     <script src="../components/multi-marker-rotation-interpolator.js"></script>
 </head>
 <body>
-<main>
-    <!-- Have to comment out the a-frame scene because it is making the window larger than the device. -->
-    <div id="scene_root">
-        <a-scene
-                embedded
-                vr-mode-ui="enabled: false;"
-                renderer="logarithmicDepthBuffer: true; antialias: true;"
-                arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
+    <a-scene
+        embedded
+        vr-mode-ui="enabled: false;"
+        renderer="logarithmicDepthBuffer: true; antialias: true;"
+        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+        scene-component
+    >
 
-            <a-assets>
-                <img id="step1" src="../assets/1.png">
-                <img id="step2" src="../assets/2.png">
-                <img id="step3" src="../assets/3.png">
+        <a-assets>
+            <img id="step1" src="../assets/1.png">
+            <img id="step2" src="../assets/2.png">
+            <img id="step3" src="../assets/3.png">
 
-                <!-- Tab Menu Icons -->
-                <img id="benefits" src="../assets/benefits_icon.png">
-                <img id="usage" src="../assets/usage_icon.png">
-                <img id="for-you" src="../assets/for_you_icon.png">
-                <img id="reviews" src="../assets/reviews_icon.png">
-                <img id="check" src="../assets/check_icon.png">
+            <!-- Tab Menu Icons -->
+            <img id="benefits" src="../assets/benefits_icon.png">
+            <img id="usage" src="../assets/usage_icon.png">
+            <img id="for-you" src="../assets/for_you_icon.png">
+            <img id="reviews" src="../assets/reviews_icon.png">
+            <img id="check" src="../assets/check_icon.png">
 
-                <img id="reclabel" src="../assets/recommended_square.png">
-                <img id="happy" src="../assets/happy_icon.png">
-                <img id="sad" src="../assets/sad_icon.png">
+            <img id="reclabel" src="../assets/recommended_square.png">
+            <img id="happy" src="../assets/happy_icon.png">
+            <img id="sad" src="../assets/sad_icon.png">
 
-                <a-mixin id="body-text"
-                         text="align: left; anchor: left; baseline: top; width: 10.0;
-               font: https://assets.contentstack.io/v3/assets/blte63f7056be4da683/bltd5d203e4c4450857/5f67d680128a9c4e4d50b7d4/din_ot.fnt;
-               fontImage: https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt8bfb56d15a62feaf/5f67d6802b93e84e4c329976/din_ot.png;
-               value: hello there;">
-                </a-mixin>
+            <a-mixin id="body-text"
+                        text="align: left; anchor: left; baseline: top; width: 10.0;
+            font: https://assets.contentstack.io/v3/assets/blte63f7056be4da683/bltd5d203e4c4450857/5f67d680128a9c4e4d50b7d4/din_ot.fnt;
+            fontImage: https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt8bfb56d15a62feaf/5f67d6802b93e84e4c329976/din_ot.png;
+            value: hello there;">
+            </a-mixin>
 
-                <a-mixin id="menu-text"
-                         text="align: center; anchor: center; baseline: top; width: 13.0; wrapCount: 35;
-               font: https://assets.contentstack.io/v3/assets/blte63f7056be4da683/bltd5d203e4c4450857/5f67d680128a9c4e4d50b7d4/din_ot.fnt;
-               fontImage: https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt8bfb56d15a62feaf/5f67d6802b93e84e4c329976/din_ot.png;
-               value: hello there;">
-                </a-mixin>
-            </a-assets>
+            <a-mixin id="menu-text"
+                        text="align: center; anchor: center; baseline: top; width: 13.0; wrapCount: 35;
+            font: https://assets.contentstack.io/v3/assets/blte63f7056be4da683/bltd5d203e4c4450857/5f67d680128a9c4e4d50b7d4/din_ot.fnt;
+            fontImage: https://images.contentstack.io/v3/assets/blte63f7056be4da683/blt8bfb56d15a62feaf/5f67d6802b93e84e4c329976/din_ot.png;
+            value: hello there;">
+            </a-mixin>
+        </a-assets>
 
-            <a-entity id="twistParent" multi-marker-rotation-interpolator>
+        <a-entity id="twistParent" multi-marker-rotation-interpolator>
 
-                <a-marker id="mainMarker" type="pattern" preset="custom"
-                          url="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt7feeb710b575430e/5f682432b038186a244b9b87/serum_1.patt.txt"
-                          smooth="true"
-                          smoothCount="10"
-                          smoothTolerance=".01"
-                          smoothThreshold="5"
-                          size="1">
-                    <!--                    <a-plane position='0 -1 -0.75' width='1' height='1' rotation='90 0 0'-->
-                    <!--                             material='opacity: 0.1; side: double;color:white;'></a-plane>-->
-                </a-marker>
+            <a-marker id="mainMarker" type="pattern" preset="custom"
+                        url="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt7feeb710b575430e/5f682432b038186a244b9b87/serum_1.patt.txt"
+                        smooth="true"
+                        smoothCount="10"
+                        smoothTolerance=".01"
+                        smoothThreshold="5"
+                        size="1">
+                <!--                    <a-plane position='0 -1 -0.75' width='1' height='1' rotation='90 0 0'-->
+                <!--                             material='opacity: 0.1; side: double;color:white;'></a-plane>-->
+            </a-marker>
 
-                <a-marker type="pattern" preset="custom"
-                          url="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt3202ddbbe73ae6f1/5f6824335e85ad4dee1904cf/antioxidant.patt.txt"
-                          smooth="true"
-                          smoothCount="10"
-                          smoothTolerance=".01"
-                          smoothThreshold="5"
-                          size="0.5">
-                    <!--                    <a-plane position='0 -1 -0.75' width='1' height='1' rotation='90 0 0'-->
-                    <!--                             material='opacity: 0.1; side: double;color:white;'></a-plane>-->
-                </a-marker>
+            <a-marker type="pattern" preset="custom"
+                        url="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt3202ddbbe73ae6f1/5f6824335e85ad4dee1904cf/antioxidant.patt.txt"
+                        smooth="true"
+                        smoothCount="10"
+                        smoothTolerance=".01"
+                        smoothThreshold="5"
+                        size="0.5">
+                <!--                    <a-plane position='0 -1 -0.75' width='1' height='1' rotation='90 0 0'-->
+                <!--                             material='opacity: 0.1; side: double;color:white;'></a-plane>-->
+            </a-marker>
 
-                <a-marker type="pattern" preset="custom"
-                          url="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt283f0555bf24f956/5f68243294533468847801ce/performant.patt.txt"
-                          smooth="true"
-                          smoothCount="10"
-                          smoothTolerance=".01"
-                          smoothThreshold="5"
-                          size="0.5">
-                    <!--                    <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0'-->
-                    <!--                             material='opacity: 0.5; side: double;color:white;'></a-plane>-->
-                </a-marker>
+            <a-marker type="pattern" preset="custom"
+                        url="https://assets.contentstack.io/v3/assets/blte63f7056be4da683/blt283f0555bf24f956/5f68243294533468847801ce/performant.patt.txt"
+                        smooth="true"
+                        smoothCount="10"
+                        smoothTolerance=".01"
+                        smoothThreshold="5"
+                        size="0.5">
+                <!--                    <a-plane position='0 0 -0.75' width='1' height='1' rotation='90 0 0'-->
+                <!--                             material='opacity: 0.5; side: double;color:white;'></a-plane>-->
+            </a-marker>
 
+        </a-entity>
+
+
+        <a-entity id="product-content" visible="false"
+                    rotation="0 0 0"
+                    position="-1 1.5 -5" scale="0.2 0.2 0.2"
+                    marker-tracker="isPromiscuous: true; lossThreshold: 3000;">
+            <a-entity id="tab-menu" tab-menu position="6 6 0">
+                <a-entity tabitem="textLabel: USAGE; iconImage: #usage"></a-entity>
+                <a-entity tabitem="textLabel: BENEFITS; iconImage: #benefits"></a-entity>
             </a-entity>
 
+            <a-entity id="contentFan" contentfan="radius: 5;" opacity="0.4" position="0 -3 0"
+                        rotation="0 0 0"></a-entity>
 
-            <a-entity id="product-content" visible="false"
-                      rotation="0 0 0"
-                      position="-1 1.5 -5" scale="0.2 0.2 0.2"
-                      marker-tracker="isPromiscuous: true; lossThreshold: 3000;">
-                <a-entity id="tab-menu" tab-menu position="6 6 0">
-                    <a-entity tabitem="textLabel: USAGE; iconImage: #usage"></a-entity>
-                    <a-entity tabitem="textLabel: BENEFITS; iconImage: #benefits"></a-entity>
-                </a-entity>
+        </a-entity>
 
-                <a-entity id="contentFan" contentfan="radius: 5;" opacity="0.4" position="0 -3 0"
-                          rotation="0 0 0"></a-entity>
-
-            </a-entity>
-
-            <a-entity camera></a-entity>
-        </a-scene>
-    </div>
+        <a-entity camera></a-entity>
+    </a-scene>
     <script src="./index.js"></script>
-</main>
 </body>
 </html>
