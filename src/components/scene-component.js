@@ -63,7 +63,7 @@ AFRAME.registerComponent('scene-component', {
     const vAspect = vPortrait ? this.vHeight / this.vWidth : this.vWidth / this.vHeight;
 
     const rWidth = calcWidthFromHeight ? Math.ceil(this.sHeight * vAspect) : this.sWidth;
-    const rHeight = calcHeightFromWidth ? Math.ceil(this.sWidth * vAspect) : this.sHeight;
+    const rHeight = calcHeightFromWidth ? Math.ceil(this.sWidth / vAspect) : this.sHeight;
 
     const leftCanvasOffset = (rWidth - this.sWidth) * 0.5;
     const bottomCanvasOffset = (rHeight - this.sHeight) * 0.5;
