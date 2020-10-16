@@ -50,6 +50,10 @@ AFRAME.registerComponent('scene-component', {
 
     this.sWidth = window.innerWidth;
     this.sHeight = window.innerHeight;
+    this.mobileHeight = document.body.clientHeight;
+
+    // sometimes mobile devices have amenu at the top that takes up space
+    const menuDiff = this.mobileHeight - this.sHeight;
 
     const sPortrait = this.sHeight >= this.sWidth;
     const sLandscape = this.sHeight < this.sWidth;
@@ -66,10 +70,10 @@ AFRAME.registerComponent('scene-component', {
     const rHeight = calcHeightFromWidth ? Math.ceil(this.sWidth / vAspect) : this.sHeight;
 
     const leftCanvasOffset = (rWidth - this.sWidth) * 0.5;
-    const bottomCanvasOffset = (rHeight - this.sHeight) * 0.5;
+    const bottomCanvasOffset = ((rHeight - this.sHeight) * 0.5) - menuDiff;
 
     const uvX = vPortrait ? (rWidth / this.vWidth * this.vHeight / rHeight) : 1;
-    const uvY = sLandscape ? 0.58 : 1;
+    const uvY = sLandscape ? 1 : 1;
 
     const uvCoeff = new THREE.Vector2(uvX, uvY);
 
@@ -87,7 +91,7 @@ AFRAME.registerComponent('scene-component', {
     // console.log('sHeight', this.sHeight);
     // console.log('rWidth', rWidth);
     // console.log('rHeight', rHeight);
-    // console.log('uvCoeff', uvCoeff);
+    // console.log('uvCoeff', `${uvX}, ${uvY}`);
 
     /**
      * normally our canvas 'width' attribute (not CSS width), would be set to the screen width * dpr
@@ -104,6 +108,7 @@ AFRAME.registerComponent('scene-component', {
 
     canvas.style.left = `-${leftCanvasOffset}px`;
     canvas.style.bottom = `-${bottomCanvasOffset}px`;
+    // canvas.style.bottom = `0`;
     canvas.style.width = `${rWidth}px`;
     canvas.style.height = `${rHeight}px`;
 

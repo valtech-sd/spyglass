@@ -37,6 +37,11 @@ body {
   margin: 0 !important;
 }
 
+
+canvas.a-canvas {
+  top: unset !important;
+}
+
 .nav-container .navlink {
   position: absolute;
   top: 12px;
